@@ -1,4 +1,3 @@
-
 -- 04_category_analysis.sql
 -- Purpose:
 -- Analyze recorded product records and brand-label coverage
