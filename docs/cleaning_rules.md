@@ -70,6 +70,8 @@ The expected number of assignments in `product_categories_clean` is 10,443,820, 
 
 The number of distinct valid category tags after cleaning must be calculated from the derived table and is not assumed in advance.
 
+After excluding the three invalid normalized labels, 116,099 distinct category tags remain in the cleaned category table.
+
 ## 4. Preservation and Traceability
 
 The original core table and bridge tables are retained without destructive cleaning.
