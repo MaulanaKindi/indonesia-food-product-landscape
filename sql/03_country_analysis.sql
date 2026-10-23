@@ -4,6 +4,26 @@
 -- Metric: Distinct dataset records assigned to each selected country.
 -- Limitation: Record counts are not sales, market size, or market share.
 
+-- 0. Create country mapping table
+CREATE OR REPLACE TABLE country_tag_mapping AS
+SELECT *
+FROM (
+    VALUES
+        ('en:france', 'France', 'Europe'),
+        ('en:united-states', 'United States', 'North America'),
+        ('en:germany', 'Germany', 'Europe'),
+        ('en:united-kingdom', 'United Kingdom', 'Europe'),
+        ('en:japan', 'Japan', 'East Asia'),
+        ('en:india', 'India', 'South Asia'),
+        ('en:singapore', 'Singapore', 'Southeast Asia'),
+        ('en:thailand', 'Thailand', 'Southeast Asia'),
+        ('en:philippines', 'Philippines', 'Southeast Asia'),
+        ('en:indonesia', 'Indonesia', 'Southeast Asia'),
+        ('en:malaysia', 'Malaysia', 'Southeast Asia'),
+        ('en:china', 'China', 'East Asia'),
+        ('en:vietnam', 'Vietnam', 'Southeast Asia')
+) AS t(country_tag, country_name, region);
+
 -- 1. Country landscape
 SELECT
     m.country_name,
