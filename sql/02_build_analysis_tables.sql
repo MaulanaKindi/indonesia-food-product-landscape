@@ -2,10 +2,12 @@
 -- Purpose: Build four analysis tables from the full Open Food Facts Parquet source.
 --
 -- Tables created:
---   product_records    : Full product-record table
---   product_countries  : Product-to-country-tag bridge table
---   product_categories : Product-to-category-tag bridge table
---   product_brands     : Product-to-brand-tag bridge table
+--   product_records          : Full product-record table
+--   product_countries        : Product-to-country-tag bridge table
+--   product_categories       : Product-to-category-tag bridge table
+--   product_brands           : Product-to-brand-tag bridge table
+--   product_categories_clean : Category bridge excluding three invalid labels
+--   product_brands_clean     : Normalized brand bridge table
 --
 -- Sample CSV files are stored separately in data/ and contain
 -- 100 rows each for inspection. They are not the full tables.
@@ -74,3 +76,16 @@ WHERE LOWER(TRIM(category_tag)) NOT IN (
     'en:unknown',
     'en:undefined'
 );
+
+-- 6. Build cleaned brand bridge table
+-- Normalize brand tags to lowercase and trim surrounding whitespace.
+-- Exclude NULL and empty brand tags.
+-- DISTINCT prevents duplicate record-brand pairs after normalization.
+-- Preserve the original product_brands table.
+CREATE OR REPLACE TABLE product_brands_clean AS
+SELECT DISTINCT
+    record_id,
+    LOWER(TRIM(brand_tag)) AS brand_tag
+FROM product_brands
+WHERE brand_tag IS NOT NULL
+  AND TRIM(brand_tag) <> '';
