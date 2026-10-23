@@ -60,3 +60,17 @@ FROM product_records AS p
 CROSS JOIN UNNEST(p.brands_tags) AS t(brand_tag)
 WHERE t.brand_tag IS NOT NULL
   AND TRIM(t.brand_tag) <> '';
+
+-- 5. Build cleaned category bridge table
+-- Exclude unknown or undefined category labels.
+-- Preserve the original product_categories table.
+CREATE OR REPLACE TABLE product_categories_clean AS
+SELECT
+    record_id,
+    category_tag
+FROM product_categories
+WHERE LOWER(TRIM(category_tag)) NOT IN (
+    'en:null',
+    'en:unknown',
+    'en:undefined'
+);
