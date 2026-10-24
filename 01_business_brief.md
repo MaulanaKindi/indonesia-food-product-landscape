@@ -51,6 +51,7 @@ The final geographic and category scope will be determined after data profiling.
 - Data quality log documenting key issues and decisions.
 - Analytical results with clearly defined metrics.
 - Business findings, limitations, and recommendations for further investigation.
+- A documented, reproducible database build and recovery workflow, including a validated backup that can be restored and independently checked.
 
 ## 8. Definition of Done
 
@@ -63,3 +64,5 @@ The project is complete when:
 5. Key analytical results can be reproduced and independently checked.
 6. Business conclusions are supported by the results and distinguish observations from interpretations.
 7. The GitHub repository is understandable to a reviewer unfamiliar with the project.
+8. The database can be rebuilt from the documented source data and SQL scripts in a clean environment, subject to stated prerequisites.
+9. At least one database backup has been restored successfully, with table-level and data-integrity checks documented.
