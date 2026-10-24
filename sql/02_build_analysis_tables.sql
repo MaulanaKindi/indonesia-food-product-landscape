@@ -1,5 +1,5 @@
 -- 02_build_analysis_tables.sql
--- Purpose: Build four analysis tables from the full Open Food Facts Parquet source.
+-- Purpose: Build six analysis tables from the full Open Food Facts Parquet source.
 --
 -- Tables created:
 --   product_records          : Full product-record table
@@ -64,18 +64,22 @@ WHERE t.brand_tag IS NOT NULL
   AND TRIM(t.brand_tag) <> '';
 
 -- 5. Build cleaned category bridge table
--- Exclude unknown or undefined category labels.
+-- Normalize category labels to lowercase and trim surrounding whitespace.
+-- Exclude NULL, empty, unknown, or undefined category labels.
+-- DISTINCT prevents duplicate record-category pairs after normalization.
 -- Preserve the original product_categories table.
 CREATE OR REPLACE TABLE product_categories_clean AS
-SELECT
+SELECT DISTINCT
     record_id,
-    category_tag
+    LOWER(TRIM(category_tag)) AS category_tag
 FROM product_categories
-WHERE LOWER(TRIM(category_tag)) NOT IN (
-    'en:null',
-    'en:unknown',
-    'en:undefined'
-);
+WHERE category_tag IS NOT NULL
+  AND TRIM(category_tag) <> ''
+  AND LOWER(TRIM(category_tag)) NOT IN (
+      'en:null',
+      'en:unknown',
+      'en:undefined'
+  );
 
 -- 6. Build cleaned brand bridge table
 -- Normalize brand tags to lowercase and trim surrounding whitespace.
