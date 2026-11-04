@@ -18,7 +18,7 @@ The [Open Food Facts terms of reuse](https://world.openfoodfacts.org/terms-of-us
 - [Analysis workflow](docs/03_analysis_workflow.md): ordered stages, quality gates, current status, and Definition of Done traceability.
 - [Relational schema design](docs/04_relational_schema_design.md): approved logical schema, physical table inventory, and Stage 4 build status.
 - [Analysis specification](docs/05_analysis_specification.md): owner-approved Stage 5 scope, denominator decisions, and Stage 6 output limits.
-- [Stage 7 findings and recommendations](docs/06_stage7_findings_and_recommendations.md): bounded interpretation of the validated Stage 6 outputs and their limitations.
+- [Stage 7 findings and recommendations](docs/06_stage7_findings_and_recommendations.md): executive summary, evidence-backed findings, and limitations for the validated Stage 6 outputs.
 - [Project log](docs/99_project_log.md): material project decisions and status.
 - [Category reporting-group framework](data/reference/category_reporting_group_framework.csv): approved group labels; taxonomy-tag assignments remain under review.
 

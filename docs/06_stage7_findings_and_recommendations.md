@@ -8,6 +8,16 @@ This is the bounded descriptive interpretation of the validated Stage 6 outputs 
 Stage 6 was rerun against the separately validated compact candidate database after the approved category mappings were applied. It generated 15 country-scenario rows, 300 country-category rows, and 159 mapped-brand assignment rows. The candidate build passed 15 checks and all 11 Stage 6 checks passed; the four published CSVs are byte-identical to the validated candidate run. These checks establish the tested reconciliations and arithmetic for the pinned inputs; they do not prove all mappings semantically correct or the data representative.
 <!-- AUTO-GENERATED: analysis-status:END -->
 
+## Executive Summary
+
+**Bottom line:** The snapshot supports a descriptive comparison of Open Food Facts records and category-tag coverage—not a comparison of the actual food markets.
+
+- **Coverage differs:** Indonesia has 9,118 records, with category tags on 12.2%. Coverage is similar in Malaysia (11.3%), higher in the Philippines (16.7%) and Singapore (17.3%), and much higher in Thailand (62.6%). Thailand is a coverage contrast, not an equivalent peer.
+- **Category assignments are incomplete:** Of Indonesia's 1,111 category-tagged records, 788 receive at least one substantive group under the candidate-based view, compared with 113 under the approved-only view. That leaves 323 and 998 records unassigned, respectively. Candidate assignments are not all approved, and records can belong to multiple groups.
+- **Brand evidence is too sparse:** Only 31 Indonesian records (0.34% of the 9,118) have an exact-approved brand mapping. This is not enough to describe the broad brand landscape or concentration.
+
+**Business use:** Treat these results as a baseline for database coverage and classification quality. They do not measure products sold, demand, sales, or market share; commercial market decisions need separate, representative market or sales evidence.
+
 ## Findings
 
 ### 1. Country record counts are measurable; category coverage differs materially
