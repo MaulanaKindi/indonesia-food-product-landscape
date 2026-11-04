@@ -1306,3 +1306,31 @@ Result:
 
 Status:
 Public history rewrite and local synchronization are complete. Stage 8 clean-room rebuild/recovery acceptance remains limited by the storage constraint; do not create a backup without renewed owner approval.
+
+## ITEM-048
+
+Type:
+Stage 8 Definition of Done Revision
+
+Title:
+Accept Documented Rebuild Evidence Under Storage Constraint
+
+Date:
+2026-11-04
+
+Decision:
+With the owner's explicit approval, a clean-room rebuild of the full database is not required for project completion while the storage constraint applies. Accept Stage 8 based on a documented rebuild procedure and prerequisites, passing retained full-build validation, and passing current mapping-derived candidate validation. Keep the untested clean-room rebuild limitation explicit. Backup creation and restore testing remain excluded.
+
+Reason:
+The full source Parquet is 7,975,461,945 bytes and the existing full DuckDB is about 15.1 GB. Repeating a clean-room build without touching the existing database would require additional temporary capacity beyond the standard GitHub-hosted runner's documented 14 GB SSD; the owner does not want additional storage on the local disks and the repository owner's GitHub plan is not Team or Enterprise Cloud. Do not incur compute costs or alter data-storage constraints without renewed approval.
+
+Evidence and scope:
+
+- The retained full Stage 4 build validation report passes 15 checks.
+- The current temporary Stage 6 candidate build validation passes 15 checks, including source-projection and bridge-content comparisons; Stage 6 passes 11 checks and Stage 5 has 107 snapshot-pinned units.
+- The README documents the pinned inputs, rebuild prerequisites, and command. The source and taxonomy checksums match their pins.
+- The full clean-room rebuild was not repeated. This decision accepts the documented limitation; it does not claim that a new clean-room rebuild was tested.
+- GitHub runner capacity reference: https://docs.github.com/en/actions/reference/runners/github-hosted-runners
+
+Status:
+Stage 8 is accepted under this owner-approved, storage-constrained Definition of Done. Reopen the clean-room rebuild requirement if the storage constraint changes or a suitable non-disruptive environment becomes available.
