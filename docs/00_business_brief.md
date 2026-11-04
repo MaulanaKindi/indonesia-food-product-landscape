@@ -7,7 +7,7 @@
 | Project | Indonesia Food Product Landscape |
 | Target role | Market Intelligence Analyst |
 | Primary data source | Open Food Facts |
-| Tools | Kaggle Notebooks, DuckDB, SQL, Python, GitHub |
+| Tools | DuckDB, SQL, Python, Git, GitHub |
 
 This project analyzes recorded food-product records in Open Food Facts, focusing on Indonesia with Malaysia, the Philippines, and Singapore as contextual peers and Thailand as a category-coverage contrast. It combines data profiling, quality assessment, relational database design, SQL analysis, reproducible outputs, and business interpretation to demonstrate practical market-intelligence capabilities.
 

@@ -1,6 +1,6 @@
 # Indonesia Food Product Landscape
 
-Exploratory market-intelligence project using Open Food Facts product records to study recorded product variety and brand distribution across country units and categories. The data is not a census of products sold and does not provide sales-based market shares.
+Exploratory market-intelligence project using Open Food Facts product records to compare category-tag coverage and harmonized group assignments across selected countries, with exact-approved brand mapping coverage as a limitation diagnostic. The data is not a census of products sold and does not provide sales-based market shares.
 
 The focal unit is Indonesia; Malaysia, the Philippines, and Singapore are contextual peers, while Thailand is a category-coverage contrast. Findings describe database records and mapping coverage, not products sold, demand, or commercial market shares.
 
