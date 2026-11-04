@@ -1061,3 +1061,35 @@ Result:
 
 Status:
 The automated candidate-to-analysis refresh is implemented and verified. Exact manual mapping decisions still require evidence and explicit approval; ambiguous cases remain unresolved. The VS Code Keep UI issue remains unverified pending its exact error message or screenshot.
+
+---
+
+## ITEM-039
+
+Type:
+Portfolio Packaging and GitHub Integration
+
+Title:
+Prepare Indonesia Food Product Landscape for Public GitHub
+
+Date:
+2026-11-04
+
+Decision:
+Rename the project to Indonesia Food Product Landscape. Apply MIT only to original project code/documentation, keep Open Food Facts and third-party licensing separate, and publish only reviewed mappings, documentation, code, and a small allowlist of aggregate evidence. Preserve the existing GitHub commit history.
+
+Reason:
+The project is intended as a recruiter-facing Market Intelligence Analyst portfolio. The previous public repository contained older setup/sample files and did not reflect the current scoped analysis or the owner's storage/data-sharing constraints.
+
+Result:
+
+- Updated project titles and scope in the README and source/analysis documents. The local folder is designated to become `D:\Projects\indonesia-food-product-landscape`; repository rename to `indonesia-food-product-landscape` was authorized.
+- Added the MIT license for original project code and documentation only. Open Food Facts data, third-party references, and derived results are not relicensed by it; source attribution and derivative-use review remain open.
+- Updated `.gitignore` with a reviewed aggregate-evidence allowlist. Raw Parquet, DuckDB files, pinned taxonomy JSON, generated profiling inventories, record-level outputs, and environment/cache files are excluded.
+- Added only 52 current project files to the tracked tree (about 0.75 MB). Removed the four old sample-record CSVs and legacy setup notebook from the current branch; prior GitHub history was not rewritten and may still contain those older files.
+- Connected the local project to the existing repository history and created three local commits: `5a70766`, `587b972`, and `5f2d117`. The commits include the required Copilot co-author trailer. No force-push or history rewrite was used.
+- A non-interactive push attempt failed because GitHub credentials could not be requested in this environment. The current public GitHub branch is therefore not yet updated or renamed; user authentication and the repository rename in GitHub Settings are required before pushing and updating the local `origin` URL.
+- No source data, database, or backup was modified or uploaded.
+
+Status:
+Local packaging is committed and reviewed. Public synchronization and GitHub repository rename remain pending interactive GitHub authentication; Stage 0 source/derivative licensing and Stage 8 recovery acceptance remain open.
