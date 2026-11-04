@@ -1,0 +1,16 @@
+check_name,actual_value,expected_value,status,database_file
+source_product_record_rows,4828207,4828207,passed,data/processed/global_product_landscape.duckdb
+distinct_source_record_ids,4828207,4828207,passed,data/processed/global_product_landscape.duckdb
+source_row_ordinal_range,1-4828207,1-4828207,passed,data/processed/global_product_landscape.duckdb
+source_column_count,111,111,passed,data/processed/global_product_landscape.duckdb
+snapshot_metadata_rows,1,1,passed,data/processed/global_product_landscape.duckdb
+iso_country_units,249,249,passed,data/processed/global_product_landscape.duckdb
+normalized_country_profile_mismatch_count,0,0,passed,data/processed/global_product_landscape.duckdb
+duplicate_code_groups,61,61,passed,data/processed/global_product_landscape.duckdb
+category_tag_assignment_reconciliation,10480049,10480049,passed,data/processed/global_product_landscape.duckdb
+country_tag_assignment_reconciliation,5079894,5079894,passed,data/processed/global_product_landscape.duckdb
+brand_tag_assignment_reconciliation,3313249,3313249,passed,data/processed/global_product_landscape.duckdb
+record_country_outside_iso_reference,0,0,passed,data/processed/global_product_landscape.duckdb
+category_decisions_without_category_tag,0,0,passed,data/processed/global_product_landscape.duckdb
+selected_groups_without_reporting_group,0,0,passed,data/processed/global_product_landscape.duckdb
+category_taxonomy_edges_without_nodes,0,0,passed,data/processed/global_product_landscape.duckdb

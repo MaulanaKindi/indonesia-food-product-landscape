@@ -1,0 +1,42 @@
+anchor_tag,group_id,candidate_rationale,review_status
+en:fruit-based-foods,fruit_vegetables,Taxonomy node for fruit-based foods,candidate_only
+en:fruits,fruit_vegetables,Direct fruit category,candidate_only
+en:fruits-and-vegetables-based-foods,fruit_vegetables,Taxonomy node for combined fruit and vegetable foods,candidate_only
+en:vegetables,fruit_vegetables,Direct vegetable category,candidate_only
+en:vegetables-based-foods,fruit_vegetables,Taxonomy node for vegetable-based foods,candidate_only
+en:cereals-and-potatoes,grains_potatoes_bakery,Taxonomy node for cereals and potatoes,candidate_only
+en:cereals-and-their-products,grains_potatoes_bakery,Taxonomy node for cereals and their products,candidate_only
+en:potatoes-and-their-products,grains_potatoes_bakery,Taxonomy node for potatoes and their products,candidate_only
+en:potatoes,grains_potatoes_bakery,Direct potato category,candidate_only
+en:breads,grains_potatoes_bakery,Direct bread category,candidate_only
+en:pastas,grains_potatoes_bakery,Direct pasta category,candidate_only
+en:flours,grains_potatoes_bakery,Direct flour category,candidate_only
+en:bakery-products,grains_potatoes_bakery,Taxonomy node for bakery products,candidate_only
+en:meats-and-their-products,meat_poultry,Taxonomy node for meats and their products,candidate_only
+en:meats,meat_poultry,Direct meat category,candidate_only
+en:prepared-meats,meat_poultry,Taxonomy node for prepared meat products,candidate_only
+en:seafood,fish_seafood,Taxonomy node for seafood,candidate_only
+en:fishes-and-their-products,fish_seafood,Taxonomy node for fish and their products,candidate_only
+en:dairies,dairy_eggs,Taxonomy node for dairy products,candidate_only
+en:fermented-milk-products,dairy_eggs,Taxonomy node for fermented milk products,candidate_only
+en:eggs-and-their-products,dairy_eggs,Taxonomy node for eggs and their products,candidate_only
+en:eggs,dairy_eggs,Direct egg category,candidate_only
+en:beverages-and-beverages-preparations,beverages,Taxonomy node for beverages and beverage preparations,candidate_only
+en:beverages,beverages,Direct beverage category,candidate_only
+en:sweet-snacks,sweet_foods_desserts,Taxonomy node for sweet snacks,candidate_only
+en:confectioneries,sweet_foods_desserts,Taxonomy node for confectioneries,candidate_only
+en:desserts,sweet_foods_desserts,Direct dessert category,candidate_only
+en:cocoa-and-its-products,sweet_foods_desserts,Taxonomy node for cocoa products,candidate_only
+en:sweeteners,sweet_foods_desserts,Direct sweetener category,candidate_only
+en:salty-snacks,salty_snacks,Taxonomy node for salty snacks,candidate_only
+en:chips-and-fries,salty_snacks,Taxonomy node for chips and fries,candidate_only
+en:appetizers,salty_snacks,Taxonomy node for appetizers,candidate_only
+en:meals,prepared_meals,Taxonomy node for meals,candidate_only
+en:pizzas-pies-and-quiches,prepared_meals,Taxonomy node for pizzas pies and quiches,candidate_only
+en:sandwiches,prepared_meals,Direct sandwich category,candidate_only
+en:condiments,condiments_fats_spreads,Direct condiment category,candidate_only
+en:sauces,condiments_fats_spreads,Direct sauce category,candidate_only
+en:spreads,condiments_fats_spreads,Direct spread category,candidate_only
+en:fats,condiments_fats_spreads,Direct fat category,candidate_only
+en:vinegars,condiments_fats_spreads,Direct vinegar category,candidate_only
+en:mustards,condiments_fats_spreads,Direct mustard category,candidate_only

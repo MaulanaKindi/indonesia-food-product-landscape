@@ -1,0 +1,435 @@
+﻿source_country_tag,iso_alpha2,country_name,classification,mapping_status,mapping_basis,review_note
+en:france,FR,France,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:united-states,US,United States,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:germany,DE,Germany,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:spain,ES,Spain,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:italy,IT,Italy,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:united-kingdom,GB,United Kingdom,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:canada,CA,Canada,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:netherlands,NL,Netherlands,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:switzerland,CH,Switzerland,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:belgium,BE,Belgium,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:australia,AU,Australia,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:ireland,IE,Ireland,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:world,,,global_label,excluded,global_label,Not an ISO 3166-1 country or territory unit; excluded from comparison.
+en:romania,RO,Romania,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:japan,JP,Japan,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:poland,PL,Poland,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:brazil,BR,Brazil,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:russia,RU,Russia,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:sweden,SE,Sweden,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:norway,NO,Norway,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:india,IN,India,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:austria,AT,Austria,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:portugal,PT,Portugal,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:denmark,DK,Denmark,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:morocco,MA,Morocco,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:finland,FI,Finland,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:czech-republic,CZ,Czechia,country_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:bulgaria,BG,Bulgaria,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:mexico,MX,Mexico,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:saudi-arabia,SA,Saudi Arabia,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:argentina,AR,Argentina,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:new-zealand,NZ,New Zealand,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:greece,GR,Greece,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:singapore,SG,Singapore,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:hungary,HU,Hungary,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:turkey,TR,Turkiye,country_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:luxembourg,LU,Luxembourg,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:thailand,TH,Thailand,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:lithuania,LT,Lithuania,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:south-africa,ZA,South Africa,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:colombia,CO,Colombia,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:slovakia,SK,Slovakia,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:united-arab-emirates,AE,United Arab Emirates,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:philippines,PH,Philippines,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:indonesia,ID,Indonesia,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:israel,IL,Israel,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:croatia,HR,Croatia,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:ukraine,UA,Ukraine,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:malaysia,MY,Malaysia,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:algeria,DZ,Algeria,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:chile,CL,Chile,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:estonia,EE,Estonia,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:qatar,QA,Qatar,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:iraq,IQ,Iraq,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:hong-kong,HK,Hong Kong,iso_territory_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:serbia,RS,Serbia,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:latvia,LV,Latvia,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:reunion,RE,Reunion,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:slovenia,SI,Slovenia,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:egypt,EG,Egypt,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:bolivia,BO,Bolivia,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:lebanon,LB,Lebanon,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:tunisia,TN,Tunisia,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:taiwan,TW,Taiwan,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:south-korea,KR,South Korea,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:kuwait,KW,Kuwait,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:iceland,IS,Iceland,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:puerto-rico,PR,Puerto Rico,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:panama,PA,Panama,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:cyprus,CY,Cyprus,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:peru,PE,Peru,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:costa-rica,CR,Costa Rica,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:new-caledonia,NC,New Caledonia,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:ecuador,EC,Ecuador,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:georgia,GE,Georgia,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:malta,MT,Malta,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:uruguay,UY,Uruguay,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:french-polynesia,PF,French Polynesia,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:moldova,MD,Moldova,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:pakistan,PK,Pakistan,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:guadeloupe,GP,Guadeloupe,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:dominican-republic,DO,Dominican Republic,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:china,CN,China,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:venezuela,VE,Venezuela,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:uzbekistan,UZ,Uzbekistan,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:belarus,BY,Belarus,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:vietnam,VN,Vietnam,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:bahrain,BH,Bahrain,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:nicaragua,NI,Nicaragua,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:bosnia-and-herzegovina,BA,Bosnia and Herzegovina,country_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:north-macedonia,MK,North Macedonia,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:mauritius,MU,Mauritius,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:cuba,CU,Cuba,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:paraguay,PY,Paraguay,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:bangladesh,BD,Bangladesh,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:senegal,SN,Senegal,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:honduras,HN,Honduras,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:el-salvador,SV,El Salvador,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:cambodia,KH,Cambodia,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:azerbaijan,AZ,Azerbaijan,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:martinique,MQ,Martinique,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:jordan,JO,Jordan,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:guatemala,GT,Guatemala,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:virgin-islands-of-the-united-states,VI,United States Virgin Islands,iso_territory_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:cote-d-ivoire,CI,Cote d'Ivoire,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:albania,AL,Albania,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:trinidad-and-tobago,TT,Trinidad and Tobago,country_or_territory_alias,approved,curated_source_tag_alias,Curated source-tag alias; ISO code and canonical name validated against the project reference.
+en:nigeria,NG,Nigeria,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:andorra,AD,Andorra,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:kazakhstan,KZ,Kazakhstan,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:Türkiye,TR,Turkiye,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:oman,OM,Oman,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:sri-lanka,LK,Sri Lanka,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:libya,LY,Libya,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:palestinian-territories,PS,Palestine,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:kenya,KE,Kenya,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:ethiopia,ET,Ethiopia,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:montenegro,ME,Montenegro,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:yugoslavia,,,historical_entity,excluded,historical_entity,Not an ISO 3166-1 country or territory unit; excluded from comparison.
+en:cameroon,CM,Cameroon,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:jamaica,JM,Jamaica,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:iran,IR,Iran,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:armenia,AM,Armenia,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:ghana,GH,Ghana,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:faroe-islands,FO,Faroe Islands,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:montserrat,MS,Montserrat,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:turkiye,TR,Turkiye,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:madagascar,MG,Madagascar,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:somalia,SO,Somalia,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:french-guiana,GF,French Guiana,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:brunei,BN,Brunei,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:myanmar,MM,Myanmar,country_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:suriname,SR,Suriname,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:democratic-republic-of-the-congo,CD,Democratic Republic of the Congo,country_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:european-union,,,special_or_supranational_code,excluded,non_iso_territory_or_special_code,Special/reserved code is outside the project's ISO 3166-1 country/territory comparison scope.
+en:kosovo,,,special_or_supranational_code,excluded,non_iso_territory_or_special_code,Special/reserved code is outside the project's ISO 3166-1 country/territory comparison scope.
+en:gabon,GA,Gabon,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:nepal,NP,Nepal,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:mongolia,MN,Mongolia,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:monaco,MC,Monaco,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:zambia,ZM,Zambia,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:burkina-faso,BF,Burkina Faso,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:maldives,MV,Maldives,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:afghanistan,AF,Afghanistan,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:rwanda,RW,Rwanda,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:barbados,BB,Barbados,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:gibraltar,GI,Gibraltar,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:jersey,JE,Jersey,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:guam,GU,Guam,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:mali,ML,Mali,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:belize,BZ,Belize,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:yemen,YE,Yemen,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:kyrgyzstan,KG,Kyrgyzstan,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:the-bahamas,BS,Bahamas,country_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:haiti,HT,Haiti,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:comoros,KM,Comoros,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:papua-new-guinea,PG,Papua New Guinea,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:benin,BJ,Benin,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:macau,MO,Macao,iso_territory_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:syria,SY,Syria,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:seychelles,SC,Seychelles,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:mauritania,MR,Mauritania,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+fr:France - La Réunion,RE,Reunion,iso_territory_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:aland-islands,AX,Aland Islands,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:isle-of-man,IM,Isle of Man,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:guernsey,GG,Guernsey,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:guinea,GN,Guinea,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:saint-pierre-and-miquelon,PM,Saint Pierre and Miquelon,iso_territory_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:togo,TG,Togo,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:liechtenstein,LI,Liechtenstein,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:sierra-leone,SL,Sierra Leone,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:tanzania,TZ,Tanzania,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:scotland,GB,United Kingdom,subnational_rollup,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:greenland,GL,Greenland,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:republic-of-the-congo,CG,Republic of the Congo,country_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:curacao,CW,Curacao,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:guyana,GY,Guyana,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:en,,,malformed_tag,excluded,malformed_tag,Not an ISO 3166-1 country or territory unit; excluded from comparison.
+en:aruba,AW,Aruba,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:mozambique,MZ,Mozambique,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:uganda,UG,Uganda,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:niger,NE,Niger,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:namibia,NA,Namibia,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:san-marino,SM,San Marino,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:fiji,FJ,Fiji,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:bermuda,BM,Bermuda,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:Scotland,GB,United Kingdom,subnational_rollup,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:europe,,,regional_label,excluded,regional_label,Not an ISO 3166-1 country or territory unit; excluded from comparison.
+en:south-east-asia,,,regional_label,excluded,regional_label,Not an ISO 3166-1 country or territory unit; excluded from comparison.
+en:angola,AO,Angola,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:republic-of-macedonia,MK,North Macedonia,historical_country_name,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:mayotte,YT,Mayotte,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:zimbabwe,ZW,Zimbabwe,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:djibouti,DJ,Djibouti,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:botswana,BW,Botswana,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:saint-lucia,LC,Saint Lucia,country_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:dominica,DM,Dominica,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:cayman-islands,KY,Cayman Islands,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:sudan,SD,Sudan,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:laos,LA,Laos,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:saint-martin,MF,Saint Martin,iso_territory_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:ישראל,IL,Israel,country_or_territory_alias,approved,curated_source_tag_alias,Curated source-tag alias; ISO code and canonical name validated against the project reference.
+en:antigua-and-barbuda,AG,Antigua and Barbuda,country_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:cape-verde,CV,Cape Verde,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:grenada,GD,Grenada,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:malawi,MW,Malawi,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:tajikistan,TJ,Tajikistan,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:vanuatu,VU,Vanuatu,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:sint-maarten,SX,Sint Maarten,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:liberia,LR,Liberia,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:worldwide,,,global_label,excluded,global_label,Not an ISO 3166-1 country or territory unit; excluded from comparison.
+en:chad,TD,Chad,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+fr:quebec,CA,Canada,subnational_rollup,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:american-samoa,AS,American Samoa,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+nl:belgie,BE,Belgium,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:equatorial-guinea,GQ,Equatorial Guinea,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:Sverige,SE,Sweden,country_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:francia-espana,,,combined_geographies,excluded,combined_geographies,Not an ISO 3166-1 country or territory unit; excluded from comparison.
+ru:nyl,,,unresolved,review_required,,Ambiguous or malformed source tag; not assigned to a country without reliable evidence.
+en:anguilla,AI,Anguilla,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:burundi,BI,Burundi,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:state-of-palestine,PS,Palestine,country_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:saint-vincent-and-the-grenadines,VC,Saint Vincent and the Grenadines,country_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:wallis-and-futuna,WF,Wallis and Futuna,iso_territory_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:republika-srpska,BA,Bosnia and Herzegovina,subnational_rollup,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:gambia,GM,Gambia,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:ประเทศไทย-thai,TH,Thailand,country_or_territory_alias,approved,curated_source_tag_alias,Curated source-tag alias; ISO code and canonical name validated against the project reference.
+fr:francia,FR,France,country_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:En,,,malformed_tag,excluded,malformed_tag,Not an ISO 3166-1 country or territory unit; excluded from comparison.
+en:northern-mariana-islands,MP,Northern Mariana Islands,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:bhutan,BT,Bhutan,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:british-virgin-islands,VG,British Virgin Islands,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:north-korea,KP,North Korea,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:south-sudan,SS,South Sudan,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:Europe,,,regional_label,excluded,regional_label,Not an ISO 3166-1 country or territory unit; excluded from comparison.
+fr:Québec,CA,Canada,subnational_rollup,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:Francia  España,,,combined_geographies,excluded,combined_geographies,Not an ISO 3166-1 country or territory unit; excluded from comparison.
+en:South-East Asia,,,regional_label,excluded,regional_label,Not an ISO 3166-1 country or territory unit; excluded from comparison.
+en:caribbean-netherlands,BQ,Caribbean Netherlands,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:east-germany,,,historical_entity,excluded,historical_entity,Not an ISO 3166-1 country or territory unit; excluded from comparison.
+en:vereinigte-staaten-von-amerika,US,United States,country_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:česko,CZ,Czechia,country_or_territory_alias,approved,curated_source_tag_alias,Curated source-tag alias; ISO code and canonical name validated against the project reference.
+en:antarctic,AQ,Antarctica,iso_territory_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:timor-leste,TL,Timor-Leste,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:нидерланды,NL,Netherlands,country_or_territory_alias,approved,curated_source_tag_alias,Curated source-tag alias; ISO code and canonical name validated against the project reference.
+en:日本,JP,Japan,country_or_territory_alias,approved,curated_source_tag_alias,Curated source-tag alias; ISO code and canonical name validated against the project reference.
+fr:france-la-reunion,RE,Reunion,iso_territory_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:Emirats Arabes Unis,AE,United Arab Emirates,country_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:central-african-republic,CF,Central African Republic,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:palau,PW,Palau,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:saint-kitts-and-nevis,KN,Saint Kitts and Nevis,country_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:turks-and-caicos-islands,TC,Turks and Caicos Islands,iso_territory_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+es:cantabria,ES,Spain,subnational_rollup,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+fr:DOM TOM,,,regional_label,excluded,regional_label,Not an ISO 3166-1 country or territory unit; excluded from comparison.
+en:ελλάδα,GR,Greece,country_or_territory_alias,approved,curated_source_tag_alias,Curated source-tag alias; ISO code and canonical name validated against the project reference.
+th:ไทย,TH,Thailand,country_or_territory_alias,approved,curated_source_tag_alias,Curated source-tag alias; ISO code and canonical name validated against the project reference.
+en:Mallorca,ES,Spain,subnational_rollup,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:bonaire,BQ,Caribbean Netherlands,iso_territory_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:cook-islands,CK,Cook Islands,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:sint-eustatius,BQ,Caribbean Netherlands,iso_territory_rollup,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:swaziland,SZ,Eswatini,historical_country_name,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:united-states-minor-outlying-islands,UM,United States Minor Outlying Islands,iso_territory_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:中華民國,TW,Taiwan,country_or_territory_alias,approved,curated_source_tag_alias,Curated source-tag alias; ISO code and canonical name validated against the project reference.
+fr:Francia,FR,France,country_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:france-spain,,,combined_geographies,excluded,combined_geographies,Not an ISO 3166-1 country or territory unit; excluded from comparison.
+en:lesotho,LS,Lesotho,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:mallorca,ES,Spain,subnational_rollup,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+es:santona,ES,Spain,subnational_rollup,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:Eswatini,SZ,Eswatini,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:iraqi-kurdistan,,,regional_label,excluded,regional_label,Not an ISO 3166-1 comparison unit; excluded.
+en:samoa,WS,Samoa,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:turkmenistan,TM,Turkmenistan,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+fr:Madagascar - Toamasina,,,subnational_rollup,excluded,curated_subnational_rollup,"Subnational source tag rolled up to its ISO 3166-1 parent unit, Madagascar."
+en:La Réunion,RE,Reunion,iso_territory_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:Vereinigte Staaten von Amerika,US,United States,country_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:deutschland,DE,Germany,country_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:en-us,,,malformed_tag,excluded,malformed_tag,Not an ISO 3166-1 country or territory unit; excluded from comparison.
+en:eswatini,SZ,Eswatini,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:solomon-islands,SB,Solomon Islands,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:stany-zjednoczone,US,United States,country_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+es:Cantabria,ES,Spain,subnational_rollup,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+fr:dom-tom,,,regional_label,excluded,regional_label,Not an ISO 3166-1 country or territory unit; excluded from comparison.
+zh:台灣,TW,Taiwan,country_or_territory_alias,approved,curated_source_tag_alias,Curated source-tag alias; ISO code and canonical name validated against the project reference.
+en:Magyarország,HU,Hungary,country_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:british-indian-ocean-territory,IO,British Indian Ocean Territory,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:falkland-islands,FK,Falkland Islands,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:galmudug,SO,Somalia,subnational_rollup,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:guinea-bissau,GW,Guinea-Bissau,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:marshall-islands,MH,Marshall Islands,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:saba,BQ,Caribbean Netherlands,iso_territory_rollup,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:soviet-union,,,historical_entity,excluded,historical_entity,Not an ISO 3166-1 country or territory unit; excluded from comparison.
+en:vatican-city,VA,Vatican City,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:western-canada,CA,Canada,subnational_rollup,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:المغرب,MA,Morocco,country_or_territory_alias,approved,curated_source_tag_alias,Curated source-tag alias; ISO code and canonical name validated against the project reference.
+es:Santoña,ES,Spain,subnational_rollup,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+fr:en-fr,,,unrecognized_non_country_value,excluded,unrecognized_non_country_value,No reliable evidence this source value denotes an ISO 3166-1 unit; excluded from country comparison.
+en:Great Britain,GB,United Kingdom,country_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:and-saba,BQ,Caribbean Netherlands,iso_territory_rollup,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:anywhere,,,global_label,excluded,global_label,Not an ISO 3166-1 country or territory unit; excluded from comparison.
+en:bouvet-island,BV,Bouvet Island,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:eritrea,ER,Eritrea,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:st-kitts-and-nevis,KN,Saint Kitts and Nevis,country_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:svalbard-and-jan-mayen,SJ,Svalbard and Jan Mayen,iso_territory_alias,approved,curated_iso_territory_alias,Recognized alias for the ISO 3166-1 unit Svalbard and Jan Mayen.
+en:tonga,TO,Tonga,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+fr:Rhones-Alpes,FR,France,subnational_rollup,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+ru:word,,,unrecognized_non_country_value,excluded,unrecognized_non_country_value,No reliable evidence this source value denotes an ISO 3166-1 unit; excluded from country comparison.
+ca:Catalunya,ES,Spain,subnational_rollup,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+de:République tchèque,CZ,Czechia,country_or_territory_alias,approved,curated_source_tag_alias,Curated source-tag alias; ISO code and canonical name validated against the project reference.
+de:südtirol,IT,Italy,subnational_rollup,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:France  Spain,,,combined_geographies,excluded,combined_geographies,Not an ISO 3166-1 country or territory unit; excluded from comparison.
+en:Nederland,NL,Netherlands,country_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:North,,,ambiguous_label,review_required,,Ambiguous or malformed source tag; not assigned to a country without reliable evidence.
+en:St Kitts and Nevis,KN,Saint Kitts and Nevis,country_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:[{&quot;value&quot;:&quot;United Kingdom&quot;}],GB,United Kingdom,country_or_territory_alias,approved,curated_source_tag_alias,Curated source-tag alias; ISO code and canonical name validated against the project reference.
+en:belgique,BE,Belgium,country_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:cocos-keeling-islands,CC,Cocos (Keeling) Islands,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:saint-barthelemy,BL,Saint Barthelemy,iso_territory_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:sao-tome-and-principe,ST,Sao Tome and Principe,country_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:suisse,CH,Switzerland,country_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:unknown,,,unknown_label,excluded,unknown_label,Not an ISO 3166-1 country or territory unit; excluded from comparison.
+en:україна,UA,Ukraine,country_or_territory_alias,approved,curated_source_tag_alias,Curated source-tag alias; ISO code and canonical name validated against the project reference.
+en:الاردن,JO,Jordan,country_or_territory_alias,approved,curated_source_tag_alias,Curated source-tag alias; ISO code and canonical name validated against the project reference.
+en:ประเทศไทย (Thai),TH,Thailand,country_or_territory_alias,approved,curated_source_tag_alias,Curated source-tag alias; ISO code and canonical name validated against the project reference.
+en:アメリカ合衆国,US,United States,country_or_territory_alias,approved,curated_source_tag_alias,Curated source-tag alias; ISO code and canonical name validated against the project reference.
+en:대한민국,KR,South Korea,country_or_territory_alias,approved,curated_source_tag_alias,Curated source-tag alias; ISO code and canonical name validated against the project reference.
+fr:Europe,,,regional_label,excluded,regional_label,Not an ISO 3166-1 country or territory unit; excluded from comparison.
+fr:Non-GB,,,ambiguous_label,excluded,ambiguous_label,Not an ISO 3166-1 country or territory unit; excluded from comparison.
+zh:韓國,KR,South Korea,country_or_territory_alias,approved,curated_source_tag_alias,Curated source-tag alias; ISO code and canonical name validated against the project reference.
+ar:jorsan,,,possible_typo_alias,review_required,,Ambiguous or malformed source tag; not assigned to a country without reliable evidence.
+ar:تونس,TN,Tunisia,country_or_territory_alias,approved,curated_source_tag_alias,Curated source-tag alias; ISO code and canonical name validated against the project reference.
+bg:литвс,,,ambiguous_or_malformed,review_required,,Ambiguous or malformed source value; retained for review and not assigned to a country.
+ca:Unión Europea,,,supranational_label,excluded,supranational_label,Not an ISO 3166-1 country or territory unit; excluded from comparison.
+ca:catalunya,ES,Spain,subnational_rollup,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+ca:franca,FR,France,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+de:22395,,,unrecognized_non_country_value,excluded,unrecognized_non_country_value,No reliable evidence this source value denotes an ISO 3166-1 unit; excluded from country comparison.
+de:Great Britain,GB,United Kingdom,country_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+de:Hamburg,DE,Germany,subnational_rollup,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+de:Německo,DE,Germany,country_or_territory_alias,approved,curated_source_tag_alias,Curated source-tag alias; ISO code and canonical name validated against the project reference.
+de:Schroeder GmbH & Co. KG,,,unrecognized_non_country_value,excluded,unrecognized_non_country_value,No reliable evidence this source value denotes an ISO 3166-1 unit; excluded from country comparison.
+de:bayern,DE,Germany,subnational_rollup,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+de:スペイン,ES,Spain,country_or_territory_alias,approved,curated_source_tag_alias,Curated source-tag alias; ISO code and canonical name validated against the project reference.
+el:ελλαδα,GR,Greece,country_or_territory_alias,approved,curated_source_tag_alias,Curated source-tag alias; ISO code and canonical name validated against the project reference.
+en:Brazil  en:france,,,malformed_combined_tag,excluded,malformed_combined_tag,Not an ISO 3166-1 country or territory unit; excluded from comparison.
+en:Clipperton Island,,,special_or_supranational_code,excluded,non_iso_territory_or_special_code,Special/reserved code is outside the project's ISO 3166-1 country/territory comparison scope.
+en:DOM TOM,,,regional_label,excluded,regional_label,Not an ISO 3166-1 country or territory unit; excluded from comparison.
+en:Deutschland,DE,Germany,country_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:Duitsland,DE,Germany,country_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:England,GB,United Kingdom,subnational_rollup,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:Frankreich,FR,France,country_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:Frankrijk,FR,France,country_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:Indian subcontinent,,,regional_label,excluded,regional_label,Not an ISO 3166-1 country or territory unit; excluded from comparison.
+en:Indk,,,unresolved,review_required,,Ambiguous or malformed source tag; not assigned to a country without reliable evidence.
+en:Indonesie,ID,Indonesia,country_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:Ireland & UK,,,combined_geographies,excluded,combined_geographies,Not an ISO 3166-1 country or territory unit; excluded from comparison.
+en:Maroc,MA,Morocco,country_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:Middle East,,,regional_label,excluded,regional_label,Not an ISO 3166-1 country or territory unit; excluded from comparison.
+en:Middle east,,,regional_label,excluded,regional_label,Not an ISO 3166-1 country or territory unit; excluded from comparison.
+en:Mohammed Lalo,,,unrecognized_non_country_value,excluded,unrecognized_non_country_value,No reliable evidence this source value denotes an ISO 3166-1 unit; excluded from country comparison.
+en:Ontario,CA,Canada,subnational_rollup,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:Piemonte,IT,Italy,subnational_rollup,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:Sark,GG,Guernsey,iso_territory_rollup,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:Stany Zjednoczone,US,United States,country_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:Unione europea,,,supranational_label,excluded,supranational_label,Not an ISO 3166-1 country or territory unit; excluded from comparison.
+en:Unknown,,,unknown_label,excluded,unknown_label,Not an ISO 3166-1 country or territory unit; excluded from comparison.
+en:WORLDWIDE,,,global_label,excluded,global_label,Not an ISO 3166-1 country or territory unit; excluded from comparison.
+en:Wales,GB,United Kingdom,subnational_rollup,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:West Africa,,,regional_label,excluded,regional_label,Not an ISO 3166-1 country or territory unit; excluded from comparison.
+en:[{&quot;value&quot;:&quot;Bosnia and Herzegovina&quot;}],BA,Bosnia and Herzegovina,country_or_territory_alias,approved,curated_source_tag_alias,Curated source-tag alias; ISO code and canonical name validated against the project reference.
+en:[{&quot;value&quot;:&quot;Italy&quot;}],IT,Italy,country_or_territory_alias,approved,curated_source_tag_alias,Curated source-tag alias; ISO code and canonical name validated against the project reference.
+en:[{&quot;value&quot;:&quot;United States&quot;}],US,United States,country_or_territory_alias,approved,curated_source_tag_alias,Curated source-tag alias; ISO code and canonical name validated against the project reference.
+en:alderney,GG,Guernsey,iso_territory_rollup,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:and Saba,BQ,Caribbean Netherlands,iso_territory_rollup,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:asia,,,regional_label,excluded,regional_label,Not an ISO 3166-1 country or territory unit; excluded from comparison.
+en:british-columbia,CA,Canada,subnational_rollup,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:british-columbia-canada,CA,Canada,subnational_rollup,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:central-africa,,,regional_label,excluded,regional_label,Not an ISO 3166-1 country or territory unit; excluded from comparison.
+en:comidosil,,,unrecognized_non_country_value,excluded,unrecognized_non_country_value,No reliable evidence this source value denotes an ISO 3166-1 unit; excluded from country comparison.
+en:emirats-arabes-unis,AE,United Arab Emirates,country_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:etats-unis,US,United States,country_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:exland,,,unrecognized_non_country_value,excluded,unrecognized_non_country_value,No reliable evidence this source value denotes an ISO 3166-1 unit; excluded from country comparison.
+en:french-southern-and-antarctic-lands,TF,French Southern Territories,iso_territory_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:indian-subcontinent,,,regional_label,excluded,regional_label,Not an ISO 3166-1 country or territory unit; excluded from comparison.
+en:ireland-uk,,,combined_geographies,excluded,combined_geographies,Not an ISO 3166-1 country or territory unit; excluded from comparison.
+en:irland,IE,Ireland,country_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:nauru,NR,Nauru,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+en:selestosina,,,unrecognized_non_country_value,excluded,unrecognized_non_country_value,No reliable evidence this source value denotes an ISO 3166-1 unit; excluded from country comparison.
+en:ser,,,unresolved,review_required,,Ambiguous or malformed source tag; not assigned to a country without reliable evidence.
+en:st-vincent-and-grenadines,VC,Saint Vincent and the Grenadines,country_or_territory_alias,approved,curated_source_tag_alias,Curated source-tag alias; ISO code and canonical name validated against the project reference.
+en:testeste,,,unrecognized_non_country_value,excluded,unrecognized_non_country_value,No reliable evidence this source value denotes an ISO 3166-1 unit; excluded from country comparison.
+en:usa-new-york-only,US,United States,subnational_rollup,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:vancouver-bc-canada,CA,Canada,subnational_rollup,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+en:west-africa,,,regional_label,excluded,regional_label,Not an ISO 3166-1 country or territory unit; excluded from comparison.
+en:Česko,CZ,Czechia,country_or_territory_alias,approved,curated_source_tag_alias,Curated source-tag alias; ISO code and canonical name validated against the project reference.
+en:Ελλάδα,GR,Greece,country_or_territory_alias,approved,curated_source_tag_alias,Curated source-tag alias; ISO code and canonical name validated against the project reference.
+en:България,BG,Bulgaria,country_or_territory_alias,approved,curated_source_tag_alias,Curated source-tag alias; ISO code and canonical name validated against the project reference.
+en:Казахстан,KZ,Kazakhstan,country_or_territory_alias,approved,curated_source_tag_alias,Curated source-tag alias; ISO code and canonical name validated against the project reference.
+en:Україна,UA,Ukraine,country_or_territory_alias,approved,curated_source_tag_alias,Curated source-tag alias; ISO code and canonical name validated against the project reference.
+en:казахстан,KZ,Kazakhstan,country_or_territory_alias,approved,curated_source_tag_alias,Curated source-tag alias; ISO code and canonical name validated against the project reference.
+en:اوروبا,,,unrecognized_non_country_value,excluded,unrecognized_non_country_value,No reliable evidence this source value denotes an ISO 3166-1 unit; excluded from country comparison.
+en:عات,,,ambiguous_or_malformed,review_required,,Ambiguous or malformed source value; retained for review and not assigned to a country.
+en:فرنسا,FR,France,country_or_territory_alias,approved,curated_source_tag_alias,Curated source-tag alias; ISO code and canonical name validated against the project reference.
+en:فلسطين,PS,Palestine,country_or_territory_alias,approved,curated_source_tag_alias,Curated source-tag alias; ISO code and canonical name validated against the project reference.
+en:台灣,TW,Taiwan,country_or_territory_alias,approved,curated_source_tag_alias,Curated source-tag alias; ISO code and canonical name validated against the project reference.
+en:泰國,,,unrecognized_non_country_value,excluded,unrecognized_non_country_value,No reliable evidence this source value denotes an ISO 3166-1 unit; excluded from country comparison.
+en:香港,HK,Hong Kong,country_or_territory_alias,approved,curated_source_tag_alias,Curated source-tag alias; ISO code and canonical name validated against the project reference.
+es:Asturias,ES,Spain,subnational_rollup,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+es:Chequia,CZ,Czechia,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+es:Ecuad,EC,Ecuador,country_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+es:Latinoamérica,,,regional_label,excluded,regional_label,Not an ISO 3166-1 country or territory unit; excluded from comparison.
+es:Mundial,,,global_label,excluded,global_label,Not an ISO 3166-1 country or territory unit; excluded from comparison.
+es:RO L9 CE,,,unrecognized_non_country_value,excluded,unrecognized_non_country_value,No reliable evidence this source value denotes an ISO 3166-1 unit; excluded from country comparison.
+es:[{&quot;value&quot;:&quot;Alemania&quot;},DE,Germany,country_or_territory_alias,approved,curated_source_tag_alias,Curated source-tag alias; ISO code and canonical name validated against the project reference.
+es:guanajuato,MX,Mexico,subnational_rollup,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+es:value-colombia,CO,Colombia,country_alias,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+es:{&quot;value&quot;:&quot;España&quot;}],,,ambiguous_or_malformed,review_required,,Ambiguous or malformed source value; retained for review and not assigned to a country.
+es:{&quot;value&quot;:&quot;Rumania&quot;},RO,Romania,country_or_territory_alias,approved,curated_source_tag_alias,Curated source-tag alias; ISO code and canonical name validated against the project reference.
+fr:Atlantique nord est - zone FAO 27,,,unrecognized_non_country_value,excluded,unrecognized_non_country_value,No reliable evidence this source value denotes an ISO 3166-1 unit; excluded from country comparison.
+fr:Hors UE,,,regional_label,excluded,regional_label,Not an ISO 3166-1 country or territory unit; excluded from comparison.
+fr:Inconnu,,,unknown_label,excluded,unknown_label,Not an ISO 3166-1 country or territory unit; excluded from comparison.
+fr:Morvan,FR,France,subnational_rollup,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+fr:Pas indiqué,,,unknown_label,excluded,unknown_label,Not an ISO 3166-1 country or territory unit; excluded from comparison.
+fr:Provence,FR,France,subnational_rollup,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+fr:QUEBEC,CA,Canada,subnational_rollup,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+fr:[{&quot;value&quot;:&quot;France&quot;}],FR,France,country_or_territory_alias,approved,curated_source_tag_alias,Curated source-tag alias; ISO code and canonical name validated against the project reference.
+fr:europe,,,regional_label,excluded,regional_label,Not an ISO 3166-1 country or territory unit; excluded from comparison.
+fr:hors UE,,,regional_label,excluded,regional_label,Not an ISO 3166-1 country or territory unit; excluded from comparison.
+it:Sicilia,IT,Italy,subnational_rollup,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+it:paesi-ue,,,supranational_label,excluded,supranational_label,Not an ISO 3166-1 country or territory unit; excluded from comparison.
+nl:moldavie,MD,Moldova,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+nl:roemenie,RO,Romania,iso3166_unit,approved,localized_name_match,Source label matched a localized territory name; ISO alpha-2 code validated against project reference.
+pt:sao-paulo,BR,Brazil,subnational_rollup,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+pt:sao-paulo-capital,BR,Brazil,subnational_rollup,approved,curated_alias_or_rollup,Curated alias/territory normalization to an ISO 3166-1 alpha-2 unit.
+si:ශ්‍රී ලංකාව,LK,Sri Lanka,country_or_territory_alias,approved,curated_source_tag_alias,Curated source-tag alias; ISO code and canonical name validated against the project reference.
+zh:unspecified,,,unrecognized_non_country_value,excluded,unrecognized_non_country_value,No reliable evidence this source value denotes an ISO 3166-1 unit; excluded from country comparison.

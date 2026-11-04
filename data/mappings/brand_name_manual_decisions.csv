@@ -1,0 +1,57 @@
+source_brand_name,canonical_brand_name,review_status,decision_basis,reviewed_on
+CARREFOUR,Carrefour,approved,Case-only variant of the exact source brand value Carrefour,2026-10-26
+Carrefour,Carrefour,approved,Approved canonical source brand value,2026-10-26
+carrefour,Carrefour,approved,Case-only variant of the exact source brand value Carrefour,2026-10-26
+LIDL,Lidl,approved,Case-only variant of the exact source brand value Lidl,2026-10-26
+LiDL,Lidl,approved,Case-only variant of the exact source brand value Lidl,2026-10-26
+LiDl,Lidl,approved,Case-only variant of the exact source brand value Lidl,2026-10-26
+LidL,Lidl,approved,Case-only variant of the exact source brand value Lidl,2026-10-26
+Lidl,Lidl,approved,Approved canonical source brand value,2026-10-26
+lidl,Lidl,approved,Case-only variant of the exact source brand value Lidl,2026-10-26
+ALDI,Aldi,approved,Case-only variant of the exact source brand value Aldi,2026-10-26
+ALdi,Aldi,approved,Case-only variant of the exact source brand value Aldi,2026-10-26
+AlDI,Aldi,approved,Case-only variant of the exact source brand value Aldi,2026-10-26
+Aldi,Aldi,approved,Approved canonical source brand value,2026-10-26
+aldi,Aldi,approved,Case-only variant of the exact source brand value Aldi,2026-10-26
+aldi ,Aldi,approved,Whitespace variant of the exact source brand value Aldi,2026-10-26
+TESCO,Tesco,approved,Case-only variant of the exact source brand value Tesco,2026-10-26
+TESCo,Tesco,approved,Case-only variant of the exact source brand value Tesco,2026-10-26
+Tesco,Tesco,approved,Approved canonical source brand value,2026-10-26
+Tesco ,Tesco,approved,Whitespace variant of the exact source brand value Tesco,2026-10-26
+tesco,Tesco,approved,Case-only variant of the exact source brand value Tesco,2026-10-26
+AUCHAN,Auchan,approved,Case-only variant of the exact source brand value Auchan,2026-10-26
+Auchan,Auchan,approved,Approved canonical source brand value,2026-10-26
+auchan,Auchan,approved,Case-only variant of the exact source brand value Auchan,2026-10-26
+HACENDADO,Hacendado,approved,Case-only variant of the exact source brand value Hacendado,2026-10-26
+Hacendado,Hacendado,approved,Approved canonical source brand value,2026-10-26
+hacendado,Hacendado,approved,Case-only variant of the exact source brand value Hacendado,2026-10-26
+DELHAIZE,Delhaize,approved,Case-only variant of the exact source brand value Delhaize,2026-10-26
+DElhaize,Delhaize,approved,Case-only variant of the exact source brand value Delhaize,2026-10-26
+Delhaize,Delhaize,approved,Approved canonical source brand value,2026-10-26
+delhaize,Delhaize,approved,Case-only variant of the exact source brand value Delhaize,2026-10-26
+ALbert Heijn,Albert Heijn,approved,Case-only variant of the exact source brand value Albert Heijn,2026-10-26
+AlberT Heijn,Albert Heijn,approved,Case-only variant of the exact source brand value Albert Heijn,2026-10-26
+Albert  Heijn,Albert Heijn,approved,Whitespace variant of the exact source brand value Albert Heijn,2026-10-26
+Albert  heijn,Albert Heijn,approved,Case and whitespace variant of the exact source brand value Albert Heijn,2026-10-26
+Albert HEIJN,Albert Heijn,approved,Case-only variant of the exact source brand value Albert Heijn,2026-10-26
+Albert Heijn,Albert Heijn,approved,Approved canonical source brand value,2026-10-26
+Albert heijn,Albert Heijn,approved,Case-only variant of the exact source brand value Albert Heijn,2026-10-26
+albert heijn,Albert Heijn,approved,Case-only variant of the exact source brand value Albert Heijn,2026-10-26
+MIGROS,Migros,approved,Case-only variant of the exact source brand value Migros,2026-10-26
+MIgros,Migros,approved,Case-only variant of the exact source brand value Migros,2026-10-26
+Migros,Migros,approved,Approved canonical source brand value,2026-10-26
+migros,Migros,approved,Case-only variant of the exact source brand value Migros,2026-10-26
+GREAT VALUE,Great Value,approved,Case-only variant of the exact source brand value Great Value,2026-10-26
+Great  Value,Great Value,approved,Whitespace variant of the exact source brand value Great Value,2026-10-26
+Great  value,Great Value,approved,Case and whitespace variant of the exact source brand value Great Value,2026-10-26
+Great VALUE,Great Value,approved,Case-only variant of the exact source brand value Great Value,2026-10-26
+Great Value,Great Value,approved,Approved canonical source brand value,2026-10-26
+Great value,Great Value,approved,Case-only variant of the exact source brand value Great Value,2026-10-26
+great value,Great Value,approved,Case-only variant of the exact source brand value Great Value,2026-10-26
+TRADER JOE'S,Trader Joe's,approved,Case-only variant of the exact source brand value Trader Joe's,2026-10-26
+Trader  Joe's,Trader Joe's,approved,Whitespace variant of the exact source brand value Trader Joe's,2026-10-26
+Trader JOE'S,Trader Joe's,approved,Case-only variant of the exact source brand value Trader Joe's,2026-10-26
+Trader Joe's,Trader Joe's,approved,Approved canonical source brand value,2026-10-26
+Trader joe's,Trader Joe's,approved,Case-only variant of the exact source brand value Trader Joe's,2026-10-26
+trader Joe's,Trader Joe's,approved,Case-only variant of the exact source brand value Trader Joe's,2026-10-26
+trader joe's,Trader Joe's,approved,Case-only variant of the exact source brand value Trader Joe's,2026-10-26

@@ -1,0 +1,12 @@
+group_id,reporting_group,display_order,framework_status
+fruit_vegetables,Fruits & vegetables,1,approved_labels_only
+grains_potatoes_bakery,"Cereals, potatoes & bakery",2,approved_labels_only
+meat_poultry,Meat & poultry,3,approved_labels_only
+fish_seafood,Fish & seafood,4,approved_labels_only
+dairy_eggs,Dairy & eggs,5,approved_labels_only
+beverages,Beverages,6,approved_labels_only
+sweet_foods_desserts,Sweet foods & desserts,7,approved_labels_only
+salty_snacks,Salty snacks,8,approved_labels_only
+prepared_meals,Prepared meals,9,approved_labels_only
+condiments_fats_spreads,"Condiments, fats & spreads",10,approved_labels_only
+other_unclassified,Other / unclassified,11,approved_labels_only

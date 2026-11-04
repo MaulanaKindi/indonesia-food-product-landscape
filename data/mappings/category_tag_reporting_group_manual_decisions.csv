@@ -1,0 +1,57 @@
+source_category_tag,reporting_group_id,review_status,decision_basis,supporting_exact_tags,reviewed_on
+en:drinkable-yogurts,dairy_eggs,approved,"Owner-approved exact-tag assignment after review of 57 selected-scope records and representative product names identifying drinkable fermented yogurt. The owner selected Dairy & eggs, consistent with the existing finished-product rule for yogurt/dairy desserts; co-occurrence with beverage tags is retained as a known boundary limitation.",en:yogurts|en:fermented-dairy-desserts|en:dairy-drinks,2026-10-29
+en:savory-snacks,salty_snacks,approved,"Owner-approved exact-tag assignment after review of 19 selected-scope records; representative products are savory snack foods and 8 records also carry the existing en:salty-snacks tag.",en:salty-snacks|en:appetizers|en:crisps,2026-10-29
+en:chili-paste,condiments_fats_spreads,approved,"Owner-approved exact-tag assignment after review of 19 selected-scope records; exact label and representative Thai source product names indicate chili pastes/condiments.",en:condiments|en:curry-pastes|en:meal-sauces,2026-10-29
+en:juice,beverages,approved,"Owner-approved exact-tag assignment after review of 14 selected-scope records; exact label and co-occurring beverage, fruit-juice, and juice taxonomy tags support Beverages.",en:beverages|en:juices-and-nectars|en:fruit-juices,2026-10-29
+en:bars-covered-with-chocolate,sweet_foods_desserts,approved,"Owner-approved exact-tag assignment after review of 18 selected-scope records; the tag co-occurs with sweet-snack, confectionery, and chocolate-candy tags.",en:sweet-snacks|en:confectioneries|en:chocolate-candies,2026-10-29
+en:dairy-desserts,dairy_eggs,approved,"Assign by finished product type; dairy desserts remain in Dairy & eggs rather than also counting as desserts.",,2026-10-26
+en:fermented-dairy-desserts,dairy_eggs,approved,"Assign by finished product type; fermented dairy desserts remain in Dairy & eggs rather than also counting as desserts.",,2026-10-26
+en:yogurts,dairy_eggs,approved,"Yogurt is a dairy product; dessert ancestry alone does not place all yogurt in Sweet foods & desserts.",,2026-10-26
+en:honeys,sweet_foods_desserts,approved,"Classify honey as a sweetener in Sweet foods & desserts; do not also count it as a spread.",,2026-10-26
+en:tomato-sauces,condiments_fats_spreads,approved,"Classify the finished sauce as a condiment; tomato ancestry reflects an ingredient, not a second reporting group.",,2026-10-26
+en:potato-crisps,salty_snacks,approved,"Classify crisps by finished snack type; potato ancestry reflects the base ingredient.",,2026-10-26
+en:dairy-drinks,beverages,approved,"Classify the finished drink as a beverage; dairy ancestry reflects composition.",,2026-10-26
+en:fermented-dairy-desserts-with-fruits,dairy_eggs,approved,"Assign by finished dairy product type; fruit and dessert ancestry do not create additional group assignments.",,2026-10-26
+en:fruit-yogurts,dairy_eggs,approved,"Classify yogurt by its dairy product type; fruit is a variant ingredient.",,2026-10-26
+en:berry-jams,condiments_fats_spreads,approved,"Classify jam by finished spread/preserve type; berry ancestry reflects the ingredient.",,2026-10-26
+en:compotes,fruit_vegetables,approved,"Classify compote as a fruit preparation; dessert ancestry alone does not create a second assignment.",,2026-10-26
+en:salty-snacks-made-from-potato,salty_snacks,approved,"Classify by finished salty-snack type; potato ancestry reflects the base ingredient.",,2026-10-26
+en:milkfat,dairy_eggs,approved,"Classify milkfat with dairy products; spreadable-fat ancestry alone does not create a second assignment.",,2026-10-26
+en:butters,dairy_eggs,approved,"Classify butter by its dairy product identity; use as a spread does not create a second assignment.",,2026-10-26
+en:vegetable-soups,prepared_meals,approved,"Classify soup by the finished meal/preparation type; vegetable ancestry reflects its contents.",,2026-10-26
+en:fermented-milk-drinks,beverages,approved,"Classify the finished fermented milk drink as a beverage; dairy ancestry reflects composition.",,2026-10-26
+en:fruit-preserves,condiments_fats_spreads,approved,"Classify fruit preserves by finished preserve/spread type; fruit ancestry reflects the ingredient.",,2026-10-26
+en:fruit-jams,condiments_fats_spreads,approved,"Classify jam by finished spread/preserve type; fruit ancestry reflects the ingredient.",,2026-10-26
+en:fruits-based-foods,fruit_vegetables,approved,"Assign to Fruits & vegetables based on all 38,389 source rows also carrying the exact taxonomy tag en:fruits-and-vegetables-based-foods and sampled fruit records; this is not an alias claim.",en:fruits-and-vegetables-based-foods,2026-10-26
+en:poultry-meals,prepared_meals,approved,"Assign finished poultry dishes to Prepared meals; all 7,037 source rows co-carry exact en:meals and en:meals-with-meat tags.",en:meals|en:meals-with-meat,2026-10-26
+en:beef-dishes,prepared_meals,approved,"Assign finished beef dishes to Prepared meals; all 3,215 source rows co-carry exact en:meals and en:meals-with-meat tags.",en:meals|en:meals-with-meat,2026-10-26
+en:labeled-cheeses,dairy_eggs,approved,"Assign to Dairy & eggs; all 2,029 source rows co-carry exact en:cheeses and en:dairies tags.",en:cheeses|en:dairies,2026-10-26
+en:aoc-cheeses,dairy_eggs,approved,"Assign to Dairy & eggs; all 2,011 source rows co-carry exact en:cheeses and en:dairies tags.",en:cheeses|en:dairies,2026-10-26
+en:ravioli,prepared_meals,approved,"Assign to Prepared meals; all 1,934 source rows co-carry exact en:meals, en:pasta-dishes, and en:stuffed-pastas tags.",en:meals|en:pasta-dishes|en:stuffed-pastas,2026-10-26
+en:raw-cured-ham,meat_poultry,approved,"Assign to Meat & poultry; 1,917 of 1,918 source rows co-carry exact en:hams, en:meats-and-their-products, and en:prepared-meats tags.",en:hams|en:meats-and-their-products|en:prepared-meats,2026-10-26
+fr:boudins,meat_poultry,approved,"Assign to Meat & poultry; all 1,352 source rows co-carry exact en:meats-and-their-products and en:prepared-meats tags.",en:meats-and-their-products|en:prepared-meats,2026-10-26
+en:lemonade,beverages,approved,"Assign to Beverages; 1,544 of 1,550 source rows co-carry exact en:beverages, en:carbonated-drinks, and en:sodas tags.",en:beverages|en:carbonated-drinks|en:sodas,2026-10-26
+en:spice-mix,condiments_fats_spreads,approved,"Assign to Condiments, fats & spreads; 1,602 of 1,603 source rows co-carry exact en:condiments and en:spices tags.",en:condiments|en:spices,2026-10-26
+en:ketchup,condiments_fats_spreads,approved,"Assign by finished sauce type; all 4,997 source rows co-carry exact en:condiments, en:sauces, and en:tomato-sauces tags.",en:condiments|en:sauces|en:tomato-sauces,2026-10-26
+en:plain-fermented-dairy-desserts,dairy_eggs,approved,"Assign by finished dairy product type; all 4,888 source rows co-carry exact dairy and fermented-dairy-dessert tags.",en:dairies|en:dairy-desserts|en:fermented-dairy-desserts,2026-10-26
+en:apple-compotes,fruit_vegetables,approved,"Assign by finished fruit preparation type; all 4,750 source rows co-carry exact en:compotes and en:fruits-and-vegetables-based-foods tags.",en:compotes|en:fruits-and-vegetables-based-foods,2026-10-26
+en:greek-style-yogurts,dairy_eggs,approved,"Assign yogurt to Dairy & eggs; all 4,302 source rows co-carry exact dairy and yogurt taxonomy tags.",en:dairies|en:yogurts,2026-10-26
+en:plain-yogurts,dairy_eggs,approved,"Assign yogurt to Dairy & eggs; all 3,268 source rows co-carry exact dairy and yogurt taxonomy tags.",en:dairies|en:yogurts,2026-10-26
+en:flower-honeys,sweet_foods_desserts,approved,"Assign honey as a sweetener to Sweet foods & desserts; all 3,182 source rows co-carry exact en:honeys and en:sweeteners tags.",en:honeys|en:sweeteners,2026-10-26
+en:strawberry-jams,condiments_fats_spreads,approved,"Assign by finished jam and preserve type; all 3,160 source rows co-carry exact jam, preserve, and spread taxonomy tags.",en:jams|en:fruit-and-vegetable-preserves|en:spreads,2026-10-26
+en:cereal-based-drinks,beverages,approved,"Assign by finished drink type; all 3,031 source rows co-carry exact en:beverages and en:milk-substitutes tags.",en:beverages|en:milk-substitutes,2026-10-26
+en:flavoured-milks,beverages,approved,"Assign by finished drink type; all 2,789 source rows co-carry exact en:beverages and en:dairy-drinks tags.",en:beverages|en:dairy-drinks,2026-10-26
+en:flavoured-potato-crisps,salty_snacks,approved,"Assign by finished snack type; all 2,611 source rows co-carry exact en:crisps and en:potato-crisps tags.",en:crisps|en:potato-crisps,2026-10-26
+en:potato-crisps-in-sunflower-oil,salty_snacks,approved,"Assign by finished snack type; all 2,153 source rows co-carry exact en:crisps and en:potato-crisps tags.",en:crisps|en:potato-crisps,2026-10-26
+en:oat-based-drinks,beverages,approved,"Assign by finished drink type; all 2,112 source rows co-carry exact en:beverages and en:cereal-based-drinks tags.",en:beverages|en:cereal-based-drinks,2026-10-26
+fr:fromages-blancs,dairy_eggs,approved,"Assign by finished dairy product type; all 2,103 source rows co-carry exact dairy and fermented-dairy-dessert taxonomy tags.",en:dairies|en:fermented-dairy-desserts,2026-10-26
+en:citrus-jams,condiments_fats_spreads,approved,"Assign by finished jam and preserve type; all 2,102 source rows co-carry exact preserve and spread taxonomy tags.",en:fruit-and-vegetable-preserves|en:plant-based-spreads,2026-10-26
+en:entremets-mousses-and-creamy-puddings,dairy_eggs,approved,"Assign by finished dairy dessert type; all 1,966 source rows co-carry exact en:dairies and en:dairy-desserts tags.",en:dairies|en:dairy-desserts,2026-10-26
+en:apricot-jams,condiments_fats_spreads,approved,"Assign by finished jam and preserve type; all 1,924 source rows co-carry exact en:jams and en:fruit-and-vegetable-preserves tags.",en:jams|en:fruit-and-vegetable-preserves,2026-10-26
+en:creamy-puddings,dairy_eggs,approved,"Assign by finished dairy dessert type; all 1,917 source rows co-carry exact en:dairies and en:dairy-desserts tags.",en:dairies|en:dairy-desserts,2026-10-26
+en:fruits-in-syrup,fruit_vegetables,approved,"Assign by finished fruit preparation type; all 1,895 source rows co-carry exact en:canned-fruits tags.",en:canned-fruits|en:canned-foods,2026-10-26
+en:cow-milk-yogurts,dairy_eggs,approved,"Assign yogurt to Dairy & eggs; all 1,874 source rows co-carry exact dairy and yogurt taxonomy tags.",en:dairies|en:yogurts,2026-10-26
+en:marmalades,condiments_fats_spreads,approved,"Assign by finished preserve type; all 1,868 source rows co-carry exact en:fruit-and-vegetable-preserves and en:plant-based-spreads tags.",en:fruit-and-vegetable-preserves|en:plant-based-spreads,2026-10-26
+en:coconut-oils,condiments_fats_spreads,approved,"Assign by finished edible oil and fat type; all 1,836 source rows co-carry exact en:fats and en:vegetable-fats tags.",en:fats|en:vegetable-fats,2026-10-26
+en:potted-meats,meat_poultry,approved,"Assign by finished meat product type; all 1,825 source rows co-carry exact en:prepared-meats and en:rillettes tags.",en:prepared-meats|en:rillettes,2026-10-26
+en:cream-of-vegetable-soups,prepared_meals,approved,"Assign by finished soup type; all 1,818 source rows co-carry exact en:meals and en:vegetable-soups tags.",en:meals|en:vegetable-soups,2026-10-26

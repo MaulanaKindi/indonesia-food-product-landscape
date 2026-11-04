@@ -1,0 +1,31 @@
+source_category_tag,disposition,review_status,decision_basis,canonical_category_tag,reviewed_on
+en:undefined,exclude_placeholder,approved,"Literal missing-value placeholder; exclude from category assignments and retain in source-quality evidence.",,2026-10-25
+nl:beauty,exclude_non_food,approved,"Personal-care/beauty category; representative source records include cosmetics and perfume.",,2026-10-25
+nl:Beauty,exclude_non_food,approved,"Exact case variant confirmed in 16 source records; reviewed product names and category tags identify cosmetics, perfume, and skincare.",,2026-10-26
+fr:tissue-paper-and-tissue-products,exclude_non_food,approved,"Household paper products; source category label is outside food scope.",,2026-10-25
+nl:make-up,exclude_non_food,approved,"Personal-care/cosmetics category; representative source records include lipstick and eye products.",,2026-10-25
+fr:indoor-and-outdoor-paints-and-varnishes,exclude_non_food,approved,"Paints and varnishes are non-food household products.",,2026-10-25
+fr:cork-and-bamboo-based-floor-coverings,exclude_non_food,approved,"Floor-covering products are outside food scope; representative source category label confirms this.",,2026-10-25
+fr:wood,exclude_non_food,approved,"Observed in source category paths for wood, cork, and bamboo floor coverings; outside food scope.",,2026-10-25
+fr:hard-surface-cleaning-products,exclude_non_food,approved,"Household cleaning products are outside food scope; representative source category label confirms this.",,2026-10-25
+nl:verzorging,exclude_non_food,approved,"Personal-care category; representative source records include hair-styling products.",,2026-10-25
+nl:parfum,exclude_non_food,approved,"Perfume/personal-care category; representative source records confirm perfume products.",,2026-10-25
+nl:lipmake-up,exclude_non_food,approved,"Personal-care/cosmetics category.",,2026-10-25
+nl:damesparfum,exclude_non_food,approved,"Women's perfume/personal-care category.",,2026-10-25
+nl:haarverzorging,exclude_non_food,approved,"Hair-care/personal-care category.",,2026-10-25
+fr:graphic-paper,exclude_non_food,approved,"Paper products are outside food scope.",,2026-10-25
+nl:Verzorging,exclude_non_food,approved,"Case variant of the personal-care category nl:verzorging.",,2026-10-25
+nl:wenkbrauw-make-up,exclude_non_food,approved,"Cosmetics/personal-care category.",,2026-10-25
+nl:mondverzorging,exclude_non_food,approved,"Oral-care/personal-care category.",,2026-10-25
+nl:unisex-parfum,exclude_non_food,approved,"Unisex perfume/personal-care category.",,2026-10-25
+nl:herenparfum,exclude_non_food,approved,"Men's perfume/personal-care category.",,2026-10-25
+nl:babyverzorging,exclude_non_food,approved,"Baby-care/personal-care category.",,2026-10-25
+nl:intieme-verzorging,exclude_non_food,approved,"Personal-care category.",,2026-10-25
+nl:make-up-accessoires,exclude_non_food,approved,"Cosmetics accessories/personal-care category.",,2026-10-25
+nl:wondverzorging,exclude_non_food,approved,"Wound-care/medical-care category.",,2026-10-25
+nl:Babyverzorging,exclude_non_food,approved,"Case variant of the baby-care/personal-care category nl:babyverzorging.",,2026-10-25
+nl:parfum-geschenkset-voor-haar,exclude_non_food,approved,"Perfume gift set/personal-care category.",,2026-10-25
+nl:Mondverzorging,exclude_non_food,approved,"Case variant of the oral-care/personal-care category nl:mondverzorging.",,2026-10-25
+nl:korean-beauty,exclude_non_food,approved,"Beauty/personal-care category.",,2026-10-25
+nl:nagelverzorging,exclude_non_food,approved,"Nail-care/personal-care category.",,2026-10-25
+nl:handverzorging,exclude_non_food,approved,"Hand-care/personal-care category.",,2026-10-25
