@@ -1276,4 +1276,33 @@ Result:
 - No force-push or public change was performed. A force-push cannot revoke copies already cloned or guarantee removal of cached GitHub objects; obtain final explicit approval after the complete sanitized branch is prepared and reviewed.
 
 Status:
-The aggregate audits are approved for Git tracking. The local sanitized-history candidate includes the reviewed changes and is verified. Request explicit force-push approval before publishing; do not push before that approval.
+The aggregate audits are approved for Git tracking. The local sanitized-history candidate includes the reviewed changes and is verified. At this entry's time, publication awaited explicit owner approval.
+
+## ITEM-047
+
+Type:
+Stage 8 Publication
+
+Title:
+Publish Sanitized Project History and Synchronize Main
+
+Date:
+2026-11-04
+
+Decision:
+After explicit owner approval, replace GitHub `main` with the verified sanitized history using an exact `--force-with-lease`; synchronize local `main` to the published tip. Keep the two aggregate category-impact audit CSVs tracked and exclude raw source, taxonomy, and database files.
+
+Reason:
+The public branch history contained four legacy sample-record CSVs that were excluded from the intended portfolio. A normal push would only delete them from the current tree while leaving their earlier commits reachable. Rewriting history was selected after explaining the impact on existing clones and the limits of cache/object removal.
+
+Result:
+
+- Force-pushed sanitized commit `e246ae93f54df26e114e55ac27435384264dba75` to `origin/main` with a lease requiring the prior remote tip `5e982b44ad2fff71d661cb9ee316a165f77e674c`.
+- Verified the remote ref, fetched it locally, and confirmed no tree reachable from the published `main` contains `data/product_brands_sample.csv`, `data/product_categories_sample.csv`, `data/product_countries_sample.csv`, or `data/product_records_sample.csv`.
+- Confirmed both additional-three impact CSVs match the published Git blobs, and that no Parquet source, DuckDB database, pinned taxonomy JSON, or credential/key file exists in the published tip.
+- Confirmed integrity evidence remains unchanged: Stage 4 15/15, candidate 15/15, Stage 6 11/11, and Stage 5 107 snapshot-pinned units. No clean-room full rebuild, backup, or restore copy was created.
+- Reset local `main` to the fetched published tip using a mixed reset after verifying the working tree matched; local status is clean and `main` tracks `origin/main`.
+- Removed the temporary review worktree and redundant `sanitized-main` branch after synchronization. Git may retain old unreachable objects through internal refs/reflogs; force-push cannot remove existing clones or guarantee cached GitHub objects are purged.
+
+Status:
+Public history rewrite and local synchronization are complete. Stage 8 clean-room rebuild/recovery acceptance remains limited by the storage constraint; do not create a backup without renewed owner approval.
