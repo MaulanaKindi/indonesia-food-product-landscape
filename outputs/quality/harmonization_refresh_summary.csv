@@ -1,7 +1,8 @@
 step,result,evidence
 category_crosswalk,completed,scripts/07_category_reporting_group_draft.py
 review_queues,completed,scripts/08_category_reporting_group_review_queues.py
-candidate_validation,13/13 passed,outputs/quality/stage6_candidate_build_validation.csv
+brand_mapping_validation,60 exact values validated,outputs/profiling/brand_name_manual_mapping_validation.csv
+candidate_validation,15/15 passed,outputs/quality/stage6_candidate_build_validation.csv
 stage5_evidence,107 units validated,outputs/profiling/stage5_country_peer_evidence.csv
 stage6_analysis,11/11 passed,outputs/analysis/
 stage7_findings,dynamic result tables refreshed,docs/06_stage7_findings_and_recommendations.md

@@ -1,0 +1,16 @@
+iso_alpha2,country_name,source_category_tag,reporting_group_id,source_rows_with_tag
+ID,Indonesia,en:chocolate-milks,beverages,13
+ID,Indonesia,en:coconut-waters,beverages,4
+ID,Indonesia,en:yogurt-drinks,dairy_eggs,2
+MY,Malaysia,en:chocolate-milks,beverages,9
+MY,Malaysia,en:coconut-waters,beverages,0
+MY,Malaysia,en:yogurt-drinks,dairy_eggs,2
+PH,Philippines,en:chocolate-milks,beverages,6
+PH,Philippines,en:coconut-waters,beverages,1
+PH,Philippines,en:yogurt-drinks,dairy_eggs,8
+SG,Singapore,en:chocolate-milks,beverages,11
+SG,Singapore,en:coconut-waters,beverages,14
+SG,Singapore,en:yogurt-drinks,dairy_eggs,3
+TH,Thailand,en:chocolate-milks,beverages,29
+TH,Thailand,en:coconut-waters,beverages,20
+TH,Thailand,en:yogurt-drinks,dairy_eggs,21

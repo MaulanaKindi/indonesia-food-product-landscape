@@ -335,6 +335,16 @@ def main() -> None:
     validate_report(BASELINE_VALIDATION, 15, "Stage 4")
     QUALITY_DIR.mkdir(parents=True, exist_ok=True)
 
+    run_script("05_category_brand_profile.py")
+    brand_mapping_validation = read_csv(
+        PROFILE_DIR / "brand_name_manual_mapping_validation.csv"
+    )
+    brand_decisions = read_csv(
+        PROJECT_ROOT / "data" / "mappings" / "brand_name_manual_decisions.csv"
+    )
+    if len(brand_mapping_validation) != len(brand_decisions):
+        raise ValueError("Brand mapping validation does not cover every approved decision.")
+
     with tempfile.TemporaryDirectory(
         prefix=".harmonization_candidate_",
         dir=PROCESSED_DIR,
@@ -359,7 +369,7 @@ def main() -> None:
             str(candidate_validation),
         )
         candidate_report = validate_report(
-            candidate_validation, 13, "Stage 6 candidate"
+            candidate_validation, 15, "Stage 6 candidate"
         )
 
         run_script(
@@ -408,13 +418,23 @@ def main() -> None:
         staged_candidate_validation = (
             refresh_dir / STAGE6_CANDIDATE_VALIDATION.name
         )
-        staged_candidate_validation.write_bytes(candidate_validation.read_bytes())
+        candidate_report_to_publish = read_csv(candidate_validation)
+        if "database_file" in candidate_report_to_publish.columns:
+            candidate_report_to_publish["database_file"] = (
+                "temporary candidate (removed after successful refresh)"
+            )
+        candidate_report_to_publish.to_csv(
+            staged_candidate_validation,
+            index=False,
+            encoding="utf-8",
+        )
 
         summary = pd.DataFrame(
             [
                 ("category_crosswalk", "completed", "scripts/07_category_reporting_group_draft.py"),
                 ("review_queues", "completed", "scripts/08_category_reporting_group_review_queues.py"),
-                ("candidate_validation", "13/13 passed", "outputs/quality/stage6_candidate_build_validation.csv"),
+                ("brand_mapping_validation", f"{len(brand_mapping_validation)} exact values validated", "outputs/profiling/brand_name_manual_mapping_validation.csv"),
+                ("candidate_validation", "15/15 passed", "outputs/quality/stage6_candidate_build_validation.csv"),
                 ("stage5_evidence", "107 units validated", "outputs/profiling/stage5_country_peer_evidence.csv"),
                 ("stage6_analysis", "11/11 passed", "outputs/analysis/"),
                 ("stage7_findings", "dynamic result tables refreshed", "docs/06_stage7_findings_and_recommendations.md"),
@@ -432,7 +452,7 @@ def main() -> None:
         staged_stage7.replace(STAGE7_FILE)
 
     print("Automated harmonization refresh completed.")
-    print("Candidate-database checks passed: 13")
+    print("Candidate-database checks passed: 15")
     print("Stage 6 checks passed: 11")
     print(f"Stage 5 ISO units: {len(stage5_evidence)}")
     print(f"Stage 6 outputs: {ANALYSIS_DIR}")

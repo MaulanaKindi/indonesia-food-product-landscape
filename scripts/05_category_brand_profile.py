@@ -1,3 +1,4 @@
+import unicodedata
 from pathlib import Path
 
 import duckdb
@@ -327,7 +328,13 @@ def build_manual_brand_mapping_validation(
         )
 
     def normalized_name(value: str) -> str:
-        return " ".join(value.split()).casefold()
+        decomposed = unicodedata.normalize("NFD", value)
+        without_diacritics = "".join(
+            character
+            for character in decomposed
+            if not unicodedata.combining(character)
+        )
+        return " ".join(without_diacritics.split()).casefold()
 
     inconsistent = mapping.loc[
         mapping.apply(
@@ -339,7 +346,7 @@ def build_manual_brand_mapping_validation(
     ].tolist()
     if inconsistent:
         raise ValueError(
-            "Manual brand mappings must be limited to case/whitespace changes: "
+            "Manual brand mappings must be limited to case/whitespace/diacritic changes: "
             f"{inconsistent}"
         )
 

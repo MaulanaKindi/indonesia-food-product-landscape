@@ -55,3 +55,7 @@ Trader Joe's,Trader Joe's,approved,Approved canonical source brand value,2026-10
 Trader joe's,Trader Joe's,approved,Case-only variant of the exact source brand value Trader Joe's,2026-10-26
 trader Joe's,Trader Joe's,approved,Case-only variant of the exact source brand value Trader Joe's,2026-10-26
 trader joe's,Trader Joe's,approved,Case-only variant of the exact source brand value Trader Joe's,2026-10-26
+Fairprice,FairPrice,approved,"Owner-approved case-only normalization; this exact spelling shares the FairPrice brand-tag evidence in the local source with FairPrice. Only these reviewed source spellings are normalized.",2026-11-04
+FairPrice,FairPrice,approved,"Owner-approved canonical spelling; the exact source value is supported by the same FairPrice brand-tag evidence as Fairprice.",2026-11-04
+Nestle,Nestlé,approved,"Owner-approved accent normalization; this exact source value shares the Nestlé brand-tag evidence in the local source with Nestlé. The Open Food Facts brand-tag taxonomy labels xx:nestle as Nestlé (Wikidata Q160746). Only these reviewed spellings are normalized.",2026-11-04
+Nestlé,Nestlé,approved,"Owner-approved canonical spelling, supported by the Open Food Facts brand-tag taxonomy label Nestlé for xx:nestle (Wikidata Q160746) and shared brand-tag evidence with Nestle.",2026-11-04

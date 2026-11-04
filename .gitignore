@@ -20,6 +20,8 @@ outputs/analysis/*
 outputs/quality/*
 !outputs/profiling/stage2_selected_scope_mapping_tag_impact.csv
 !outputs/profiling/stage2_selected_scope_mapping_coverage_delta.csv
+!outputs/profiling/stage2_selected_scope_mapping_tag_impact_additional_three.csv
+!outputs/profiling/stage2_selected_scope_mapping_coverage_delta_additional_three.csv
 !outputs/profiling/stage5_country_peer_evidence.csv
 !outputs/analysis/stage6_country_scope.csv
 !outputs/analysis/stage6_country_category.csv

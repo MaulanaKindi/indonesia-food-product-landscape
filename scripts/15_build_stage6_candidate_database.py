@@ -35,6 +35,9 @@ MANUAL_DECISIONS_FILE = (
     / "mappings"
     / "category_tag_reporting_group_manual_decisions.csv"
 )
+BRAND_MAPPING_FILE = (
+    PROJECT_ROOT / "data" / "mappings" / "brand_name_manual_decisions.csv"
+)
 FRAMEWORK_FILE = (
     PROJECT_ROOT / "data" / "reference" / "category_reporting_group_framework.csv"
 )
@@ -88,6 +91,8 @@ def build_candidate(
     output_file: Path,
     crosswalk: pd.DataFrame,
     category_mapping_version: str,
+    brand_mapping: pd.DataFrame,
+    brand_mapping_version: str,
 ) -> list[tuple[str, str, str]]:
     escaped_baseline = str(baseline_database.resolve()).replace("'", "''")
     connection = duckdb.connect(str(output_file))
@@ -96,6 +101,7 @@ def build_candidate(
             f"ATTACH '{escaped_baseline}' AS baseline (READ_ONLY)"
         )
         connection.register("current_crosswalk", crosswalk)
+        connection.register("current_brand_mapping", brand_mapping)
 
         connection.execute(
             """
@@ -145,8 +151,16 @@ def build_candidate(
         connection.execute(
             """
             CREATE TABLE brand_name_mapping AS
-            SELECT * FROM baseline.brand_name_mapping
-            """
+            SELECT
+                source_brand_name,
+                canonical_brand_name,
+                review_status,
+                decision_basis,
+                reviewed_on,
+                ? AS mapping_version
+            FROM current_brand_mapping
+            """,
+            [brand_mapping_version],
         )
         connection.execute(
             """
@@ -265,6 +279,15 @@ def build_candidate(
                     )
                 )
             ),
+            missing_brand_mapping_source_values AS (
+                SELECT COUNT(*) AS missing_count
+                FROM brand_name_mapping AS mapping
+                WHERE NOT EXISTS (
+                    SELECT 1
+                    FROM record_brand_source_value AS source
+                    WHERE source.source_brand_name = mapping.source_brand_name
+                )
+            ),
             invalid_selected_groups AS (
                 SELECT COUNT(*) AS invalid_count
                 FROM category_tag_group_decision AS decision
@@ -323,6 +346,16 @@ def build_candidate(
                    '0'
             FROM brand_value_mismatches
             UNION ALL
+            SELECT 'brand_name_mapping_rows',
+                   COUNT(*)::VARCHAR,
+                   ?::VARCHAR
+            FROM brand_name_mapping
+            UNION ALL
+            SELECT 'missing_brand_mapping_source_values',
+                   missing_count::VARCHAR,
+                   '0'
+            FROM missing_brand_mapping_source_values
+            UNION ALL
             SELECT 'category_decision_tag_rows',
                    COUNT(*)::VARCHAR,
                    ?::VARCHAR
@@ -346,6 +379,7 @@ def build_candidate(
                 str(EXPECTED_SOURCE_ROWS),
                 str(EXPECTED_RECORD_COUNTRY_LINKS),
                 str(EXPECTED_CATEGORY_LINKS),
+                str(len(brand_mapping)),
                 str(len(crosswalk)),
                 str(int(crosswalk["assignment_status"].eq("manual_group_assignment").sum())),
             ],
@@ -374,6 +408,7 @@ def main() -> None:
         args.baseline_validation,
         CROSSWALK_FILE,
         MANUAL_DECISIONS_FILE,
+        BRAND_MAPPING_FILE,
         FRAMEWORK_FILE,
         DISPOSITIONS_FILE,
         ANCHORS_FILE,
@@ -463,6 +498,36 @@ def main() -> None:
     if not manual["review_status"].eq("approved").all():
         raise ValueError("All manual category decisions must be approved.")
 
+    brand_mapping = pd.read_csv(
+        BRAND_MAPPING_FILE,
+        dtype=str,
+        keep_default_na=False,
+    )
+    required_brand_mapping_columns = {
+        "source_brand_name",
+        "canonical_brand_name",
+        "review_status",
+        "decision_basis",
+        "reviewed_on",
+    }
+    if not required_brand_mapping_columns.issubset(brand_mapping.columns):
+        raise ValueError(
+            "Manual brand mapping is missing required columns: "
+            f"{sorted(required_brand_mapping_columns - set(brand_mapping.columns))}"
+        )
+    if brand_mapping["source_brand_name"].duplicated().any():
+        raise ValueError("Manual brand mapping contains duplicate source values.")
+    if not brand_mapping["review_status"].eq("approved").all():
+        raise ValueError("All manual brand mappings must be approved.")
+    if not brand_mapping["decision_basis"].str.strip().ne("").all():
+        raise ValueError("Manual brand mappings must include a decision basis.")
+    if brand_mapping[
+        ["source_brand_name", "canonical_brand_name"]
+    ].eq("").any().any():
+        raise ValueError(
+            "Manual brand mappings must include source and canonical values."
+        )
+
     category_mapping_version = sha256_files(
         (
             DISPOSITIONS_FILE,
@@ -472,6 +537,7 @@ def main() -> None:
             CROSSWALK_FILE,
         )
     )
+    brand_mapping_version = sha256_files((BRAND_MAPPING_FILE,))
 
     output_file.parent.mkdir(parents=True, exist_ok=True)
     validation_file.parent.mkdir(parents=True, exist_ok=True)
@@ -490,6 +556,8 @@ def main() -> None:
             temporary_database,
             crosswalk,
             category_mapping_version,
+            brand_mapping,
+            brand_mapping_version,
         )
         failures = [
             (name, actual, expected)

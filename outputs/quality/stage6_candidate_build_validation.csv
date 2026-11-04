@@ -1,14 +1,16 @@
 check_name,actual_value,expected_value,status,database_file
-snapshot_id,DA39B2C5AAF1F85B2E637B904B5FC3A29780DD7E184254F4B660CFE0CD84999A,DA39B2C5AAF1F85B2E637B904B5FC3A29780DD7E184254F4B660CFE0CD84999A,passed,data/processed/.harmonization_candidate_vz9801yd/candidate.duckdb
-source_product_record_rows,4828207,4828207,passed,data/processed/.harmonization_candidate_vz9801yd/candidate.duckdb
-distinct_source_record_ids,4828207,4828207,passed,data/processed/.harmonization_candidate_vz9801yd/candidate.duckdb
-stage6_source_projection_mismatches,0,0,passed,data/processed/.harmonization_candidate_vz9801yd/candidate.duckdb
-record_country_rows,5004567,5004567,passed,data/processed/.harmonization_candidate_vz9801yd/candidate.duckdb
-record_country_content_mismatches,0,0,passed,data/processed/.harmonization_candidate_vz9801yd/candidate.duckdb
-record_category_tag_rows,10480049,10480049,passed,data/processed/.harmonization_candidate_vz9801yd/candidate.duckdb
-record_category_tag_content_mismatches,0,0,passed,data/processed/.harmonization_candidate_vz9801yd/candidate.duckdb
-record_brand_source_value_rows,3094430,3094430,passed,data/processed/.harmonization_candidate_vz9801yd/candidate.duckdb
-record_brand_source_value_content_mismatches,0,0,passed,data/processed/.harmonization_candidate_vz9801yd/candidate.duckdb
-category_decision_tag_rows,116105,116105,passed,data/processed/.harmonization_candidate_vz9801yd/candidate.duckdb
-manual_group_decision_count,56,56,passed,data/processed/.harmonization_candidate_vz9801yd/candidate.duckdb
-selected_group_reference_errors,0,0,passed,data/processed/.harmonization_candidate_vz9801yd/candidate.duckdb
+snapshot_id,DA39B2C5AAF1F85B2E637B904B5FC3A29780DD7E184254F4B660CFE0CD84999A,DA39B2C5AAF1F85B2E637B904B5FC3A29780DD7E184254F4B660CFE0CD84999A,passed,temporary candidate (removed after successful refresh)
+source_product_record_rows,4828207,4828207,passed,temporary candidate (removed after successful refresh)
+distinct_source_record_ids,4828207,4828207,passed,temporary candidate (removed after successful refresh)
+stage6_source_projection_mismatches,0,0,passed,temporary candidate (removed after successful refresh)
+record_country_rows,5004567,5004567,passed,temporary candidate (removed after successful refresh)
+record_country_content_mismatches,0,0,passed,temporary candidate (removed after successful refresh)
+record_category_tag_rows,10480049,10480049,passed,temporary candidate (removed after successful refresh)
+record_category_tag_content_mismatches,0,0,passed,temporary candidate (removed after successful refresh)
+record_brand_source_value_rows,3094430,3094430,passed,temporary candidate (removed after successful refresh)
+record_brand_source_value_content_mismatches,0,0,passed,temporary candidate (removed after successful refresh)
+brand_name_mapping_rows,60,60,passed,temporary candidate (removed after successful refresh)
+missing_brand_mapping_source_values,0,0,passed,temporary candidate (removed after successful refresh)
+category_decision_tag_rows,116105,116105,passed,temporary candidate (removed after successful refresh)
+manual_group_decision_count,59,59,passed,temporary candidate (removed after successful refresh)
+selected_group_reference_errors,0,0,passed,temporary candidate (removed after successful refresh)

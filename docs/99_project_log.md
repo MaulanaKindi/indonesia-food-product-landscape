@@ -1107,7 +1107,173 @@ Result:
 
 - Renamed the existing public GitHub repository to `MaulanaKindi/indonesia-food-product-landscape`; its commit history is preserved.
 - The local `main` has unpublished commits. The `origin` URL now points to the renamed repository; push is still pending GitHub authentication.
-- Updated the handoff and Stage 8 status to reflect the completed rename. The local project folder has not been moved and remains `D:\Projects\off-brand-landscape`.
+- Updated the handoff and Stage 8 status to reflect the repository rename. At the time of this entry, the local folder rename was still pending; it was completed later as recorded in ITEM-041.
 
 Status:
 Repository rename completed. Public branch synchronization, Stage 0 source/derivative licensing review, and Stage 8 recovery acceptance remain open.
+
+## ITEM-041
+
+Type:
+Stage 2 Refresh and Local Folder Rename
+
+Title:
+Refresh Harmonized Analysis and Complete Local Folder Rename
+
+Date:
+2026-11-04
+
+Decision:
+Run the existing automated harmonization refresh without changing owner-approved mapping decisions, then rename the local project folder to match the public repository.
+
+Result:
+
+- `scripts/16_refresh_harmonized_analysis.py` completed successfully: 13/13 candidate checks passed, all 107 Stage 5 units were refreshed, and 11/11 Stage 6 checks passed. Stage 7 generated result tables were refreshed.
+- Deterministic candidate assignments and review queues were regenerated. Ambiguous values remain unresolved; owner-approved mapping inputs and the original full Stage 4 database were not changed.
+- Updated the refresh runner so its retained candidate-validation report identifies the temporary database as removed, rather than recording a stale random temporary path.
+- Initial folder rename attempts were blocked because Windows reported the source directory in use; no files were moved by those attempts. The user later completed the rename to `D:\Projects\indonesia-food-product-landscape`.
+- No backup was created.
+
+Status:
+The harmonized analysis refresh is complete. The folder was subsequently renamed by the user to `D:\Projects\indonesia-food-product-landscape`; active handoff paths have been harmonized. The earlier rename attempts were blocked by an active process. Public branch synchronization, Stage 0 source/derivative licensing review, and Stage 8 recovery acceptance remain open.
+
+## ITEM-042
+
+Type:
+Stage 0 Scoped Portfolio Acceptance
+
+Title:
+Pin Reproducible Source and Document Publication Limits
+
+Date:
+2026-11-04
+
+Decision:
+Use an immutable Hugging Face commit whose `food.parquet` content metadata matches the local size and SHA-256 as the reproducible source reference, without claiming it was the historical download source. Accept the unknown historical retrieval date and method as disclosed provenance limitations. Publish only reviewed aggregate results with Open Food Facts attribution and links to the applicable terms; do not apply MIT to data-derived outputs or redistribute the source dataset, databases, record-level extracts, or pinned taxonomy.
+
+Reason:
+No contemporaneous evidence establishes the original local retrieval event. Current Open Food Facts terms describe ODbL/DbCL and attribution/share-alike conditions, while Hugging Face metadata also labels the dataset AGPL-3.0 without clarifying its scope. The portfolio should disclose these limitations instead of inventing provenance or making unsupported legal classifications.
+
+Result:
+
+- Selected `31f31c441274c095718cc88ae582030a5a615415` as a reproducible content reference; its `food.parquet` metadata matches local size 7,975,461,945 bytes and SHA-256 `DA39B2C5AAF1F85B2E637B904B5FC3A29780DD7E184254F4B660CFE0CD84999A`. This does not identify the historical download commit/date/method.
+- Rechecked the current Open Food Facts terms and Hugging Face dataset card/API on 2026-11-04. The documented attribution, license statements, and AGPL scope ambiguity are retained; no legal determination is made.
+- Updated the source note, README, workflow status, and handoff to reflect the owner's accepted scoped-publication policy and limitations.
+- No source data, database, backup, or generated analysis output was modified for this Stage 0 documentation update.
+
+Status:
+Stage 0 is accepted for the scoped aggregate portfolio publication with explicit historical-provenance and license-scope limitations. Do not redistribute excluded source/data artifacts or describe the unresolved legal classification as settled.
+
+## ITEM-043
+
+Type:
+Stage 8 Definition of Done Revision
+
+Title:
+Remove Backup Restore Requirement Under Storage Constraint
+
+Date:
+2026-11-04
+
+Decision:
+Revise the project Definition of Done so creating or restoring a database backup is not required. Require a documented recovery/rebuild approach, prerequisites, storage implications, and limitations instead.
+
+Reason:
+The owner does not want to increase storage use on drives C or D. No backup or restore copy should be created for this project under the current instruction.
+
+Result:
+
+- Replaced the mandatory backup-restore criterion in the business brief with a documented recovery/rebuild approach and explicit storage constraints.
+- Updated the workflow traceability, README, and handoff. Stage 8 remains open for repository synchronization/usability, rebuild/recovery documentation, and independent checks; this change does not declare Stage 8 complete.
+- No backup, restore copy, database, source data, or analytical output was created or modified.
+
+Status:
+Backup creation and restore testing are no longer Definition of Done requirements. No backup has been created. The remaining Stage 8 release/recovery acceptance tasks are still pending.
+
+## ITEM-044
+
+Type:
+Decision and Implementation
+
+Title:
+Apply Bounded Category and Brand Decisions
+
+Date:
+2026-11-04
+
+Decision:
+Add three owner-approved category-tag assignments and four exact brand-text mapping decisions. Classify `en:chocolate-milks` and `en:coconut-waters` as Beverages and `en:yogurt-drinks` as Dairy & eggs. Map `Fairprice`/`FairPrice` to FairPrice and `Nestle`/`Nestlé` to Nestlé. Preserve all unrelated unresolved tags and brand values.
+
+Reason:
+The pinned Open Food Facts category taxonomy supports the product-type review for the three exact category tags. The two exact brand spelling pairs share local brand-tag evidence; the Open Food Facts brand-tag taxonomy identifies `xx:nestle` as Nestlé (Wikidata Q160746). These decisions were approved after reviewing evidence and bounded Stage 6 impact, not by generalized similarity.
+
+Result:
+
+- The category mapping now has 59 approved exact-tag assignments; the refreshed crosswalk has 838 unresolved multi-group tags and 106,211 unresolved taxonomy-unmatched tags.
+- The brand mapping now has 60 exact source-text values across 13 canonical groups. Validation accepts diacritic-only differences only for explicitly reviewed mappings; no general brand normalization or `brands_tags` merge was added.
+- The additional-three category impact audit found no candidate-derived assigned-row coverage change. Approved-only coverage increased by ID +4, MY +0, PH +1, SG +12, and TH +20 rows; SG approved-only overlap rose by two.
+- Across ID/MY/PH/SG/TH, approved brand-mapped rows increased by +30, +59, +88, +323, and +35 respectively.
+- Updated the candidate builder to use the current reviewed brand mapping rather than copying the earlier Stage 4 mapping. The refresh now regenerates brand profiling/validation, then Stage 5, Stage 6, and Stage 7 outputs.
+- `scripts/16_refresh_harmonized_analysis.py` passed all 15 candidate checks, refreshed all 107 Stage 5 units, and passed all 11 Stage 6 checks. Its temporary candidate was removed; the full Stage 4 database was not changed.
+- Updated the separate impact audit to preserve the original five-decision outputs and generate dedicated additional-three outputs.
+- No backup was created, and no commit or push was performed.
+
+Status:
+The bounded eight-tag category review and four exact brand-spelling decisions are complete and validated in current candidate-backed outputs. Broader category/brand harmonization remains intentionally open. Stage 8 repository/rebuild/recovery acceptance remains pending.
+
+## ITEM-045
+
+Type:
+Stage 8 Preflight and Integrity Validation
+
+Title:
+Verify Local Rebuild Inputs and Published Analysis Integrity
+
+Date:
+2026-11-04
+
+Decision:
+Record the successful local release preflight while keeping GitHub publication and clean-room rebuild testing pending. Preserve the existing full database and do not create a backup.
+
+Reason:
+The release gate requires verifiable source identity, reproducible instructions, and reconciled analysis outputs. The owner prohibits backup copies, and the existing DuckDB is large enough that rebuilding over it or duplicating it would add avoidable risk and storage use.
+
+Result:
+
+- Confirmed local source Parquet size 7,975,461,945 bytes and SHA-256 `DA39B2C5AAF1F85B2E637B904B5FC3A29780DD7E184254F4B660CFE0CD84999A`; confirmed the pinned taxonomy SHA-256 `EB03AEFABAE4C6269B5FBC3E89160F8DA84CA3300A53787E27EAB5FE2D1020D5`.
+- Verified retained reports: 15/15 full Stage 4 build checks, 15/15 temporary candidate checks, 11/11 Stage 6 checks, and 107 Stage 5 snapshot-pinned units. The published Stage 6 output files also carry the expected source snapshot hash.
+- Confirmed Python 3.13.0, DuckDB 2.0.0, and pandas 3.1.0; README rebuild prerequisites and commands refer to the pinned Parquet and taxonomy inputs.
+- Confirmed the source Parquet, taxonomy JSON, and 15.1-GB DuckDB are ignored by Git. The live GitHub `main` matches local `origin/main`; six local commits and current worktree changes remain unpublished.
+- Did not perform a clean-room full rebuild because the builder refuses to overwrite the existing database and no backup/duplicate is permitted. No database or source data was modified; no backup, commit, or push was created.
+- Updated the README, workflow status, and handoff to reflect verified preflight results and remaining release steps.
+
+Status:
+Local Stage 8 preflight and integrity checks passed. Publication review, authenticated push, and final release acceptance remain pending; clean-room full rebuild was not repeated under the storage constraint.
+
+## ITEM-046
+
+Type:
+Stage 8 Publication Review Decision
+
+Title:
+Track Aggregate Audit Evidence and Pause for Sample-History Review
+
+Date:
+2026-11-04
+
+Decision:
+Include the two additional-three category-impact audit CSVs in the repository's reviewed output allowlist. Pause GitHub publication while deciding how to handle legacy sample-record CSVs in the public Git history.
+
+Reason:
+The audit CSVs are small aggregate evidence referenced by the analysis documentation and contain no product-level rows. The live public branch still contains four earlier sample-record CSVs, while the pending local commits delete them only from the current branch tree. A normal fast-forward push would preserve their historical commits; rewriting published history requires a separate explicit decision.
+
+Result:
+
+- Added allowlist exceptions for `outputs/profiling/stage2_selected_scope_mapping_tag_impact_additional_three.csv` and `outputs/profiling/stage2_selected_scope_mapping_coverage_delta_additional_three.csv`.
+- Confirmed the live `origin/main` tree contains `data/product_brands_sample.csv`, `data/product_categories_sample.csv`, `data/product_countries_sample.csv`, and `data/product_records_sample.csv` (26,576 bytes combined). The prior local branch tip already deletes these files, but their earlier blobs remain in history.
+- At the owner's direction, created a separate local `sanitized-main` branch by rewriting all 36 commits to remove those four paths from every commit tree. Verified no matching path occurs in any tree reachable from `sanitized-main`; its tip tree is identical to the existing local `main` tip.
+- Kept the original local `main`, public `origin/main`, and current uncommitted worktree changes unchanged. The pending mapping, analysis, documentation, and aggregate-audit changes are not yet on `sanitized-main`.
+- No force-push or public change was performed. A force-push cannot revoke copies already cloned or guarantee removal of cached GitHub objects; obtain final explicit approval after the complete sanitized branch is prepared and reviewed.
+
+Status:
+The aggregate audits are approved for Git tracking. A local sanitized-history candidate is verified; prepare the remaining worktree changes on that branch, review the final result, then request explicit force-push approval. Do not push before that approval.

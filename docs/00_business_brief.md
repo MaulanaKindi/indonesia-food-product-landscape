@@ -119,7 +119,7 @@ Do not infer missing provenance details. Mark them as not yet recorded and resol
 - Data-quality log documenting key issues, decisions, and their impacts.
 - Versioned, reproducible analytical outputs with clearly defined metrics and denominators.
 - Business findings, limitations, and recommendations for further investigation, linked to supporting results.
-- Documented database build and recovery workflow, including a validated backup restore and independent checks.
+- Documented database build and recovery/rebuild approach, storage requirements, and recovery limitations, with independent integrity checks. Backup creation and restore testing are not required under the owner's storage constraint.
 
 ## 10. Definition of Done
 
@@ -134,8 +134,8 @@ The project is complete when:
 7. Business conclusions are linked to reproducible results, distinguish observations from interpretations, and state limitations.
 8. The GitHub repository is understandable to a reviewer unfamiliar with the project.
 9. The database can be rebuilt from the documented source data and SQL scripts in a clean environment, subject to stated prerequisites.
-10. At least one database backup has been restored successfully, with table-level and data-integrity checks documented.
+10. The recovery approach and its prerequisites, storage implications, and limitations are documented. Creating or restoring a backup is not a completion requirement; do not create backup copies under the owner's current storage constraint.
 
 ## 11. Current Project Status
 
-Initial dataset profiling, quality checks, raw country-tag profiling, and an ISO-mapped exploratory country profile are available. The country shortlist currently uses a 1,000-record screening floor. Product-identifier resolution, category and brand harmonization, relational schema design, core SQL pipeline, and backup/recovery validation remain to be completed before their related conclusions can be considered final.
+Initial profiling, relational design/build, and the bounded Stage 5–7 analysis are complete for the documented scope. Stage 0 is accepted for the scoped aggregate portfolio with historical retrieval and license-scope limitations disclosed. Broader product-identifier, category, and brand harmonization remain incomplete by design; unresolved mappings limit the conclusions. Stage 8 repository/release and recovery acceptance remains open. The owner revised the Definition of Done so backup creation and restore testing are not required because additional disk storage is not acceptable; no backup has been created.

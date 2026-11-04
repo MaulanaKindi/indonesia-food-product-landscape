@@ -5,7 +5,7 @@
 This is the bounded descriptive interpretation of the validated Stage 6 outputs for source snapshot SHA-256 `DA39B2C5AAF1F85B2E637B904B5FC3A29780DD7E184254F4B660CFE0CD84999A`. Scope: Indonesia (ID, focal), Malaysia (MY), Philippines (PH), and Singapore (SG) as contextual peers, plus Thailand (TH) as a category-coverage contrast.
 
 <!-- AUTO-GENERATED: analysis-status:START -->
-Stage 6 was rerun against the separately validated compact candidate database after the approved category mappings were applied. It generated 15 country-scenario rows, 300 country-category rows, and 36 mapped-brand assignment rows. The candidate build passed 13 checks and all 11 Stage 6 checks passed; the four published CSVs are byte-identical to the validated candidate run. These checks establish the tested reconciliations and arithmetic for the pinned inputs; they do not prove all mappings semantically correct or the data representative.
+Stage 6 was rerun against the separately validated compact candidate database after the approved category mappings were applied. It generated 15 country-scenario rows, 300 country-category rows, and 159 mapped-brand assignment rows. The candidate build passed 15 checks and all 11 Stage 6 checks passed; the four published CSVs are byte-identical to the validated candidate run. These checks establish the tested reconciliations and arithmetic for the pinned inputs; they do not prove all mappings semantically correct or the data representative.
 <!-- AUTO-GENERATED: analysis-status:END -->
 
 ## Findings
@@ -49,15 +49,15 @@ For baseline, the number of category-tagged rows assigned to at least one substa
 <!-- AUTO-GENERATED: category-coverage:START -->
 | ISO | Category-tagged rows | Candidate-derived assigned | Candidate-derived tagged rows without assignment | Approved-only assigned | Approved-only tagged rows without assignment |
 |---|---:|---:|---:|---:|---:|
-| ID | 1,111 | 788 | 323 | 109 | 1,002 |
+| ID | 1,111 | 788 | 323 | 113 | 998 |
 | MY | 840 | 620 | 220 | 84 | 756 |
-| PH | 1,535 | 1,273 | 262 | 157 | 1,378 |
-| SG | 2,074 | 1,806 | 268 | 251 | 1,823 |
-| TH | 7,104 | 4,516 | 2,588 | 653 | 6,451 |
+| PH | 1,535 | 1,273 | 262 | 158 | 1,377 |
+| SG | 2,074 | 1,806 | 268 | 263 | 1,811 |
+| TH | 7,104 | 4,516 | 2,588 | 673 | 6,431 |
 <!-- AUTO-GENERATED: category-coverage:END -->
 
 <!-- AUTO-GENERATED: category-overlap:START -->
-There are also rows assigned to multiple groups in the candidate-derived view: ID 134, MY 99, PH 177, SG 266, and TH 1,020. These overlap counts are diagnostics and must not be added to category totals as if groups formed a partition.
+There are also rows assigned to multiple groups in the candidate-derived view: ID 136, MY 99, PH 177, SG 276, and TH 1,037. These overlap counts are diagnostics and must not be added to category totals as if groups formed a partition.
 <!-- AUTO-GENERATED: category-overlap:END -->
 
 **Interpretation:** The candidate-derived view gives broader coverage than the approved-only sensitivity, while neither resolves all category-tagged records. The “without assignment” value is a coverage gap, not an explanation of the underlying tag dispositions. Keep the two bases separate and do not force unresolved values into groups merely to increase coverage.
@@ -69,18 +69,18 @@ Stage 5 evidence reports records with an approved exact brand mapping as follows
 <!-- AUTO-GENERATED: brand-coverage:START -->
 | ISO | Rows with approved exact brand mapping | Share of country rows |
 |---|---:|---:|
-| ID | 1 | 0.0110% |
-| MY | 5 | 0.0673% |
-| PH | 0 | 0.0000% |
-| SG | 18 | 0.1502% |
-| TH | 11 | 0.0970% |
+| ID | 31 | 0.3400% |
+| MY | 64 | 0.8618% |
+| PH | 88 | 0.9590% |
+| SG | 341 | 2.8450% |
+| TH | 46 | 0.4055% |
 <!-- AUTO-GENERATED: brand-coverage:END -->
 
 <!-- AUTO-GENERATED: brand-assignment-note:START -->
-Stage 6's 36 rows are assignments across scenarios, assignment bases, country-category groups, and mapped canonical names; they are not 4 distinct brands or an exhaustive brand census.
+Stage 6's 159 rows are assignments across scenarios, assignment bases, country-category groups, and mapped canonical names; they are not 6 distinct brands or an exhaustive brand census.
 <!-- AUTO-GENERATED: brand-assignment-note:END -->
 
-**Interpretation:** The exact-approved subset is highly selected and small. It cannot support broad brand variety, concentration, HHI, dominance, or market-share conclusions. Report the mapping coverage with any mapped-brand counts; do not generalize the mapped-only distribution to all brands in these countries.
+**Interpretation:** Coverage rose after two evidence-reviewed canonical mappings, but remains limited (0.3400%–2.8450% of rows in these selected countries) and highly selected. It cannot support broad brand variety, concentration, HHI, dominance, or market-share conclusions. Report the mapping coverage with any mapped-brand counts; do not generalize the mapped-only distribution to all brands in these countries.
 
 ### 5. The agreed non-food sensitivity has a small, visible selected-scope impact
 
@@ -104,18 +104,18 @@ The two sensitivity scenarios produce equal country row counts for these selecte
 2. Show category-tag coverage and both assignment bases alongside every category interpretation. State the overlap and unresolved-coverage limitations.
 3. Keep the exact-approved brand results as a coverage diagnostic only. Do not calculate HHI or broad brand concentration from this mapping subset.
 4. Preserve all three non-food scenarios. Do not replace the baseline with an exclusion scenario.
-5. Do not reopen Stage 2 broadly. The five approved category decisions are now included in the validated Stage 6 outputs. Revisit an exact category, country, or brand mapping only if a concrete finding or proposed conclusion is materially affected; document the evidence, approve the change, then rerun and revalidate affected analyses.
-6. Keep Stage 0 provenance and Stage 8 recovery/release work open. In particular, do not claim a known source retrieval date, extraction method, or unique upstream commit without evidence.
+5. Do not reopen Stage 2 broadly. The eight bounded category decisions and four exact brand-spelling decisions are included in the validated Stage 6 outputs. Revisit an exact category, country, or brand mapping only if a concrete finding or proposed conclusion is materially affected; document the evidence, approve the change, then rerun and revalidate affected analyses.
+6. Preserve the Stage 0 disclosures: the historical source retrieval date/method and exact retrieved commit are unknown, while a content-matching immutable reference is documented. Stage 0 is accepted only for the scoped aggregate portfolio. Continue Stage 8 repository/release and recovery acceptance work.
 7. These outputs do not answer sales-based market size, market share, demand, or commercial brand dominance. If those are required business questions, identify appropriate external data before attempting those conclusions.
 
 ## Limitations
 
 - The source is a collaboratively maintained database, not a census of products sold.
-- The exact upstream commit, local retrieval date, and extraction method for the Parquet remain undetermined.
+- The exact historical upstream commit, local retrieval date, and retrieval method for the Parquet remain undetermined; a content-matching immutable commit is documented only as a reproducibility reference.
 - Category coverage is low in the focal unit and varies substantially across countries.
 - Candidate-derived assignments are not all owner-approved; approved-only assignments cover far fewer rows.
 - Group assignments overlap, and unassigned category-tagged rows are not disposition-level explanations.
-- Exact-approved brand mapping coverage is negligible in the selected country scope.
+- Exact-approved brand mapping coverage remains limited in the selected country scope (0.3400%–2.8450%).
 - `code` is not a validated unique product identifier; source rows remain the primary measurement unit.
 - Stage 6 technical validations do not establish semantic mapping truth, representativeness, or commercial validity.
 

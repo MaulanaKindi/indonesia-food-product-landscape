@@ -1,3 +1,4 @@
+import argparse
 from pathlib import Path
 
 import duckdb
@@ -20,22 +21,51 @@ CROSSWALK_FILE = (
     / "category_reporting_group_candidate_crosswalk.csv"
 )
 OUTPUT_DIR = PROJECT_ROOT / "outputs" / "profiling"
-TAG_IMPACT_FILE = OUTPUT_DIR / "stage2_selected_scope_mapping_tag_impact.csv"
-COVERAGE_DELTA_FILE = (
-    OUTPUT_DIR / "stage2_selected_scope_mapping_coverage_delta.csv"
-)
 
 SELECTED_COUNTRIES = ("ID", "MY", "PH", "SG", "TH")
-DECISIONS = {
-    "en:drinkable-yogurts": "dairy_eggs",
-    "en:savory-snacks": "salty_snacks",
-    "en:chili-paste": "condiments_fats_spreads",
-    "en:juice": "beverages",
-    "en:bars-covered-with-chocolate": "sweet_foods_desserts",
+DECISION_SETS = {
+    "initial-five": {
+        "en:drinkable-yogurts": "dairy_eggs",
+        "en:savory-snacks": "salty_snacks",
+        "en:chili-paste": "condiments_fats_spreads",
+        "en:juice": "beverages",
+        "en:bars-covered-with-chocolate": "sweet_foods_desserts",
+    },
+    "additional-three": {
+        "en:chocolate-milks": "beverages",
+        "en:coconut-waters": "beverages",
+        "en:yogurt-drinks": "dairy_eggs",
+    },
 }
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--decision-set",
+        choices=DECISION_SETS,
+        default="initial-five",
+        help="Exact approved decision batch to compare before and after.",
+    )
+    args = parser.parse_args()
+    decision_set = DECISION_SETS[args.decision_set]
+    decision_set_order = list(DECISION_SETS)
+    selected_index = decision_set_order.index(args.decision_set)
+    later_decision_tags = {
+        tag
+        for later_set in decision_set_order[selected_index + 1 :]
+        for tag in DECISION_SETS[later_set]
+    }
+    output_suffix = (
+        "" if args.decision_set == "initial-five" else "_additional_three"
+    )
+    tag_impact_file = OUTPUT_DIR / (
+        f"stage2_selected_scope_mapping_tag_impact{output_suffix}.csv"
+    )
+    coverage_delta_file = OUTPUT_DIR / (
+        f"stage2_selected_scope_mapping_coverage_delta{output_suffix}.csv"
+    )
+
     for path in (
         DATA_FILE,
         COUNTRY_MAPPING_FILE,
@@ -71,15 +101,15 @@ def main() -> None:
         keep_default_na=False,
     )
     decisions = decisions.loc[
-        decisions["source_category_tag"].isin(DECISIONS)
+        decisions["source_category_tag"].isin(decision_set)
     ].copy()
     observed_decisions = dict(
         zip(decisions["source_category_tag"], decisions["reporting_group_id"])
     )
     if (
-        len(decisions) != len(DECISIONS)
+        len(decisions) != len(decision_set)
         or not decisions["review_status"].eq("approved").all()
-        or observed_decisions != DECISIONS
+        or observed_decisions != decision_set
     ):
         raise ValueError(
             "Selected manual decisions do not match the approved impact scope."
@@ -95,7 +125,6 @@ def main() -> None:
         "proposed_group_id",
         "comparison_role",
         "assignment_status",
-        "taxonomy_match_status",
     }
     missing_columns = required_columns - set(crosswalk.columns)
     if missing_columns:
@@ -105,16 +134,15 @@ def main() -> None:
     if crosswalk["source_category_tag"].duplicated().any():
         raise ValueError("Candidate crosswalk contains duplicate source tags.")
     decisions_in_crosswalk = crosswalk.loc[
-        crosswalk["source_category_tag"].isin(DECISIONS)
+        crosswalk["source_category_tag"].isin(decision_set)
     ].set_index("source_category_tag")
-    if set(decisions_in_crosswalk.index) != set(DECISIONS):
+    if set(decisions_in_crosswalk.index) != set(decision_set):
         raise ValueError("Candidate crosswalk is missing an approved decision tag.")
-    for tag, group_id in DECISIONS.items():
+    for tag, group_id in decision_set.items():
         row = decisions_in_crosswalk.loc[tag]
         if (
             row["assignment_status"] != "manual_group_assignment"
             or row["proposed_group_id"] != group_id
-            or row["taxonomy_match_status"] != "not_found_in_pinned_taxonomy"
         ):
             raise ValueError(
                 f"Crosswalk decision mismatch for {tag}: "
@@ -126,16 +154,22 @@ def main() -> None:
         & crosswalk["proposed_group_id"].ne(""),
         ["source_category_tag", "proposed_group_id"],
     ].copy()
+    after_map = after_map.loc[
+        ~after_map["source_category_tag"].isin(later_decision_tags)
+    ].copy()
     before_map = after_map.loc[
-        ~after_map["source_category_tag"].isin(DECISIONS)
+        ~after_map["source_category_tag"].isin(decision_set)
     ].copy()
     approved_after_map = crosswalk.loc[
         crosswalk["assignment_status"].eq("manual_group_assignment")
         & crosswalk["proposed_group_id"].ne(""),
         ["source_category_tag", "proposed_group_id"],
     ].copy()
+    approved_after_map = approved_after_map.loc[
+        ~approved_after_map["source_category_tag"].isin(later_decision_tags)
+    ].copy()
     approved_before_map = approved_after_map.loc[
-        ~approved_after_map["source_category_tag"].isin(DECISIONS)
+        ~approved_after_map["source_category_tag"].isin(decision_set)
     ].copy()
 
     with duckdb.connect() as connection:
@@ -363,13 +397,13 @@ def main() -> None:
     coverage_delta["change"] = coverage_delta["after"] - coverage_delta["before"]
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    tag_impact.to_csv(TAG_IMPACT_FILE, index=False)
-    coverage_delta.to_csv(COVERAGE_DELTA_FILE, index=False)
+    tag_impact.to_csv(tag_impact_file, index=False)
+    coverage_delta.to_csv(coverage_delta_file, index=False)
     print("Selected-scope Stage 2 mapping impact audit completed.")
-    print(f"Tag-level evidence: {TAG_IMPACT_FILE}")
-    print(f"Before/after coverage metrics: {COVERAGE_DELTA_FILE}")
+    print(f"Tag-level evidence: {tag_impact_file}")
+    print(f"Before/after coverage metrics: {coverage_delta_file}")
     print(
-        "Scope: five owner-approved category decisions across "
+        f"Scope: {len(decision_set)} owner-approved category decisions across "
         f"{', '.join(SELECTED_COUNTRIES)}."
     )
 
