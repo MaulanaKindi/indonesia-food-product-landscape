@@ -1272,8 +1272,8 @@ Result:
 - Added allowlist exceptions for `outputs/profiling/stage2_selected_scope_mapping_tag_impact_additional_three.csv` and `outputs/profiling/stage2_selected_scope_mapping_coverage_delta_additional_three.csv`.
 - Confirmed the live `origin/main` tree contains `data/product_brands_sample.csv`, `data/product_categories_sample.csv`, `data/product_countries_sample.csv`, and `data/product_records_sample.csv` (26,576 bytes combined). The prior local branch tip already deletes these files, but their earlier blobs remain in history.
 - At the owner's direction, created a separate local `sanitized-main` branch by rewriting all 36 commits to remove those four paths from every commit tree. Verified no matching path occurs in any tree reachable from `sanitized-main`; its tip tree is identical to the existing local `main` tip.
-- Kept the original local `main`, public `origin/main`, and current uncommitted worktree changes unchanged. The pending mapping, analysis, documentation, and aggregate-audit changes are not yet on `sanitized-main`.
+- Kept the original local `main`, public `origin/main`, and the user's original worktree unchanged. Transferred the reviewed mapping, analysis, documentation, and aggregate-audit changes to `sanitized-main` and committed them locally; no public ref was changed.
 - No force-push or public change was performed. A force-push cannot revoke copies already cloned or guarantee removal of cached GitHub objects; obtain final explicit approval after the complete sanitized branch is prepared and reviewed.
 
 Status:
-The aggregate audits are approved for Git tracking. A local sanitized-history candidate is verified; prepare the remaining worktree changes on that branch, review the final result, then request explicit force-push approval. Do not push before that approval.
+The aggregate audits are approved for Git tracking. The local sanitized-history candidate includes the reviewed changes and is verified. Request explicit force-push approval before publishing; do not push before that approval.
