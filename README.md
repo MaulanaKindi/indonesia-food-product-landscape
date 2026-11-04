@@ -1,19 +1,56 @@
 # Indonesia Food Product Landscape
 
-Exploratory market-intelligence project using Open Food Facts product records to compare category-tag coverage and harmonized group assignments across selected countries, with exact-approved brand mapping coverage as a limitation diagnostic. The data is not a census of products sold and does not provide sales-based market shares.
+An exploratory market-intelligence portfolio project about what Open Food Facts records show—and do not show—about food-product categories in Indonesia and four comparison countries.
 
-The focal unit is Indonesia; Malaysia, the Philippines, and Singapore are contextual peers, while Thailand is a category-coverage contrast. Findings describe database records and mapping coverage, not products sold, demand, or commercial market shares.
+## TL;DR / Executive Summary
 
-## Data, Attribution, and License
+This project compares product records listed in a pinned Open Food Facts snapshot. It asks how many records are associated with Indonesia, Malaysia, the Philippines, Singapore, and Thailand; how often those records have category tags; and how results change when category groupings are based on candidate mappings versus exact, owner-approved decisions.
 
-The Open Food Facts source snapshot, database files, record-level extracts, and pinned taxonomy are not included. The local Parquet is identified by its SHA-256 and a [content-matching immutable Hugging Face commit](https://huggingface.co/datasets/openfoodfacts/product-database/tree/31f31c441274c095718cc88ae582030a5a615415); this is a reproducibility reference, not evidence that the local file was historically downloaded from that commit. Its actual retrieval date/method remain unknown and are disclosed in [the source and provenance note](docs/01_data_source.md).
+**The main finding is about data coverage, not market size:** 12.2% of Indonesian records have a category tag. That is close to Malaysia (11.3%), below the Philippines (16.7%) and Singapore (17.3%), and far below Thailand (62.6%). Thailand is included as a coverage contrast—not as an equivalent market peer.
 
-The [Open Food Facts terms of reuse](https://world.openfoodfacts.org/terms-of-use) describe ODbL/DbCL terms for the database and individual contents, including attribution and applicable derivative-work conditions. The Hugging Face card also lists AGPL-3.0 but does not clarify its scope. This portfolio publishes only reviewed aggregate results with attribution and source/license links; it does not independently classify those outputs under a particular data license. The MIT License applies only to original project code and documentation—not Open Food Facts data, third-party reference files, or data-derived outputs. This disclosure is not legal advice; see the source note for the accepted limitations.
+Category assignments are incomplete. In Indonesia, 788 of 1,111 category-tagged records receive at least one group under the candidate-based view; 113 do under the stricter approved-only view. Candidate assignments are not all approved, and some records belong to multiple groups. Exact-approved brand mappings cover just 31 Indonesian records (0.34%), too few to describe the broad brand landscape or brand concentration.
+
+**Practical takeaway:** The results are useful for assessing the database's coverage and the quality of its classifications. They are not evidence of all products sold, consumer demand, sales, or market share. Decisions about the commercial market require separate, representative market or sales data.
+
+### Results at a glance
+
+The category assignment figures show records assigned to at least one group: the first number uses taxonomy-derived candidate groupings, and the second uses only exact group decisions that were explicitly approved.
+
+| Country | Role in comparison | Product records | Records with category tags | Category-tag coverage | Assigned to a group (candidate / approved-only) | Records with exact-approved brand mapping |
+|---|---|---:|---:|---:|---:|---:|
+| Indonesia | Focal | 9,118 | 1,111 | 12.2% | 788 / 113 | 31 (0.34%) |
+| Malaysia | Contextual peer | 7,426 | 840 | 11.3% | 620 / 84 | 64 (0.86%) |
+| Philippines | Contextual peer | 9,176 | 1,535 | 16.7% | 1,273 / 158 | 88 (0.96%) |
+| Singapore | Contextual peer | 11,986 | 2,074 | 17.3% | 1,806 / 263 | 341 (2.85%) |
+| Thailand | Coverage contrast | 11,343 | 7,104 | 62.6% | 4,516 / 673 | 46 (0.41%) |
+
+Counts are database records, not verified unique real-world products. “Assigned to a group” counts records with at least one substantive category-group assignment among records that have category tags; groups can overlap. “Exact-approved brand mapping” is the count and share of all country records with a reviewed exact brand-text mapping. Read the [Stage 7 findings](docs/06_stage7_findings_and_recommendations.md) for detailed results, definitions, and caveats.
+
+### What this project does—and does not—answer
+
+- **It does:** compare record counts and category-tag coverage across the approved country scope; show how candidate-based and approved-only category assignments differ; quantify exact-approved brand-mapping coverage.
+- **It does not:** estimate the total products available in a country, identify consumer preferences, or measure sales, revenue, market share, or brand dominance.
+- **Why the distinction matters:** Open Food Facts is a collaboratively maintained database. Differences in record counts or tags can reflect database coverage and contributor activity—not just differences between countries' food markets.
+
+### Project approach, in plain language
+
+The analysis uses one fixed, checksum-identified copy of the source data, checks its quality, and preserves source records rather than silently deleting or merging them. Country, category, and brand mappings are explicit and reviewed. Where evidence is insufficient, values remain unresolved instead of being guessed. SQL and DuckDB build and check the analysis tables; Python runs the repeatable workflow; and results are presented with their coverage and mapping limits.
+
+This is also a demonstration of an end-to-end market-intelligence workflow: source profiling, data-quality controls, relational design, reproducible analysis, evidence-backed interpretation, and clear communication of uncertainty.
+
+### Important limitations
+
+- A record is not necessarily a unique real-world product; product identity and deduplication rules are not established.
+- Category mappings are intentionally incomplete. Candidate-derived assignments are not all approved; approved-only results are narrower. Category groups may overlap.
+- Brand coverage uses only exact, owner-approved source-text mappings and is too sparse for broad brand or concentration analysis.
+- The source is not a representative census of products sold, and no sales or consumer-demand measures are available.
+- The historical retrieval date and method for the local source file are unknown. A matching immutable content reference and file checksum are documented; the limitation is accepted for this scoped portfolio.
+- A new clean-room rebuild of the full database was not repeated because of the storage constraint. The documented procedure, retained full-build validation, and current candidate validations meet the owner-approved Definition of Done; this limitation remains explicit.
 
 ## Project Documents
 
 - [Business brief](docs/00_business_brief.md): questions, measurement rules, scope, and completion criteria.
-- [Data source and provenance](docs/01_data_source.md): source information and provenance items still to complete.
+- [Data source and provenance](docs/01_data_source.md): source details, reproducibility reference, attribution, and accepted provenance limitations.
 - [Data profile](docs/02_data_profile.md): profiling evidence, quality findings, country mapping, and current scope.
 - [Analysis workflow](docs/03_analysis_workflow.md): ordered stages, quality gates, current status, and Definition of Done traceability.
 - [Relational schema design](docs/04_relational_schema_design.md): approved logical schema, physical table inventory, and Stage 4 build status.
@@ -21,6 +58,12 @@ The [Open Food Facts terms of reuse](https://world.openfoodfacts.org/terms-of-us
 - [Stage 7 findings and recommendations](docs/06_stage7_findings_and_recommendations.md): executive summary, evidence-backed findings, and limitations for the validated Stage 6 outputs.
 - [Project log](docs/99_project_log.md): material project decisions and status.
 - [Category reporting-group framework](data/reference/category_reporting_group_framework.csv): approved group labels; taxonomy-tag assignments remain under review.
+
+## Data, Attribution, and License
+
+The Open Food Facts source snapshot, database files, record-level extracts, and pinned taxonomy are not included. The local Parquet is identified by its SHA-256 and a [content-matching immutable Hugging Face commit](https://huggingface.co/datasets/openfoodfacts/product-database/tree/31f31c441274c095718cc88ae582030a5a615415); this is a reproducibility reference, not evidence that the local file was historically downloaded from that commit. Its actual retrieval date/method remain unknown and are disclosed in [the source and provenance note](docs/01_data_source.md).
+
+The [Open Food Facts terms of reuse](https://world.openfoodfacts.org/terms-of-use) describe ODbL/DbCL terms for the database and individual contents, including attribution and applicable derivative-work conditions. The Hugging Face card also lists AGPL-3.0 but does not clarify its scope. This portfolio publishes only reviewed aggregate results with attribution and source/license links; it does not independently classify those outputs under a particular data license. The MIT License applies only to original project code and documentation—not Open Food Facts data, third-party reference files, or data-derived outputs. This disclosure is not legal advice; see the source note for the accepted limitations.
 
 ## Repository Structure
 
@@ -37,7 +80,11 @@ The [Open Food Facts terms of reuse](https://world.openfoodfacts.org/terms-of-us
 
 Only a reviewed allowlist of country/category aggregate and validation CSVs is tracked. Generated profiling inventories, record-level evidence, source data, the pinned taxonomy file, virtual environments, caches, and DuckDB files are excluded from Git.
 
-## Current Profiling Workflow
+## Technical Guide: Reproducing the Analysis
+
+The following instructions are for analysts and developers who want to reproduce or extend the work. The executive summary and findings above can be read without running the code.
+
+### Current Profiling Workflow
 
 Prerequisites: create `data/raw/` and place the documented Open Food Facts Parquet snapshot at `data/raw/food.parquet`. The dataset is intentionally excluded from Git due to its size. Use Python and install dependencies from `requirements.txt`.
 
@@ -109,7 +156,7 @@ This writes separate tag-level counts and before/after candidate-derived and app
 
 Generated CSVs are written under `outputs/profiling/` and `outputs/quality/`. See [02_data_profile.md](docs/02_data_profile.md) for definitions, results, and limitations.
 
-## Relational Database Build
+### Relational Database Build
 
 The Stage 4 build requires the project virtual environment and the existing local Parquet, taxonomy, mapping, crosswalk, and country-profile inputs. No package installation is needed beyond `requirements.txt`. From the repository root, run:
 
@@ -119,6 +166,12 @@ The Stage 4 build requires the project virtual environment and the existing loca
 
 The builder verifies the expected source file size and SHA-256 and the pinned taxonomy SHA-256, then runs `sql/01_build_relational_database.sql` and `sql/02_validate_relational_database.sql`. It refuses to overwrite an existing database. A successful build creates `data/processed/global_product_landscape.duckdb` and `outputs/quality/database_build_validation.csv`. Review the report before using the database; a successful process exit is required for all checks to pass.
 
-## Project Status
+## Project Status and Reproducibility
 
-Initial profiling, relational design/build, and the bounded Stage 5–7 analysis are complete for the documented scope. Broader category and brand harmonization remains intentionally incomplete; unresolved values are not automatically approved. Use `scripts\16_refresh_harmonized_analysis.py` to regenerate deterministic single-group candidates and dependent analytical outputs after maintained mapping inputs change. Stage 0 is accepted for the scoped aggregate portfolio with the historical retrieval event and Hugging Face AGPL metadata scope explicitly unresolved; the source hash and a content-matching immutable reference are documented. Open Food Facts attribution and applicable terms are disclosed; MIT applies only to original project code and documentation, not data-derived outputs. Stage 8 is accepted under the owner-approved storage-constrained Definition of Done: pinned source/taxonomy checksums and retained full-build, candidate, Stage 5, and Stage 6 validation reports pass, and rebuild prerequisites and commands are documented. The two additional-three impact-audit CSVs are small aggregate evidence and are included in the repository allowlist. A clean-room full rebuild has not been repeated because the existing 15.1-GB database must be preserved and no backup is permitted; the Parquet source and pinned taxonomy must be supplied locally because Git excludes them. On 2026-11-04, the sanitized history was force-pushed to GitHub `main` with an exact lease; the local `main` now tracks the published commit. The four legacy sample-record paths are absent from every commit tree reachable from the published branch. A force-push cannot revoke prior clones or guarantee removal of cached GitHub objects, and local Git may retain unreachable pre-rewrite objects. No data backup has been created. See the [relational schema design](docs/04_relational_schema_design.md), [analysis specification](docs/05_analysis_specification.md), [Stage 7 findings](docs/06_stage7_findings_and_recommendations.md), and [analysis workflow](docs/03_analysis_workflow.md) for assumptions and gate status; see the [business brief](docs/00_business_brief.md) for the full Definition of Done.
+The bounded Stage 1–7 analysis and Stage 8 release acceptance are complete for the documented scope. Category and brand harmonization remains intentionally incomplete; uncertain values are not guessed or automatically approved. If maintained mappings change, use `scripts\16_refresh_harmonized_analysis.py` to regenerate dependent evidence and analysis.
+
+The owner-approved, storage-constrained Definition of Done accepts the documented rebuild procedure, the retained passing full-build validation, and current candidate validations without a new clean-room full rebuild. The clean-room rebuild was not repeated; no backup was created. The source Parquet and pinned taxonomy must be supplied locally because they are excluded from Git. Stage 0 provenance and the Hugging Face AGPL metadata scope retain the limitations described above and in the [source note](docs/01_data_source.md).
+
+The sanitized history is published on GitHub [`main`](https://github.com/MaulanaKindi/indonesia-food-product-landscape). The four legacy sample-record paths are absent from every commit tree reachable from the published branch. A force-push cannot revoke prior clones or guarantee removal of cached GitHub objects, and local Git may retain unreachable pre-rewrite objects.
+
+For detailed assumptions and evidence, see the [relational schema design](docs/04_relational_schema_design.md), [analysis specification](docs/05_analysis_specification.md), [Stage 7 findings](docs/06_stage7_findings_and_recommendations.md), and [analysis workflow](docs/03_analysis_workflow.md); the [business brief](docs/00_business_brief.md) contains the full Definition of Done.
