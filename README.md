@@ -4,7 +4,7 @@ An exploratory market-intelligence portfolio project about what Open Food Facts 
 
 ## TL;DR / Executive Summary
 
-This project compares product records listed in a pinned Open Food Facts snapshot. It asks how many records are associated with Indonesia, Malaysia, the Philippines, Singapore, and Thailand; how often those records have category tags; and how results change when category groupings are based on candidate mappings versus exact, owner-approved decisions.
+This project compares product records listed in a pinned Open Food Facts snapshot. It asks how many records are associated with Indonesia, Malaysia, the Philippines, Singapore, and Thailand; how often those records have category tags; and how results change when category groupings are based on candidate mappings versus exact.
 
 **The main finding is about data coverage, not market size:** 12.2% of Indonesian records have a category tag. That is close to Malaysia (11.3%), below the Philippines (16.7%) and Singapore (17.3%), and far below Thailand (62.6%). Thailand is included as a coverage contrast—not as an equivalent market peer.
 
@@ -42,10 +42,10 @@ This is also a demonstration of an end-to-end market-intelligence workflow: sour
 
 - A record is not necessarily a unique real-world product; product identity and deduplication rules are not established.
 - Category mappings are intentionally incomplete. Candidate-derived assignments are not all approved; approved-only results are narrower. Category groups may overlap.
-- Brand coverage uses only exact, owner-approved source-text mappings and is too sparse for broad brand or concentration analysis.
+- Brand coverage uses only exact, source-text mappings and is too sparse for broad brand or concentration analysis.
 - The source is not a representative census of products sold, and no sales or consumer-demand measures are available.
 - The historical retrieval date and method for the local source file are unknown. A matching immutable content reference and file checksum are documented; the limitation is accepted for this scoped portfolio.
-- A new clean-room rebuild of the full database was not repeated because of the storage constraint. The documented procedure, retained full-build validation, and current candidate validations meet the owner-approved Definition of Done; this limitation remains explicit.
+- A new clean-room rebuild of the full database was not repeated because of the storage constraint. The documented procedure, retained full-build validation, and current candidate validations meet the Definition of Done; this limitation remains explicit.
 
 ## Project Documents
 
@@ -54,7 +54,7 @@ This is also a demonstration of an end-to-end market-intelligence workflow: sour
 - [Data profile](docs/02_data_profile.md): profiling evidence, quality findings, country mapping, and current scope.
 - [Analysis workflow](docs/03_analysis_workflow.md): ordered stages, quality gates, current status, and Definition of Done traceability.
 - [Relational schema design](docs/04_relational_schema_design.md): approved logical schema, physical table inventory, and Stage 4 build status.
-- [Analysis specification](docs/05_analysis_specification.md): owner-approved Stage 5 scope, denominator decisions, and Stage 6 output limits.
+- [Analysis specification](docs/05_analysis_specification.md): Stage 5 scope, denominator decisions, and Stage 6 output limits.
 - [Stage 7 findings and recommendations](docs/06_stage7_findings_and_recommendations.md): executive summary, evidence-backed findings, and limitations for the validated Stage 6 outputs.
 - [Project log](docs/99_project_log.md): material project decisions and status.
 - [Category reporting-group framework](data/reference/category_reporting_group_framework.csv): approved group labels; taxonomy-tag assignments remain under review.
@@ -118,7 +118,7 @@ After the relational database is built, generate the Stage 5 country-peer eviden
 
 This offline profiling step reads the validated DuckDB and existing country/category/non-food outputs. It writes the snapshot-pinned 107-unit evidence table to `outputs/profiling/stage5_country_peer_evidence.csv`; it does not select peers or create Stage 6 analysis results.
 
-Run the owner-approved Stage 6 descriptive analysis with:
+Run the Stage 6 descriptive analysis with:
 
 ```powershell
 .\.venv\Scripts\python.exe .\scripts\13_run_stage6_analysis.py
@@ -138,9 +138,9 @@ For an automated refresh after maintained mapping inputs change, run:
 .\.venv\Scripts\python.exe .\scripts\16_refresh_harmonized_analysis.py
 ```
 
-This refreshes category and brand profiling/validation, regenerates the taxonomy-based candidate crosswalk and review queues, builds a temporary validated candidate database, regenerates Stage 5 and Stage 6 evidence, and refreshes the data-driven tables in the Stage 7 findings. It publishes the Stage 5/6 outputs and Stage 7 tables only after the candidate (15 checks) and analysis (11 checks) pass; validation reports and a refresh summary are retained under `outputs/quality/`. The temporary database is removed at the end. Exact owner-approved mapping inputs are never silently edited: only the existing deterministic single-group candidate rules are applied automatically; multi-group, unmatched, residual, and other ambiguous tags remain unresolved and visible. Review and update exact manual decisions only with evidence and explicit approval.
+This refreshes category and brand profiling/validation, regenerates the taxonomy-based candidate crosswalk and review queues, builds a temporary validated candidate database, regenerates Stage 5 and Stage 6 evidence, and refreshes the data-driven tables in the Stage 7 findings. It publishes the Stage 5/6 outputs and Stage 7 tables only after the candidate (15 checks) and analysis (11 checks) pass; validation reports and a refresh summary are retained under `outputs/quality/`. The temporary database is removed at the end. Exact mapping inputs are never silently edited: only the existing deterministic single-group candidate rules are applied automatically; multi-group, unmatched, residual, and other ambiguous tags remain unresolved and visible. Review and update exact manual decisions only with evidence and explicit approval.
 
-The initial five owner-approved category decisions and their impact on ID, MY, PH, SG, and TH can be reproduced with the default audit:
+The initial five category decisions and their impact on ID, MY, PH, SG, and TH can be reproduced with the default audit:
 
 ```powershell
 .\.venv\Scripts\python.exe .\scripts\14_stage2_selected_scope_mapping_impact.py
@@ -170,7 +170,7 @@ The builder verifies the expected source file size and SHA-256 and the pinned ta
 
 The bounded Stage 1–7 analysis and Stage 8 release acceptance are complete for the documented scope. Category and brand harmonization remains intentionally incomplete; uncertain values are not guessed or automatically approved. If maintained mappings change, use `scripts\16_refresh_harmonized_analysis.py` to regenerate dependent evidence and analysis.
 
-The owner-approved, storage-constrained Definition of Done accepts the documented rebuild procedure, the retained passing full-build validation, and current candidate validations without a new clean-room full rebuild. The clean-room rebuild was not repeated; no backup was created. The source Parquet and pinned taxonomy must be supplied locally because they are excluded from Git. Stage 0 provenance and the Hugging Face AGPL metadata scope retain the limitations described above and in the [source note](docs/01_data_source.md).
+Storage-constrained Definition of Done accepts the documented rebuild procedure, the retained passing full-build validation, and current candidate validations without a new clean-room full rebuild. The clean-room rebuild was not repeated; no backup was created. The source Parquet and pinned taxonomy must be supplied locally because they are excluded from Git. Stage 0 provenance and the Hugging Face AGPL metadata scope retain the limitations described above and in the [source note](docs/01_data_source.md).
 
 The sanitized history is published on GitHub [`main`](https://github.com/MaulanaKindi/indonesia-food-product-landscape). The four legacy sample-record paths are absent from every commit tree reachable from the published branch. A force-push cannot revoke prior clones or guarantee removal of cached GitHub objects, and local Git may retain unreachable pre-rewrite objects.
 
