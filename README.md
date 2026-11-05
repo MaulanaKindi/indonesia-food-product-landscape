@@ -1,4 +1,4 @@
-# Indonesia Food Product Landscape (ON PROGRESS)
+# Indonesia Food Product Landscape (In Revision)
 
 An exploratory market-intelligence portfolio project about what Open Food Facts records show—and do not show—about food-product categories in Indonesia and four comparison countries.
 
