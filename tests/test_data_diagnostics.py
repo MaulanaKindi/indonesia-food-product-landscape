@@ -134,6 +134,33 @@ def test_contributor_and_year_diagnostics_reconcile_to_country_rows(
     assert int(indonesia["unique_creators"]) == 10
     assert int(indonesia["valid_year_records"]) == 80
     assert int(indonesia_years["year_records"].sum()) == 80
+    assert int(indonesia["peak_creator_day_records"]) <= 80
+    assert 0 <= float(indonesia["peak_creator_day_share_of_country_records_pct"]) <= 100
+    assert 0 <= float(indonesia["top_5_category_tag_coverage_pct"]) <= 100
+    assert 0 <= float(indonesia["other_named_creator_category_tag_coverage_pct"]) <= 100
+
+
+def test_online_evidence_audit_covers_every_disputed_sample_record() -> None:
+    evidence = _read_csv(
+        PROJECT_ROOT
+        / "outputs"
+        / "quality"
+        / "category_mapping_online_evidence_audit.csv"
+    )
+    record_ids = [row["source_record_id"] for row in evidence]
+
+    assert len(evidence) == 48
+    assert len(set(record_ids)) == len(record_ids)
+    assert all(row["online_review_status"] != "not_yet_researched" for row in evidence)
+    assert all(
+        row["source_url"]
+        for row in evidence
+        if row["identifier_match"] == "yes"
+    )
+    assert all(
+        row["identifier_match"] in {"", "yes", "no", "partial", "product_name"}
+        for row in evidence
+    )
 
 
 def test_mapping_inputs_have_no_conflicting_decisions_or_invalid_groups() -> None:

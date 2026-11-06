@@ -133,13 +133,13 @@ The scorecard separates raw field availability from exact-approved brand harmoni
 The following summaries measure concentration among records and their recorded source tags. They do not establish why a record was added or whether a contributor imported products in bulk.
 
 <!-- AUTO-GENERATED: contributor-diagnostics:START -->
-| ISO | Distinct creator values | Top-five creator share | Peak creation year | Peak-year share of dated rows | Peak-day share of dated rows |
-|---|---:|---:|---:|---:|---:|
-| ID | 161 | 87.50% | 2025 | 29.84% | 1.41% |
-| MY | 134 | 84.41% | 2026 | 35.27% | 2.36% |
-| PH | 140 | 85.96% | 2026 | 27.16% | 3.59% |
-| SG | 177 | 82.44% | 2025 | 25.29% | 0.98% |
-| TH | 231 | 81.69% | 2025 | 18.53% | 1.15% |
+| ISO | Distinct creator values | Top-five creator share | Peak creation year | Peak-year share of dated rows | Peak-day share of dated rows | Largest one-creator/day batch (country share) | Batch category-tag coverage | Top-five category-tag coverage | Other named creators' category-tag coverage | Missing-creator category-tag coverage |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| ID | 161 | 87.50% | 2025 | 29.84% | 1.41% | 127 (1.39%) | 0.79% | 7.26% | 46.67% | — |
+| MY | 134 | 84.41% | 2026 | 35.27% | 2.36% | 130 (1.75%) | 12.31% | 6.89% | 35.23% | — |
+| PH | 140 | 85.96% | 2026 | 27.16% | 3.59% | 328 (3.57%) | 25.91% | 10.07% | 57.53% | — |
+| SG | 177 | 82.44% | 2025 | 25.29% | 0.98% | 116 (0.97%) | 20.69% | 10.43% | 49.55% | — |
+| TH | 231 | 81.69% | 2025 | 18.53% | 1.15% | 130 (1.15%) | 100.00% | 61.76% | 66.49% | — |
 
 Top three `data_sources_tags` by record count for Indonesia and Thailand:
 
@@ -153,7 +153,9 @@ Top three `data_sources_tags` by record count for Indonesia and Thailand:
 | TH | `app-macrofactor` | 2,390 | 21.07% | 36.03% |
 <!-- AUTO-GENERATED: contributor-diagnostics:END -->
 
-The yearly record table and top source-tag coverage are available in `outputs/profiling/record_creation_year.csv` and `outputs/profiling/source_tag_coverage.csv`. `created_t` is a record-creation timestamp, not a product launch date. Source-tag/category-coverage associations are not causal explanations for country differences.
+The yearly record table and top source-tag coverage are available in `outputs/profiling/record_creation_year.csv` and `outputs/profiling/source_tag_coverage.csv`. `created_t` is a record-creation timestamp, not a product launch date. The busiest single creator-day ranges from 116 to 328 country records (0.97%–3.57% of each country total). This does not show a country-wide mass-import event. Thailand's category-tag coverage is 62.6%; its top five creators account for 81.69% of records, and category-tag coverage is 61.76% for top-five creators versus 66.49% for other named creators. These descriptive differences cannot identify an import mechanism.
+
+The Open Food Facts schema defines `sources[].import_t` as a source import timestamp, but the pinned 111-column snapshot used here has neither a `sources` field nor `import_t` ([product schema](https://openfoodfacts.github.io/documentation/docs/Product-Opener/schemas/schemas/product/)). Therefore, the bulk-import hypothesis is **not testable from this snapshot**. Creator-day peaks and source tags are indirect diagnostics only; no import event or automated transfer is inferred.
 
 ### 8. Product-code overlap is small and does not establish regional commerce
 
@@ -238,7 +240,7 @@ Exact-set agreement across all primary records is 61/150 (40.7%; approximate 95%
 
 Among determinate records, the reviewer supported 57 group pairs absent from the candidate sets, across 50 records. This is an AI-label omission diagnostic, not objective recall.
 
-The diagnostic `food_groups_tags` cross-check exactly matched 17/104 comparable records (16.3%) and had any overlap for 96/104 (92.3%). These tags are not a gold standard and did not inform the independent labels.
+The diagnostic `food_groups_tags` cross-check exactly matched 17/104 comparable records (16.3%) and had any overlap for 96/104 (92.3%). These tags are not a gold standard and did not inform the AI-assisted labels.
 
 ### Error analysis and external evidence
 
@@ -259,15 +261,17 @@ Selected official product-page checks are recorded alongside the affected record
 
 The 150-record sample is a fixed MD5-ranked sample, not a literal random draw. Approximate 95% intervals use first-order Taylor linearization with a finite-population correction, conditional on the hash ordering approximating simple random sampling without replacement; sparse per-group intervals are suppressed. These intervals describe sampling uncertainty only, not the reliability, calibration, or independence of AI judgments. The assessment is AI-assisted, not human annotation: the separate-context reviewer received product fields but not category tags or candidate mappings, while the coordinating workflow had previously inspected those materials. Reviewer confidence is self-assessed, not calibrated.
 
+The targeted online follow-up reviewed all 48 disputed or uncertain primary-sample records: 30 had supporting product evidence and 18 remained partial or unresolved. 36 records have a source URL and 29 have an exact product-code match. Because records were selected by disagreement/uncertainty, these counts are not a sample-wide accuracy estimate.
+
 No mappings, candidate-generation rules, source records, or original analytical results were changed. The 8-record Meat & poultry census is descriptive and is not pooled into the primary estimate.
 
-Record-level annotations, product evidence, source URLs, and generated metrics: [semantic audit records](../outputs/quality/category_mapping_semantic_audit_records.csv), [review labels](../outputs/quality/category_mapping_semantic_audit_labels.csv), [overall metrics](../outputs/quality/category_mapping_semantic_audit_summary.csv), and [per-group metrics](../outputs/quality/category_mapping_semantic_audit_by_group.csv).
+Record-level annotations, product evidence, source URLs, and generated metrics: [semantic audit records](../outputs/quality/category_mapping_semantic_audit_records.csv), [review labels](../outputs/quality/category_mapping_semantic_audit_labels.csv), [online evidence log](../outputs/quality/category_mapping_online_evidence_audit.csv), [overall metrics](../outputs/quality/category_mapping_semantic_audit_summary.csv), and [per-group metrics](../outputs/quality/category_mapping_semantic_audit_by_group.csv).
 <!-- AUTO-GENERATED: semantic-mapping-audit:END -->
 
 ## Recommendations
 
 1. Use the record-based country totals and clearly labeled category assignment tables as descriptive evidence only. Keep ID focal, MY/PH/SG contextual, and TH as the coverage contrast.
-2. Show category-tag coverage and both assignment bases alongside every category interpretation. Prioritize human review of taxonomy-driven sauce assignments and contradictory source-category cases; do not change mappings from AI labels alone.
+2. Show category-tag coverage and both assignment bases alongside every category interpretation. Use the online evidence log to prioritize specific disputed records; do not change broad mapping rules from targeted AI or web checks alone.
 3. Keep the exact-approved brand results as a coverage diagnostic only. Do not calculate HHI or broad brand concentration from this mapping subset.
 4. Preserve all three non-food scenarios. Do not replace the baseline with an exclusion scenario.
 5. Do not reopen Stage 2 broadly. The eight bounded category decisions and four exact brand-spelling decisions are included in the validated Stage 6 outputs. Revisit an exact category, country, or brand mapping only if a concrete finding or proposed conclusion is materially affected; document the evidence, approve the change, then rerun and revalidate affected analyses.

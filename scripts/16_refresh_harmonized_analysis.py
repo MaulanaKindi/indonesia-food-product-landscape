@@ -36,6 +36,7 @@ SEMANTIC_AUDIT_SUMMARY_FILE = (
 SEMANTIC_AUDIT_GROUP_FILE = (
     QUALITY_DIR / "category_mapping_semantic_audit_by_group.csv"
 )
+ONLINE_AUDIT_FILE = QUALITY_DIR / "category_mapping_online_evidence_audit.csv"
 VISUAL_DIR = PROJECT_ROOT / "docs" / "img"
 VISUAL_NAMES = (
     "category_coverage.png",
@@ -360,6 +361,14 @@ def render_readme(
     audit_unresolved = int(audit["ambiguous_assignments"]) + int(
         audit["insufficient_evidence_assignments"]
     )
+    online_audit = read_csv(ONLINE_AUDIT_FILE)
+    online_source_count = int(online_audit["source_url"].ne("").sum())
+    online_exact_code_count = int(
+        online_audit["identifier_match"].eq("yes").sum()
+    )
+    online_supported_count = int(
+        online_audit["online_review_status"].eq("researched_supports").sum()
+    )
     headline = "\n".join(
         [
             (
@@ -386,16 +395,19 @@ def render_readme(
                 f"{float(id_brand['approved_brand_mapping_coverage_pct_of_country_rows']):.2f}%."
             ),
             (
-                f"- **AI-assisted mapping check:** {int(audit['correct_assignments'])}/"
+                f"- **AI + online mapping audit:** {int(audit['correct_assignments'])}/"
                 f"{int(audit['candidate_assignment_pairs'])} candidate assignments "
                 f"were judged correct ({int(audit['manual_exact_overlap_assignment_pairs'])} "
-                f"also have exact-manual mappings); {int(audit['incorrect_assignments'])} disagreed "
+                f"also align with exact-reviewed mappings); {int(audit['incorrect_assignments'])} disagreed "
                 f"and {audit_unresolved} were unresolved. Exact group-set agreement "
                 f"was {int(audit['exact_set_matches'])}/"
                 f"{int(audit['records_reviewed'])} "
                 f"({100 * float(audit['record_exact_set_agreement_all_records']):.1f}%). "
-                "AI assessment, not human ground truth; "
-                "[record-level audit](outputs/quality/category_mapping_semantic_audit_records.csv)."
+                f"Online follow-up found supporting product evidence for {online_supported_count}/48 cases; "
+                f"{online_source_count} have a source URL and {online_exact_code_count} match the exact product code. "
+                "Targeted, non-random, and not human ground truth; "
+                "[AI audit](outputs/quality/category_mapping_semantic_audit_records.csv) · "
+                "[online evidence](outputs/quality/category_mapping_online_evidence_audit.csv)."
             ),
         ]
     )
@@ -769,19 +781,30 @@ def render_stage7(
     for iso in COUNTRIES:
         row = contributors_by_country.loc[iso]
         peak_year = int(row["peak_creation_year"])
+        missing_creator_coverage = (
+            f"{float(row['missing_creator_category_tag_coverage_pct']):.2f}%"
+            if str(row["missing_creator_category_tag_coverage_pct"]).strip()
+            else "—"
+        )
         contributor_rows.append(
             f"| {iso} | {int(row['unique_creators']):,} | "
             f"{float(row['top_5_creator_share_pct']):.2f}% | {peak_year} | "
             f"{float(row['peak_year_share_of_dated_records_pct']):.2f}% | "
-            f"{float(row['peak_day_share_of_dated_records_pct']):.2f}% |"
+            f"{float(row['peak_day_share_of_dated_records_pct']):.2f}% | "
+            f"{int(row['peak_creator_day_records']):,} "
+            f"({float(row['peak_creator_day_share_of_country_records_pct']):.2f}%) | "
+            f"{float(row['peak_creator_day_category_tag_coverage_pct']):.2f}% | "
+            f"{float(row['top_5_category_tag_coverage_pct']):.2f}% | "
+            f"{float(row['other_named_creator_category_tag_coverage_pct']):.2f}% | "
+            f"{missing_creator_coverage} |"
         )
     document = replace_generated_section(
         document,
         "contributor-diagnostics",
         "\n".join(
             [
-                "| ISO | Distinct creator values | Top-five creator share | Peak creation year | Peak-year share of dated rows | Peak-day share of dated rows |",
-                "|---|---:|---:|---:|---:|---:|",
+                "| ISO | Distinct creator values | Top-five creator share | Peak creation year | Peak-year share of dated rows | Peak-day share of dated rows | Largest one-creator/day batch (country share) | Batch category-tag coverage | Top-five category-tag coverage | Other named creators' category-tag coverage | Missing-creator category-tag coverage |",
+                "|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|",
                 *contributor_rows,
                 "",
                 "Top three `data_sources_tags` by record count for Indonesia and Thailand:",
@@ -849,6 +872,17 @@ def render_stage7(
     audit_census = semantic_audit_summary.loc[
         semantic_audit_summary["analysis_scope"].eq("meat_poultry_census")
     ].iloc[0]
+    online_audit = read_csv(ONLINE_AUDIT_FILE)
+    online_source_count = int(online_audit["source_url"].ne("").sum())
+    online_exact_code_count = int(
+        online_audit["identifier_match"].eq("yes").sum()
+    )
+    online_supported_count = int(
+        online_audit["online_review_status"].eq("researched_supports").sum()
+    )
+    online_partial_count = int(
+        online_audit["online_review_status"].eq("researched_partial").sum()
+    )
     meat_census_group = semantic_audit_groups.loc[
         semantic_audit_groups["analysis_scope"].eq("meat_poultry_census")
         & semantic_audit_groups["reporting_group_id"].eq("meat_poultry")
@@ -1056,7 +1090,7 @@ def render_stage7(
             f"and had any overlap for {int(audit_primary['food_groups_any_overlap_records'])}/"
             f"{int(audit_primary['food_groups_comparable_records'])} "
             f"({100 * float(audit_primary['food_groups_any_overlap_rate']):.1f}%). "
-            "These tags are not a gold standard and did not inform the independent labels.",
+            "These tags are not a gold standard and did not inform the AI-assisted labels.",
             "",
             "### Error analysis and external evidence",
             "",
@@ -1075,9 +1109,11 @@ def render_stage7(
             "",
             "The 150-record sample is a fixed MD5-ranked sample, not a literal random draw. Approximate 95% intervals use first-order Taylor linearization with a finite-population correction, conditional on the hash ordering approximating simple random sampling without replacement; sparse per-group intervals are suppressed. These intervals describe sampling uncertainty only, not the reliability, calibration, or independence of AI judgments. The assessment is AI-assisted, not human annotation: the separate-context reviewer received product fields but not category tags or candidate mappings, while the coordinating workflow had previously inspected those materials. Reviewer confidence is self-assessed, not calibrated.",
             "",
+            f"The targeted online follow-up reviewed all {len(online_audit)} disputed or uncertain primary-sample records: {online_supported_count} had supporting product evidence and {online_partial_count} remained partial or unresolved. {online_source_count} records have a source URL and {online_exact_code_count} have an exact product-code match. Because records were selected by disagreement/uncertainty, these counts are not a sample-wide accuracy estimate.",
+            "",
             "No mappings, candidate-generation rules, source records, or original analytical results were changed. The 8-record Meat & poultry census is descriptive and is not pooled into the primary estimate.",
             "",
-            "Record-level annotations, product evidence, source URLs, and generated metrics: [semantic audit records](../outputs/quality/category_mapping_semantic_audit_records.csv), [review labels](../outputs/quality/category_mapping_semantic_audit_labels.csv), [overall metrics](../outputs/quality/category_mapping_semantic_audit_summary.csv), and [per-group metrics](../outputs/quality/category_mapping_semantic_audit_by_group.csv).",
+            "Record-level annotations, product evidence, source URLs, and generated metrics: [semantic audit records](../outputs/quality/category_mapping_semantic_audit_records.csv), [review labels](../outputs/quality/category_mapping_semantic_audit_labels.csv), [online evidence log](../outputs/quality/category_mapping_online_evidence_audit.csv), [overall metrics](../outputs/quality/category_mapping_semantic_audit_summary.csv), and [per-group metrics](../outputs/quality/category_mapping_semantic_audit_by_group.csv).",
         ]
     )
     document = replace_generated_section(

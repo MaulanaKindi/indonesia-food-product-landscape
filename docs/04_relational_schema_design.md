@@ -14,7 +14,7 @@ Stage 2 has completed a bounded category and brand review for the selected analy
 - Preserve the source snapshot, values, types, arrays, and structs without destructive rewriting.
 - Model country, category, and brand associations so multi-valued fields do not cause accidental row multiplication.
 - Keep exact source identifiers separate from canonical or reporting assignments.
-- Make unresolved, excluded, candidate, and owner-approved mapping states auditable.
+- Make unresolved, excluded, candidate, and explicitly approved mapping states auditable.
 - Normalize only relationships required for the business questions. Keep other source arrays and nested fields in the raw record until a demonstrated analysis need justifies additional tables.
 
 ## Proposed Logical Entities and Grain
@@ -32,8 +32,8 @@ Stage 2 has completed a bounded category and brand review for the selected analy
 | `category_tag` | One row per exact observed category tag | Unique `source_category_tag` | Stores exact source spelling/case and taxonomy-match facts from the generated crosswalk. |
 | `record_category_tag` | One row per source record and exact category tag | Unique `(source_record_id, source_category_tag)` | Preserves many-to-many category-tag assignments, including tags later excluded or left unresolved. |
 | `reporting_group` | One row per project reporting group | Unique `reporting_group_id` | Stores the approved group labels and display order. `other_unclassified` remains diagnostic-only. |
-| `category_tag_group_decision` | One row per exact source category tag and mapping version | Unique `(source_category_tag, mapping_version)`; nullable selected group | Stores assignment/disposition status, selected owner-approved group when present, rationale, evidence tags, and the source's serialized co-occurrence evidence. Unresolved/excluded tags have no substantive selected group. |
-| `category_tag_group_candidate` | One row per exact source category tag, mapping version, candidate group, and candidate role | Unique composite of tag, version, group, and role | Stores candidate groups and diagnostic residual membership separately from owner-approved decisions. |
+| `category_tag_group_decision` | One row per exact source category tag and mapping version | Unique `(source_category_tag, mapping_version)`; nullable selected group | Stores assignment/disposition status, selected explicitly approved group when present, rationale, evidence tags, and the source's serialized co-occurrence evidence. Unresolved/excluded tags have no substantive selected group. |
+| `category_tag_group_candidate` | One row per exact source category tag, mapping version, candidate group, and candidate role | Unique composite of tag, version, group, and role | Stores candidate groups and diagnostic residual membership separately from explicitly approved decisions. |
 | `record_brand_source_value` | One row per source record with a non-empty raw `brands` value | Unique `source_record_id` | Holds the complete raw `brands` field value. Multi-brand text is not split. |
 | `brand_name_mapping` | One row per exact source brand text and mapping version | Unique `(source_brand_name, mapping_version)` | Stores the approved exact source-text mappings. Mapping version is a SHA-256 over the mapping file. |
 | `record_brand_tag` | One row per source record and exact `brands_tags` value | Unique `(source_record_id, source_brand_tag)` | Preserves the separate `brands_tags` array. No equivalence to `brands` text is inferred. |

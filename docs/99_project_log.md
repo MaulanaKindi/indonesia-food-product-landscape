@@ -43,3 +43,9 @@ Short records of decisions that affect scope, measurement, or reproducibility.
 **Decision:** Publish the fixed-sample AI-assisted audit labels and record-level audit outputs for the 150-record Indonesian sample and separate eight-record Meat & poultry census. Keep the unlabeled human-review sample local.
 
 **Reason:** The audit makes candidate-mapping uncertainty visible, but AI judgments are not independent human validation or ground truth. Report its estimates and sampling intervals only as conditional diagnostics, with their limitations stated alongside them.
+
+## 2026-11-06 — Add targeted online evidence follow-up
+
+**Decision:** Search product-identifying information online for all 48 primary-sample records with disputed or uncertain AI assessments and publish a structured evidence log.
+
+**Reason:** Exact product pages can help resolve particular records, but the follow-up is selected by observed uncertainty. Source match quality is recorded explicitly; no population-level precision or human-ground-truth claim is derived from it.

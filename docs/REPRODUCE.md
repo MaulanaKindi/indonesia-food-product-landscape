@@ -74,7 +74,7 @@ All reported rates use records in the stated country or comparison subset as the
 
 ## AI-assisted semantic mapping audit
 
-The completed AI-assisted audit evaluates the fixed sample of 150 Indonesian category-tagged records and separately reports a census of eight Meat & poultry candidates. Its label file contains AI-assisted judgments and evidence references; it is not human annotation or ground truth. These outputs are published as a narrowly scoped diagnostic under the project publication policy.
+The completed AI-assisted audit evaluates the fixed sample of 150 Indonesian category-tagged records and separately reports a census of eight Meat & poultry candidates. Its label file contains AI-assisted judgments and evidence references; it is not human annotation or ground truth. A web follow-up was then performed for all 48 sample records whose AI assessment was disputed or uncertain. The separate online evidence log documents the URL, source type, exact-code match, access date, evidence summary, and unresolved cases. This targeted follow-up is published as a diagnostic under the project publication policy.
 
 After building the canonical database, create the deterministic sample only if `data/private/category_mapping_audit_sample.csv` is absent; the preparation script refuses to overwrite an existing file. Then rebuild the record-level and aggregate audit outputs:
 
@@ -87,7 +87,9 @@ The evaluator verifies the pinned snapshot, the deterministic sample membership,
 
 Assignment-level determinate precision is correct / (correct + incorrect); a separate confirmed share retains ambiguous and insufficient-evidence assignments in the denominator. Record exact-set agreement, per-group precision, uncertainty rates, and the diagnostic-only `food_groups_tags` comparison are also reported. The separate eight-record census is not pooled with the primary estimate.
 
-Approximate 95% intervals use first-order Taylor linearization with a finite-population correction, conditional on the fixed MD5-ranked sample approximating simple random sampling without replacement. Sparse per-group intervals are suppressed, and zero-residual-variance intervals are not reported. The intervals quantify sampling uncertainty only—not AI-judgment reliability, calibration, or independence. This is AI-assisted semantic assessment, not independent human annotation; reviewer confidence is self-assessed. External product-page checks are recorded for only the specific records where they helped resolve ambiguity.
+Approximate 95% intervals use first-order Taylor linearization with a finite-population correction, conditional on the fixed MD5-ranked sample approximating simple random sampling without replacement. Sparse per-group intervals are suppressed, and zero-residual-variance intervals are not reported. The intervals quantify sampling uncertainty only—not AI-judgment reliability, calibration, or independence. This is AI-assisted semantic assessment, not independent human annotation; reviewer confidence is self-assessed.
+
+The follow-up online evidence log covers every sample record with a disputed or uncertain AI assessment. It records the URL, source type, exact-code match, access date, and a concise evidence summary. Prefer manufacturer, regulator, or official product-specification evidence; retailer listings and secondary barcode/product databases are fallback evidence and are labeled as such. A product-family or related-variant page does not count as an exact-code match. A no-result search remains unresolved, not a contradiction. Open Food Facts-derived pages are not independent corroboration of Open Food Facts data. Because the follow-up is targeted by observed disagreement/uncertainty, its 30 supporting and 18 partial findings cannot be used as sample-wide accuracy or precision estimates. See `outputs/quality/category_mapping_online_evidence_audit.csv`.
 
 ## Quality checks
 
@@ -104,6 +106,6 @@ The documentation checker recomputes generated README and Stage 7 sections from 
 
 ## Outputs and attribution
 
-Published outputs include aggregate country/category/brand results, the field-readiness scorecard, contributor/source/year diagnostics, identifier-overlap and food-groups diagnostics, the fixed-sample AI-assisted semantic-audit labels and record-level results, validation reports, and static PNG charts. The audit output is the sole record-level exception to the publication scope and contains only the reviewed records and their product evidence; the unlabeled human-review sample and full source database are not published.
+Published outputs include aggregate country/category/brand results, the field-readiness scorecard, contributor/source/year diagnostics, identifier-overlap and food-groups diagnostics, the fixed-sample AI-assisted semantic-audit labels and record-level results, the targeted online evidence log, validation reports, and static PNG charts. These audit files are the scoped record-level exception to the publication policy; the unlabeled human-review sample and full source database are not published.
 
 Open Food Facts data and third-party reference files have terms separate from this project's MIT-licensed code and documentation. Review [the source, attribution, and license note](./01_data_source.md) before redistribution or commercial use.

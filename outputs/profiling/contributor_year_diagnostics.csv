@@ -1,6 +1,6 @@
-iso_alpha2,country_records,unique_creators,top_5_creator_records,top_5_creator_share_pct,valid_year_records,peak_creation_year,peak_year_records,peak_year_share_of_dated_records_pct,peak_day_records,peak_day_share_of_dated_records_pct
-ID,9118,161,7978.0,87.4973,9118.0,2025,2721,29.8421,129,1.4148
-MY,7426,134,6268.0,84.4061,7426.0,2026,2619,35.268,175,2.3566
-PH,9176,140,7888.0,85.9634,9176.0,2026,2492,27.1578,329,3.5854
-SG,11986,177,9881.0,82.4378,11986.0,2025,3031,25.2878,117,0.9761
-TH,11343,231,9266.0,81.6891,11343.0,2025,2102,18.5313,130,1.1461
+iso_alpha2,country_records,unique_creators,top_5_creator_records,top_5_creator_share_pct,valid_year_records,peak_creation_year,peak_year_records,peak_year_share_of_dated_records_pct,peak_day_records,peak_day_share_of_dated_records_pct,peak_creator_day_records,peak_creator_day_share_of_country_records_pct,peak_creator_day_category_tag_coverage_pct,top_5_category_tag_coverage_pct,other_named_creator_category_tag_coverage_pct,missing_creator_category_tag_coverage_pct
+ID,9118,161,7978.0,87.4973,9118.0,2025,2721,29.8421,129,1.4148,127,1.3928,0.7874,7.2575,46.6667,
+MY,7426,134,6268.0,84.4061,7426.0,2026,2619,35.268,175,2.3566,130,1.7506,12.3077,6.8922,35.2332,
+PH,9176,140,7888.0,85.9634,9176.0,2026,2492,27.1578,329,3.5854,328,3.5745,25.9146,10.0659,57.5311,
+SG,11986,177,9881.0,82.4378,11986.0,2025,3031,25.2878,117,0.9761,116,0.9678,20.6897,10.4342,49.5487,
+TH,11343,231,9266.0,81.6891,11343.0,2025,2102,18.5313,130,1.1461,130,1.1461,100.0,61.7634,66.4901,

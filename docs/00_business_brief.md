@@ -75,7 +75,7 @@ The final country and category scope is determined by data profiling, mapping qu
 
 ### 6.5 Brands and concentration
 
-- Apply only exact, owner-approved mappings of complete source `brands` text; do not split multi-brand values or infer identity from `brands_tags`.
+- Apply only exact, explicitly approved mappings of complete source `brands` text; do not split multi-brand values or infer identity from `brands_tags`.
 - Report approved-mapping coverage and mapped-only assignment counts with the selected denominator clearly labeled.
 - Current approved-brand coverage is too sparse and selected to support a broad brand landscape or an HHI. Defer concentration measures until identity rules and coverage are demonstrably adequate and the owner approves a defensible denominator.
 - Any future record-based brand distribution remains descriptive; it is not sales share, revenue concentration, or proof of commercial dominance.

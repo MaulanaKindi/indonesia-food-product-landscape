@@ -10,7 +10,7 @@ An evidence-based comparison of product records and data coverage in a pinned Op
 - **Category coverage:** 12.2% of Indonesian records are tagged, versus 11.3%–17.3% in the contextual peers and 62.6% in Thailand, the separate coverage contrast.
 - **Category assignments in Indonesia:** 788 of 1,111 tagged records (70.9%) receive at least one candidate-derived group; 113 (10.2%) do under the stricter approved-only view.
 - **Brand evidence:** raw brand text is present for 38.8% of Indonesian records, while exact-approved mapping covers only 0.34%.
-- **AI-assisted mapping check:** 97/130 candidate assignments were judged correct (26 also have exact-manual mappings); 16 disagreed and 17 were unresolved. Exact group-set agreement was 61/150 (40.7%). AI assessment, not human ground truth; [record-level audit](outputs/quality/category_mapping_semantic_audit_records.csv).
+- **AI + online mapping audit:** 97/130 candidate assignments were judged correct (26 also align with exact-reviewed mappings); 16 disagreed and 17 were unresolved. Exact group-set agreement was 61/150 (40.7%). Online follow-up found supporting product evidence for 30/48 cases; 36 have a source URL and 29 match the exact product code. Targeted, non-random, and not human ground truth; [AI audit](outputs/quality/category_mapping_semantic_audit_records.csv) · [online evidence](outputs/quality/category_mapping_online_evidence_audit.csv).
 <!-- AUTO-GENERATED: headline-metrics:END -->
 
 ### Country comparison
@@ -136,6 +136,7 @@ ORDER BY country.iso_alpha2;
 
 - Open Food Facts is collaborative, not a census or proof of country availability; it has no sales, revenue, market-share, or demand measures. Candidate assignments are exploratory, and approved-only assignments are narrower.
 - The AI-assisted semantic audit is not human ground truth; `food_groups_tags` is a diagnostic cross-check, not an inference source.
+- Contributor concentration and creation-time patterns are descriptive only. The snapshot does not include the Open Food Facts `sources.import_t` field, so this analysis cannot establish whether records arrived through a bulk import.
 - Brand-text availability and exact-approved brand mapping are distinct. The mapped subset is too sparse for broad brand-concentration claims.
 - The snapshot is pinned to Hugging Face commit `31f31c441274c095718cc88ae582030a5a615415`, with expected SHA-256 `DA39B2C5AAF1F85B2E637B904B5FC3A29780DD7E184254F4B660CFE0CD84999A`.
 
@@ -144,7 +145,6 @@ ORDER BY country.iso_alpha2;
 - [Reproduction guide](docs/REPRODUCE.md): one-command workflow, requirements, data definitions, and SQL.
 - [Stage 7 findings](docs/06_stage7_findings_and_recommendations.md): detailed generated results, diagnostics, interpretation, and caveats.
 - [Data source and licensing](docs/01_data_source.md): pinned source, attribution, and third-party data conditions.
-- [Business brief](docs/00_business_brief.md): objective, questions, scope, and measurement rules.
-- The published GitHub `main` history excludes four legacy sample-record paths.
+- [Business brief](docs/00_business_brief.md): objective, questions, scope, and measurement rules; [GitHub metadata and v1.0 release draft](docs/GITHUB_RELEASE_DRAFT.md), with the prepared [social preview](docs/img/social_preview.png).
 
 Original project code and documentation are MIT-licensed. Open Food Facts data and third-party references have separate terms; see the [source and licensing note](docs/01_data_source.md).

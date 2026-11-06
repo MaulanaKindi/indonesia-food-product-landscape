@@ -223,6 +223,28 @@ def build_contributor_diagnostics(
                    ) AS creator_rank
             FROM creator_counts
         ),
+        creator_segments AS (
+            SELECT country.iso_alpha2,
+                   CASE
+                       WHEN NULLIF(trim(country.creator), '') IS NULL
+                           THEN 'missing_creator'
+                       WHEN ranked.creator_rank <= 5 THEN 'top_five'
+                       ELSE 'other_named'
+                   END AS creator_segment,
+                   COUNT(*) AS segment_records,
+                   COUNT(*) FILTER (
+                       WHERE EXISTS (
+                           SELECT 1
+                           FROM record_category_tag AS category
+                           WHERE category.source_record_id = country.source_record_id
+                       )
+                   ) AS category_tagged_records
+            FROM country_records AS country
+            LEFT JOIN creator_ranked AS ranked
+                ON ranked.iso_alpha2 = country.iso_alpha2
+               AND ranked.creator = country.creator
+            GROUP BY country.iso_alpha2, creator_segment
+        ),
         creator_summary AS (
             SELECT iso_alpha2,
                    COUNT(*) AS unique_creators,
@@ -270,6 +292,54 @@ def build_contributor_diagnostics(
             SELECT iso_alpha2, MAX(day_records) AS peak_day_records
             FROM daily_counts
             GROUP BY iso_alpha2
+        ),
+        creator_day_counts AS (
+            SELECT iso_alpha2, creator, creation_date,
+                   COUNT(*) AS creator_day_records,
+                   COUNT(*) FILTER (
+                       WHERE EXISTS (
+                           SELECT 1
+                           FROM record_category_tag AS category
+                           WHERE category.source_record_id = country_records.source_record_id
+                       )
+                   ) AS category_tagged_records
+            FROM country_records
+            JOIN dated_records USING (iso_alpha2, source_record_id)
+            WHERE NULLIF(trim(creator), '') IS NOT NULL
+            GROUP BY iso_alpha2, creator, creation_date
+        ),
+        creator_day_ranked AS (
+            SELECT *, row_number() OVER (
+                PARTITION BY iso_alpha2
+                ORDER BY creator_day_records DESC, creator, creation_date
+            ) AS burst_rank
+            FROM creator_day_counts
+        ),
+        creator_day_summary AS (
+            SELECT iso_alpha2,
+                   MAX(creator_day_records) FILTER (WHERE burst_rank = 1)
+                       AS peak_creator_day_records,
+                   MAX(category_tagged_records) FILTER (WHERE burst_rank = 1)
+                       AS peak_creator_day_category_records
+            FROM creator_day_ranked
+            GROUP BY iso_alpha2
+        ),
+        creator_segment_summary AS (
+            SELECT iso_alpha2,
+                   MAX(100.0 * category_tagged_records
+                       / NULLIF(segment_records, 0))
+                       FILTER (WHERE creator_segment = 'top_five')
+                       AS top_5_category_tag_coverage_pct,
+                   MAX(100.0 * category_tagged_records
+                       / NULLIF(segment_records, 0))
+                       FILTER (WHERE creator_segment = 'other_named')
+                       AS other_named_creator_category_tag_coverage_pct,
+                   MAX(100.0 * category_tagged_records
+                       / NULLIF(segment_records, 0))
+                       FILTER (WHERE creator_segment = 'missing_creator')
+                       AS missing_creator_category_tag_coverage_pct
+            FROM creator_segments
+            GROUP BY iso_alpha2
         )
         SELECT
             totals.iso_alpha2,
@@ -294,11 +364,31 @@ def build_contributor_diagnostics(
                 100.0 * COALESCE(days.peak_day_records, 0)
                     / NULLIF(years.valid_year_records, 0),
                 4
-            ) AS peak_day_share_of_dated_records_pct
+            ) AS peak_day_share_of_dated_records_pct,
+            COALESCE(bursts.peak_creator_day_records, 0)
+                AS peak_creator_day_records,
+            round(
+                100.0 * COALESCE(bursts.peak_creator_day_records, 0)
+                    / totals.country_records,
+                4
+            ) AS peak_creator_day_share_of_country_records_pct,
+            round(
+                100.0 * COALESCE(bursts.peak_creator_day_category_records, 0)
+                    / NULLIF(bursts.peak_creator_day_records, 0),
+                4
+            ) AS peak_creator_day_category_tag_coverage_pct,
+            round(segments.top_5_category_tag_coverage_pct, 4)
+                AS top_5_category_tag_coverage_pct,
+            round(segments.other_named_creator_category_tag_coverage_pct, 4)
+                AS other_named_creator_category_tag_coverage_pct,
+            round(segments.missing_creator_category_tag_coverage_pct, 4)
+                AS missing_creator_category_tag_coverage_pct
         FROM country_totals AS totals
         LEFT JOIN creator_summary AS creators USING (iso_alpha2)
         LEFT JOIN year_summary AS years USING (iso_alpha2)
         LEFT JOIN daily_summary AS days USING (iso_alpha2)
+        LEFT JOIN creator_day_summary AS bursts USING (iso_alpha2)
+        LEFT JOIN creator_segment_summary AS segments USING (iso_alpha2)
         ORDER BY totals.iso_alpha2
         """
     ).fetchdf()

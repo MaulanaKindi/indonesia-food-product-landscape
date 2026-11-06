@@ -2,7 +2,7 @@
 
 ## Purpose and Status
 
-This document records the owner-approved scope and measurement protocol, plus the current validated Stage 6 descriptive outputs. The owner approved Indonesia (ID) as the focal unit, Malaysia/Philippines/Singapore (MY/PH/SG) as contextual peers, and Thailand (TH) as a separate coverage contrast. These choices support descriptive comparison only; they do not establish representativeness or commercial similarity.
+This document records the explicitly approved scope and measurement protocol, plus the current validated Stage 6 descriptive outputs. The project approved Indonesia (ID) as the focal unit, Malaysia/Philippines/Singapore (MY/PH/SG) as contextual peers, and Thailand (TH) as a separate coverage contrast. These choices support descriptive comparison only; they do not establish representativeness or commercial similarity.
 
 Stage 2 is not fully harmonized. On 2026-11-04, three additional exact category tags and two exact-text brand variant pairs were approved after evidence review. The three category decisions bring the maintained total to 59; the brand mapping now has 60 exact source values across 13 canonical groups. These changes are included in the current separately validated candidate-backed Stage 5/6 outputs. Do not resume broad category or brand review without new material evidence.
 
@@ -17,7 +17,7 @@ The Stage 6 results below were regenerated after the eight bounded category deci
 | Country coverage | 4,769,998 rows have an approved ISO mapping (98.7944%); 237 ISO units are represented | Preserve the full record universe and report country coverage and unresolved country-tag evidence. |
 | Existing country screening | The exploratory 1,000-record floor retains 107 ISO units | Use as an initial eligibility screen only, not as evidence that all 107 units are comparable peers. |
 | Indonesia | 9,118 rows; 1,111 rows have `categories_tags` (12.1847%). Current candidate coverage counts 788 rows in at least one primary candidate group; 132 of those rows overlap multiple primary groups. | Indonesia passes the existing volume screen, but category coverage is limited. Keep it as the focal geography while reporting this constraint; do not use NOVA, Nutri-Score, ingredients, or food-group signals to infer missing categories. |
-| Category assignment status | 59 owner-approved exact-tag group decisions; 7,889 single-group taxonomy candidates; 838 multi-group candidates; 106,211 taxonomy-unmatched tags; `Other / unclassified` is diagnostic-only | The reporting-group labels are approved, but candidate assignments are not. Category analyses need an explicit owner decision about candidate inclusion. |
+| Category assignment status | 59 explicitly approved exact-tag group decisions; 7,889 single-group taxonomy candidates; 838 multi-group candidates; 106,211 taxonomy-unmatched tags; `Other / unclassified` is diagnostic-only | The reporting-group labels are approved, but candidate assignments are not. Category analyses need an explicit owner decision about candidate inclusion. |
 | Brand mapping | 60 approved exact `brands` text values across 13 canonical groups | Apply only exact reviewed mappings; preserve unmapped values, do not split multi-brand text, and keep `brands_tags` separate. Broad brand coverage and entity identity are not established. |
 | Non-food audit | Record-level A/B sensitivity outputs exist; class C is discovery-only | Keep the baseline and both agreed A/B sensitivity scenarios. Never use class C as an exclusion. |
 
@@ -47,7 +47,7 @@ The approved-only category assignments remain sparse (e.g. 113 Indonesian rows),
 
 ### Bounded Stage 2 reopening and impact (2026-11-04)
 
-The owner approved an initial five exact-tag decisions: `en:drinkable-yogurts` → Dairy & eggs; `en:savory-snacks` → Salty snacks; `en:chili-paste` → Condiments, fats & spreads; `en:juice` → Beverages; and `en:bars-covered-with-chocolate` → Sweet foods & desserts. They were added to `data/mappings/category_tag_reporting_group_manual_decisions.csv`, and the candidate crosswalk and review queues were regenerated.
+The project approved an initial five exact-tag decisions: `en:drinkable-yogurts` → Dairy & eggs; `en:savory-snacks` → Salty snacks; `en:chili-paste` → Condiments, fats & spreads; `en:juice` → Beverages; and `en:bars-covered-with-chocolate` → Sweet foods & desserts. They were added to `data/mappings/category_tag_reporting_group_manual_decisions.csv`, and the candidate crosswalk and review queues were regenerated.
 
 The reproducible audit is `scripts/14_stage2_selected_scope_mapping_impact.py` with its default `initial-five` decision set. It compares the mapping immediately before these five decisions with the result after that batch on the same source Parquet and country mappings. Counts are distinct source rows by country; a record can carry multiple target tags and/or be assigned to multiple groups. Tag-level counts are in `outputs/profiling/stage2_selected_scope_mapping_tag_impact.csv`; country and per-group before/after counts are in `outputs/profiling/stage2_selected_scope_mapping_coverage_delta.csv`.
 
@@ -73,7 +73,7 @@ The approved-only sensitivity is more affected than the candidate-derived view b
 
 ### Additional category and brand decisions (2026-11-04)
 
-After review of the pinned Open Food Facts taxonomy, the owner approved `en:chocolate-milks` → Beverages, `en:coconut-waters` → Beverages, and `en:yogurt-drinks` → Dairy & eggs. These assignments follow finished product type rather than adding a group from ingredient ancestry. Each tag occurs on the following number of records in the selected scope; per-tag counts may overlap:
+After review of the pinned Open Food Facts taxonomy, the project approved `en:chocolate-milks` → Beverages, `en:coconut-waters` → Beverages, and `en:yogurt-drinks` → Dairy & eggs. These assignments follow finished product type rather than adding a group from ingredient ancestry. Each tag occurs on the following number of records in the selected scope; per-tag counts may overlap:
 
 | ISO | Chocolate milks | Coconut waters | Yogurt drinks |
 |---|---:|---:|---:|
@@ -142,8 +142,8 @@ The following protocol was approved for the bounded Stage 6 analysis.
 ### 3. Category scope and treatment
 
 - Use the ten substantive labels in `category_reporting_group_framework.csv`; do not include `Other / unclassified` in primary comparisons.
-- Proposed main analytical view: include exact tags assigned to one reporting group by the single-group taxonomy candidate rule plus the 59 owner-approved exact-tag decisions. Label taxonomy-derived assignments as **candidate-derived**, not owner-approved.
-- Proposed narrow sensitivity view: include only the 59 owner-approved exact-tag group decisions. This makes the coverage cost of using only approved assignments visible.
+- Proposed main analytical view: include exact tags assigned to one reporting group by the single-group taxonomy candidate rule plus the 59 explicitly approved exact-tag decisions. Label taxonomy-derived assignments as **candidate-derived**, not explicitly approved.
+- Proposed narrow sensitivity view: include only the 59 explicitly approved exact-tag group decisions. This makes the coverage cost of using only approved assignments visible.
 - Exclude multi-group candidates, taxonomy-unmatched tags, diagnostic residuals, placeholders, and exact category tags with an explicit `exclude_non_food` disposition from substantive group assignments. Report each status separately as coverage/unresolved evidence; do not force assignments.
 - In each country-category result, count a row at most once in a given reporting group, while allowing overlap between different groups. Report both the group row count divided by all rows in that ISO unit and category-tag coverage (rows with non-empty `categories_tags` divided by all rows in the unit). State that group shares can overlap and are not a partition.
 - Treat the candidate country-coverage output as evidence for coverage planning, not as final analytical results: it includes unapproved single-group candidates and excludes unresolved assignments.

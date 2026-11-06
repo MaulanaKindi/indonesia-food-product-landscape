@@ -42,3 +42,4 @@ outputs/quality/*
 !outputs/quality/category_mapping_semantic_audit_records.csv
 !outputs/quality/category_mapping_semantic_audit_summary.csv
 !outputs/quality/category_mapping_semantic_audit_by_group.csv
+!outputs/quality/category_mapping_online_evidence_audit.csv
