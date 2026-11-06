@@ -145,6 +145,6 @@ ORDER BY country.iso_alpha2;
 - [Reproduction guide](docs/REPRODUCE.md): one-command workflow, requirements, data definitions, and SQL.
 - [Stage 7 findings](docs/06_stage7_findings_and_recommendations.md): detailed generated results, diagnostics, interpretation, and caveats.
 - [Data source and licensing](docs/01_data_source.md): pinned source, attribution, and third-party data conditions.
-- [Business brief](docs/00_business_brief.md): objective, questions, scope, and measurement rules; [GitHub metadata and v1.0 release draft](docs/GITHUB_RELEASE_DRAFT.md), with the prepared [social preview](docs/img/social_preview.png).
+- [Business brief](docs/00_business_brief.md): objective, questions, scope, and measurement rules; [GitHub metadata and v1.0 publication record](docs/GITHUB_RELEASE_METADATA.md), with the prepared [social preview](docs/img/social_preview.png).
 
 Original project code and documentation are MIT-licensed. Open Food Facts data and third-party references have separate terms; see the [source and licensing note](docs/01_data_source.md).
