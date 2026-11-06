@@ -11,9 +11,17 @@ import pandas as pd
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-DATABASE_FILE = PROJECT_ROOT / "data" / "processed" / "global_product_landscape.duckdb"
+DATABASE_FILE = (
+    PROJECT_ROOT
+    / "data"
+    / "processed"
+    / "global_product_landscape_five_country_candidate.duckdb"
+)
 BUILD_VALIDATION_FILE = (
-    PROJECT_ROOT / "outputs" / "quality" / "database_build_validation.csv"
+    PROJECT_ROOT
+    / "outputs"
+    / "quality"
+    / "stage6_candidate_build_validation.csv"
 )
 COUNTRY_EVIDENCE_FILE = (
     PROJECT_ROOT / "outputs" / "profiling" / "stage5_country_peer_evidence.csv"

@@ -1,0 +1,41 @@
+iso_alpha2,metric,records_with_field,country_records,coverage_pct
+ID,Brand text,3534,9118,38.7585
+ID,Category tags,1111,9118,12.1847
+ID,Exact-approved brand mapping,31,9118,0.34
+ID,Ingredient text,1580,9118,17.3284
+ID,Label information,2636,9118,28.9098
+ID,Numeric nutrition value,2831,9118,31.0485
+ID,Packaging information,363,9118,3.9811
+ID,Valid Nutri-Score (A-E),505,9118,5.5385
+MY,Brand text,3430,7426,46.1891
+MY,Category tags,840,7426,11.3116
+MY,Exact-approved brand mapping,64,7426,0.8618
+MY,Ingredient text,642,7426,8.6453
+MY,Label information,1124,7426,15.136
+MY,Numeric nutrition value,2946,7426,39.6714
+MY,Packaging information,250,7426,3.3665
+MY,Valid Nutri-Score (A-E),341,7426,4.592
+PH,Brand text,5542,9176,60.3967
+PH,Category tags,1535,9176,16.7284
+PH,Exact-approved brand mapping,88,9176,0.959
+PH,Ingredient text,1266,9176,13.7969
+PH,Label information,923,9176,10.0588
+PH,Numeric nutrition value,4788,9176,52.1796
+PH,Packaging information,426,9176,4.6425
+PH,Valid Nutri-Score (A-E),996,9176,10.8544
+SG,Brand text,7744,11986,64.6087
+SG,Category tags,2074,11986,17.3035
+SG,Exact-approved brand mapping,341,11986,2.845
+SG,Ingredient text,1625,11986,13.5575
+SG,Label information,1745,11986,14.5587
+SG,Numeric nutrition value,6905,11986,57.6089
+SG,Packaging information,881,11986,7.3502
+SG,Valid Nutri-Score (A-E),1319,11986,11.0045
+TH,Brand text,9123,11343,80.4285
+TH,Category tags,7104,11343,62.6289
+TH,Exact-approved brand mapping,46,11343,0.4055
+TH,Ingredient text,6308,11343,55.6114
+TH,Label information,1950,11343,17.1912
+TH,Numeric nutrition value,9211,11343,81.2043
+TH,Packaging information,3396,11343,29.9392
+TH,Valid Nutri-Score (A-E),5172,11343,45.5964

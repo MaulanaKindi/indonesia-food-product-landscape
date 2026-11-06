@@ -14,37 +14,18 @@ The Hugging Face dataset card describes its Parquet files as simplified conversi
 
 data/raw/food.parquet
 
-## Source Snapshot and Extraction
+## Reproducible Snapshot
 
 | Item | Status |
 |----------|----------|
-| Reproducible upstream content reference | Hugging Face commit `31f31c441274c095718cc88ae582030a5a615415`; its `food.parquet` metadata matches the local size and SHA-256. This is a reproducibility pin, not a claim about the historical download source. |
-| Hub metadata retrieval date | 2026-10-26 |
-| Historical local retrieval date and method | Unknown; no contemporaneous evidence was found. The owner accepts this as an explicit provenance limitation. |
-| Upstream Parquet conversion | The dataset card describes conversion from daily Open Food Facts JSONL dumps using PyArrow; this does not establish how or when the local file was obtained. |
+| Pinned Hugging Face dataset commit | `31f31c441274c095718cc88ae582030a5a615415` |
+| Snapshot file | `food.parquet` |
 | Local file format | Parquet |
-| Current local file size | 7,975,461,945 bytes |
-| Local file SHA-256 checksum | `DA39B2C5AAF1F85B2E637B904B5FC3A29780DD7E184254F4B660CFE0CD84999A` |
+| Expected size | 7,975,461,945 bytes |
+| Expected SHA-256 | `DA39B2C5AAF1F85B2E637B904B5FC3A29780DD7E184254F4B660CFE0CD84999A` |
+| Local artifact verification | Size and SHA-256 checked on 2026-11-04 |
 
-The local file's observed profile is 4,828,207 rows and 111 columns. The size and SHA-256, together with the immutable content-matching commit above, let a reviewer identify and retrieve identical bytes. They do not prove which commit or method was used for the historical local retrieval.
-
-On 2026-10-29, a bounded audit of project documentation, scripts, and outputs found no contemporaneous record establishing the local download date or extraction method. Windows currently reports a file last-write timestamp of 2026-10-23 14:43:35 local time; this filesystem metadata is not accepted as proof of download or retrieval time because it can change when files are copied or restored. No user-level browser history or download cache was inspected. The retrieval date and method therefore remain unknown; do not infer them from the timestamp.
-
-### Upstream Snapshot Check
-
-On 2026-10-26, the Hugging Face Hub commit listing exposed metadata for 683 commits. The local file's size and SHA-256 match the `food.parquet` metadata in these three listed commits:
-
-| Commit | Commit date |
-|----------|----------|
-| `31f31c441274c095718cc88ae582030a5a615415` | 2026-10-23 |
-| `0273016bf1a86da29ccb1b22a487574f0c9a31ea` | 2026-10-23 |
-| `99d7ba5bcb35b693300108f43cfaeee508b7e915` | 2026-10-22 |
-
-This verifies a content-hash match to the listed Hub metadata, but does not establish which commit was used to retrieve the local file: the same file hash appears in multiple commits, and earlier history is unavailable beyond a squash boundary. Commit `31f31c441274c095718cc88ae582030a5a615415` is selected as a reproducible content reference only. The local retrieval date and method remain unknown. The check used Hub metadata and did not download the Parquet file.
-
-On 2026-11-04, the local artifact was rechecked: 7,975,461,945 bytes and SHA-256 `DA39B2C5AAF1F85B2E637B904B5FC3A29780DD7E184254F4B660CFE0CD84999A`. The Hugging Face dataset API reported current `main` commit `e5ed2fae58c2ce58d26a1298f61c7d40b1bd1e4a` (last modified 2026-11-04 08:01 UTC); its current `food.parquet` metadata reports 8,029,922,066 bytes and SHA-256 `84D9D985BB1262EE1F8B71770ADA9ADA2F87F0B40B8A37BC99917111FB0E95E6`. Thus the current upstream file is not the local pinned artifact. The local source remains pinned and unchanged; do not silently replace it with current `main`.
-
-The three October commits above are reproducible content matches for the local bytes. They can identify commits that contain the same file, but cannot establish which one was actually used to retrieve it. The exact local retrieval event/date and whether the file was downloaded from a particular commit or extracted from another copy remain unknown. The local timestamp remains filesystem metadata only, not retrieval evidence. No user-level browser/download history was inspected.
+The project uses the immutable commit and file checksum as its reproducibility contract. `scripts/00_download_snapshot.py` downloads that exact revision and verifies both values before placing the file at `data/raw/food.parquet`; the database builder verifies them again. The verified file profile is 4,828,207 rows and 111 columns. The local retrieval event is not part of the reproducibility claim.
 
 ### Online Claim Validation
 
@@ -83,7 +64,7 @@ Terms initially checked: 2026-10-25. Rechecked: 2026-11-04.
 
 The 2026-11-04 check of the current Open Food Facts reuse terms states ODbL for the database, DbCL for individual contents, and CC BY-SA for product images, and requires attribution/linking to Open Food Facts and compliance with applicable derivative-work conditions. This project does not use product images. The current Hugging Face dataset card/API also labels the repository with `agpl-3.0` and `odbl`, but does not clarify whether AGPL applies to the dataset artifact, conversion code, or both.
 
-For the scoped portfolio publication, the owner accepts publishing only reviewed aggregate Stage 5/6 results with Open Food Facts attribution and links to the applicable terms. The repository does not redistribute the source Parquet, DuckDB databases, record-level extracts, or the pinned taxonomy. The project does not claim that MIT applies to data-derived outputs, nor does it make a legal determination about whether an output is a Produced Work or Derivative Database, or what the Hugging Face AGPL label covers. The outputs remain subject to any applicable source-license conditions. This is a documented publication policy, not legal advice; seek qualified advice for a definitive legal classification or materially different reuse.
+For the scoped portfolio publication, the owner accepts publishing reviewed aggregate Stage 5/6 results and a narrowly scoped, AI-assisted semantic audit of a fixed 150-record Indonesian sample plus an eight-record Meat & poultry census, with Open Food Facts attribution and links to applicable terms. The audit is a diagnostic, not independent human validation or ground truth. The repository does not redistribute the source Parquet, DuckDB databases, the unlabeled local human-review sample, general record-level extracts, or the pinned taxonomy. The audit's record-level evidence is a specific exception to the aggregate-only publication scope; it remains subject to any applicable source-license conditions. The project does not claim that MIT applies to data-derived outputs, nor does it make a legal determination about whether an output is a Produced Work or Derivative Database, or what the Hugging Face AGPL label covers. This is a documented publication policy, not legal advice; seek qualified advice for a definitive legal classification or materially different reuse.
 
 ## ISO 3166-1 Reference
 
@@ -108,4 +89,4 @@ Further profiling and quality assessment are documented separately.
 
 ## Provenance and Publication Disclosure
 
-The immutable content reference, local size, and SHA-256 are recorded above; the historical retrieval date and method remain unknown and are explicitly accepted as a limitation rather than inferred. The current upstream `main` file is different and must not be substituted silently. The public repository excludes the raw Parquet, DuckDB databases, record-level samples, and pinned taxonomy JSON. It includes only a reviewed allowlist of aggregate Stage 5/6 tables and validation reports, with Open Food Facts attribution and links to its terms in the README and this note. The owner accepts publishing these aggregates with the license-scope caveat above. The project-authored code uses MIT as documented in the repository LICENSE; that license does not apply to source data or data-derived outputs.
+The source is identified by the immutable commit above, and the local artifact's size and SHA-256 matched on 2026-11-04. That pin and checksum, rather than a historical file-acquisition event, define reproducibility. The public repository excludes the raw Parquet, DuckDB databases, the unlabeled local human-review sample, general record-level extracts, and pinned taxonomy JSON. It includes a reviewed allowlist of aggregate Stage 5/6 tables and validation reports, plus the fixed-sample AI-assisted semantic audit outputs described above. Open Food Facts attribution and links to its terms appear in the README and this note. The project-authored code uses MIT as documented in the repository LICENSE; that license does not apply to source data or data-derived outputs.

@@ -21,13 +21,24 @@ VALUES (
     'not determined'
 );
 
+CREATE TEMP TABLE selected_country_source_tags AS
+SELECT source_country_tag
+FROM read_csv_auto(
+    'data/mappings/country_tag_mapping.csv',
+    header = true,
+    all_varchar = true
+)
+WHERE mapping_status = 'approved'
+  AND {{SCOPE_CODES_FILTER}};
+
 CREATE TABLE source_product_record AS
 SELECT
     CAST(file_row_number + 1 AS BIGINT) AS source_record_id,
     '{{SNAPSHOT_ID}}' AS snapshot_id,
     CAST(file_row_number + 1 AS BIGINT) AS source_row_ordinal,
     source.* EXCLUDE (file_row_number)
-FROM read_parquet('data/raw/food.parquet', file_row_number = true) AS source;
+FROM read_parquet('data/raw/food.parquet', file_row_number = true) AS source
+WHERE {{SOURCE_SCOPE_FILTER}};
 
 CREATE UNIQUE INDEX ux_source_product_record_id
     ON source_product_record (source_record_id);
@@ -181,7 +192,8 @@ JOIN country_source_tag_mapping AS mapping
 JOIN country_unit AS unit
     ON mapping.iso_alpha2 = unit.iso_alpha2
 WHERE mapping.mapping_status = 'approved'
-  AND mapping.iso_alpha2 IS NOT NULL;
+  AND mapping.iso_alpha2 IS NOT NULL
+  AND {{COUNTRY_ASSIGNMENT_SCOPE_FILTER}};
 CREATE UNIQUE INDEX ux_record_country
     ON record_country (source_record_id, iso_alpha2);
 

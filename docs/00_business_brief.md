@@ -102,13 +102,12 @@ The final country and category scope is determined by data profiling, mapping qu
 
 Document and retain:
 
-- Source dataset page and exact source file or release.
-- Snapshot/release date, retrieval date, and extraction/download method.
-- Local file name, format, size, and SHA-256 checksum.
+- Source dataset page and immutable upstream commit.
+- Local file name, format, expected size, and SHA-256 checksum, plus the date the local bytes were verified.
 - Applicable license, attribution, and share-alike or other reuse obligations, verified against the upstream source.
 - Tool and dependency versions needed to reproduce extraction, transformation, and analysis.
 
-Do not infer missing provenance details. Mark them as not yet recorded and resolve them before the final reproducibility and licensing checks.
+Use the immutable commit and checksum as the reproducibility contract; historical file-acquisition details are not part of the analysis claim.
 
 ## 9. Expected Deliverables
 
@@ -125,7 +124,7 @@ Do not infer missing provenance details. Mark them as not yet recorded and resol
 
 The project is complete when:
 
-1. The data source, exact snapshot, extraction method, applicable licensing, and attribution requirements are documented.
+1. The data source is pinned by immutable commit and checksum, and applicable licensing and attribution are documented.
 2. The relational schema is justified by the data and analytical requirements, with an ERD.
 3. SQL scripts can be executed in the documented order from a clean environment when stated prerequisites are met.
 4. Product, brand, country, category, denominator, and concentration definitions are explicit and applied consistently.
@@ -133,9 +132,9 @@ The project is complete when:
 6. Key results can be regenerated and independently checked against documented validation queries or checks.
 7. Business conclusions are linked to reproducible results, distinguish observations from interpretations, and state limitations.
 8. The GitHub repository is understandable to a reviewer unfamiliar with the project.
-9. The database rebuild procedure and prerequisites are documented, the retained full-build validation passes, and the current mapping-derived candidate validations pass. While the owner's storage constraint applies, a clean-room rebuild of the full database is not required for completion; this rebuild has not been repeated and must remain disclosed as an unverified limitation.
+9. The canonical five-country database rebuild succeeds from the pinned source and passes its scoped validation checks. A full-country database is optional and is not required for the portfolio.
 10. The recovery approach and its prerequisites, storage implications, and limitations are documented. Creating or restoring a backup is not a completion requirement; do not create backup copies under the owner's current storage constraint.
 
 ## 11. Current Project Status
 
-Initial profiling, relational design/build, and the bounded Stage 5–7 analysis are complete for the documented scope. Stage 0 is accepted for the scoped aggregate portfolio with historical retrieval and license-scope limitations disclosed. Broader product-identifier, category, and brand harmonization remain incomplete by design; unresolved mappings limit the conclusions. Stage 8 is accepted under the owner's storage-constrained Definition of Done: repository synchronization and integrity evidence are verified, retained full-build and current candidate validations pass, and the rebuild procedure and prerequisites are documented. A clean-room full rebuild has not been repeated and remains an explicit limitation. Backup creation and restore testing are not required; no backup has been created.
+The pinned five-country database has been rebuilt and passed 15 scoped validation checks. The bounded Stage 5–7 analysis, generated executive README, static charts, and documentation-consistency checks use this canonical scope. Broader product-identifier, category, and brand harmonization remain incomplete by design; uncertain mappings remain unresolved. The source pin, expected file checksum, and verification date are documented; the optional full-country database is not a prerequisite. Sales, market-share, and demand conclusions remain out of scope.

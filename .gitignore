@@ -9,6 +9,7 @@ data/processed/*.duckdb
 data/processed/*.wal
 data/processed/*
 !data/processed/.gitkeep
+data/private/
 data/reference/off_categories_taxonomy_*.json
 
 outputs/*
@@ -23,10 +24,21 @@ outputs/quality/*
 !outputs/profiling/stage2_selected_scope_mapping_tag_impact_additional_three.csv
 !outputs/profiling/stage2_selected_scope_mapping_coverage_delta_additional_three.csv
 !outputs/profiling/stage5_country_peer_evidence.csv
+!outputs/profiling/data_readiness_scorecard.csv
+!outputs/profiling/contributor_year_diagnostics.csv
+!outputs/profiling/record_creation_year.csv
+!outputs/profiling/source_tag_coverage.csv
+!outputs/profiling/country_code_overlap.csv
+!outputs/profiling/food_groups_crosscheck.csv
 !outputs/analysis/stage6_country_scope.csv
 !outputs/analysis/stage6_country_category.csv
 !outputs/analysis/stage6_country_brand.csv
 !outputs/analysis/stage6_validation.csv
 !outputs/quality/database_build_validation.csv
+!outputs/quality/database_build_validation_five_country.csv
 !outputs/quality/stage6_candidate_build_validation.csv
 !outputs/quality/harmonization_refresh_summary.csv
+!outputs/quality/category_mapping_semantic_audit_labels.csv
+!outputs/quality/category_mapping_semantic_audit_records.csv
+!outputs/quality/category_mapping_semantic_audit_summary.csv
+!outputs/quality/category_mapping_semantic_audit_by_group.csv

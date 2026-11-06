@@ -12,13 +12,22 @@ import pandas as pd
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 SOURCE_FILE = PROJECT_ROOT / "data" / "raw" / "food.parquet"
 BASELINE_DATABASE = (
-    PROJECT_ROOT / "data" / "processed" / "global_product_landscape.duckdb"
+    PROJECT_ROOT
+    / "data"
+    / "processed"
+    / "global_product_landscape_five_country.duckdb"
 )
 BASELINE_VALIDATION = (
-    PROJECT_ROOT / "outputs" / "quality" / "database_build_validation.csv"
+    PROJECT_ROOT
+    / "outputs"
+    / "quality"
+    / "database_build_validation_five_country.csv"
 )
 CANDIDATE_DATABASE = (
-    PROJECT_ROOT / "data" / "processed" / "global_product_landscape_stage6_candidate.duckdb"
+    PROJECT_ROOT
+    / "data"
+    / "processed"
+    / "global_product_landscape_five_country_candidate.duckdb"
 )
 CANDIDATE_VALIDATION = (
     PROJECT_ROOT / "outputs" / "quality" / "stage6_candidate_build_validation.csv"
@@ -51,10 +60,7 @@ EXPECTED_SNAPSHOT_SHA256 = (
     "DA39B2C5AAF1F85B2E637B904B5FC3A29780DD7E184254F4B660CFE0CD84999A"
 )
 EXPECTED_SOURCE_SIZE = 7_975_461_945
-EXPECTED_SOURCE_ROWS = 4_828_207
-EXPECTED_CATEGORY_LINKS = 10_480_049
-EXPECTED_COUNTRY_SOURCE_TAG_LINKS = 5_079_894
-EXPECTED_RECORD_COUNTRY_LINKS = 5_004_567
+SELECTED_COUNTRIES = ("ID", "MY", "PH", "SG", "TH")
 
 
 def sha256_file(path: Path) -> str:
@@ -102,6 +108,26 @@ def build_candidate(
         )
         connection.register("current_crosswalk", crosswalk)
         connection.register("current_brand_mapping", brand_mapping)
+        expected_source_rows = connection.execute(
+            "SELECT COUNT(*) FROM baseline.source_product_record"
+        ).fetchone()[0]
+        expected_country_rows = connection.execute(
+            "SELECT COUNT(*) FROM baseline.record_country"
+        ).fetchone()[0]
+        expected_category_links = connection.execute(
+            "SELECT COUNT(*) FROM baseline.record_category_tag"
+        ).fetchone()[0]
+        expected_present_brand_mapping_values = connection.execute(
+            """
+            SELECT COUNT(*)
+            FROM current_brand_mapping AS mapping
+            WHERE EXISTS (
+                SELECT 1
+                FROM baseline.record_brand_source_value AS source
+                WHERE source.source_brand_name = mapping.source_brand_name
+            )
+            """
+        ).fetchone()[0]
 
         connection.execute(
             """
@@ -118,9 +144,24 @@ def build_candidate(
                 source_row_ordinal,
                 code,
                 categories_tags,
+                categories,
+                brands,
+                ingredients,
+                ingredients_text,
+                nutriments,
                 nova_group,
                 nutriscore_grade,
-                ingredients_n
+                ingredients_n,
+                packaging,
+                packaging_tags,
+                packagings,
+                labels,
+                labels_tags,
+                creator,
+                created_t,
+                data_sources_tags,
+                food_groups_tags,
+                product_name
             FROM baseline.source_product_record
             """
         )
@@ -214,10 +255,30 @@ def build_candidate(
                    OR old.code IS DISTINCT FROM candidate.code
                    OR old.categories_tags
                         IS DISTINCT FROM candidate.categories_tags
+                   OR old.categories
+                        IS DISTINCT FROM candidate.categories
+                   OR old.brands IS DISTINCT FROM candidate.brands
+                   OR old.ingredients IS DISTINCT FROM candidate.ingredients
+                   OR old.ingredients_text
+                        IS DISTINCT FROM candidate.ingredients_text
+                   OR old.nutriments IS DISTINCT FROM candidate.nutriments
                    OR old.nova_group IS DISTINCT FROM candidate.nova_group
                    OR old.nutriscore_grade
                         IS DISTINCT FROM candidate.nutriscore_grade
                    OR old.ingredients_n IS DISTINCT FROM candidate.ingredients_n
+                   OR old.packaging IS DISTINCT FROM candidate.packaging
+                   OR old.packaging_tags
+                        IS DISTINCT FROM candidate.packaging_tags
+                   OR old.packagings IS DISTINCT FROM candidate.packagings
+                   OR old.labels IS DISTINCT FROM candidate.labels
+                   OR old.labels_tags IS DISTINCT FROM candidate.labels_tags
+                   OR old.creator IS DISTINCT FROM candidate.creator
+                   OR old.created_t IS DISTINCT FROM candidate.created_t
+                   OR old.data_sources_tags
+                        IS DISTINCT FROM candidate.data_sources_tags
+                   OR old.food_groups_tags
+                        IS DISTINCT FROM candidate.food_groups_tags
+                   OR old.product_name IS DISTINCT FROM candidate.product_name
             ),
             country_link_mismatches AS (
                 SELECT COUNT(*) AS mismatch_count
@@ -279,10 +340,10 @@ def build_candidate(
                     )
                 )
             ),
-            missing_brand_mapping_source_values AS (
-                SELECT COUNT(*) AS missing_count
+            brand_mapping_source_values_present AS (
+                SELECT COUNT(*) AS present_count
                 FROM brand_name_mapping AS mapping
-                WHERE NOT EXISTS (
+                WHERE EXISTS (
                     SELECT 1
                     FROM record_brand_source_value AS source
                     WHERE source.source_brand_name = mapping.source_brand_name
@@ -351,10 +412,10 @@ def build_candidate(
                    ?::VARCHAR
             FROM brand_name_mapping
             UNION ALL
-            SELECT 'missing_brand_mapping_source_values',
-                   missing_count::VARCHAR,
-                   '0'
-            FROM missing_brand_mapping_source_values
+            SELECT 'brand_mapping_source_values_present',
+                   present_count::VARCHAR,
+                   ?::VARCHAR
+            FROM brand_mapping_source_values_present
             UNION ALL
             SELECT 'category_decision_tag_rows',
                    COUNT(*)::VARCHAR,
@@ -375,11 +436,12 @@ def build_candidate(
             """,
             [
                 EXPECTED_SNAPSHOT_SHA256,
-                str(EXPECTED_SOURCE_ROWS),
-                str(EXPECTED_SOURCE_ROWS),
-                str(EXPECTED_RECORD_COUNTRY_LINKS),
-                str(EXPECTED_CATEGORY_LINKS),
+                str(expected_source_rows),
+                str(expected_source_rows),
+                str(expected_country_rows),
+                str(expected_category_links),
                 str(len(brand_mapping)),
+                str(expected_present_brand_mapping_values),
                 str(len(crosswalk)),
                 str(int(crosswalk["assignment_status"].eq("manual_group_assignment").sum())),
             ],
@@ -422,7 +484,7 @@ def main() -> None:
             f"Refusing to overwrite existing validation report: {validation_file}"
         )
 
-    print("Validating pinned source and prior Stage 4 build...", flush=True)
+    print("Validating pinned source and selected-scope database...", flush=True)
     if SOURCE_FILE.stat().st_size != EXPECTED_SOURCE_SIZE:
         raise ValueError(
             f"Parquet size mismatch: expected {EXPECTED_SOURCE_SIZE}, "
@@ -439,10 +501,35 @@ def main() -> None:
         source_rows = baseline.execute(
             "SELECT COUNT(*) FROM source_product_record"
         ).fetchone()[0]
-        if snapshot_id != EXPECTED_SNAPSHOT_SHA256 or source_rows != EXPECTED_SOURCE_ROWS:
+        country_codes = tuple(
+            row[0]
+            for row in baseline.execute(
+                "SELECT DISTINCT iso_alpha2 FROM record_country ORDER BY iso_alpha2"
+            ).fetchall()
+        )
+        if snapshot_id != EXPECTED_SNAPSHOT_SHA256:
             raise ValueError(
                 "Baseline database does not match the expected pinned source: "
-                f"snapshot={snapshot_id}, rows={source_rows}."
+                f"snapshot={snapshot_id}."
+            )
+        if country_codes != SELECTED_COUNTRIES:
+            raise ValueError(
+                "Baseline database must contain exactly the selected countries "
+                f"{SELECTED_COUNTRIES}; found {country_codes}."
+            )
+        validation_report = pd.read_csv(
+            args.baseline_validation,
+            dtype=str,
+            keep_default_na=False,
+        )
+        expected_row_check = validation_report.loc[
+            validation_report["check_name"].eq("source_product_record_rows"),
+            "expected_value",
+        ]
+        if len(expected_row_check) != 1 or source_rows != int(expected_row_check.iloc[0]):
+            raise ValueError(
+                "Selected-scope build report does not reconcile to the baseline "
+                f"database row count ({source_rows})."
             )
         country_link_count = baseline.execute(
             "SELECT COUNT(*) FROM record_country_source_tag"

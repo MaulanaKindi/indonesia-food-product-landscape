@@ -1,0 +1,41 @@
+name: Quality checks
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  python-and-sql:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt -r requirements-dev.txt
+      - name: Run tests
+        run: python -m pytest -q
+      - name: Lint Python
+        run: >-
+          ruff check
+          scripts/00_download_snapshot.py
+          scripts/check_docs_consistency.py
+          scripts/evaluate_mapping_audit_sample.py
+          scripts/11_build_relational_database.py
+          scripts/12_stage5_country_peer_evidence.py
+          scripts/13_run_stage6_analysis.py
+          scripts/15_build_stage6_candidate_database.py
+          scripts/16_refresh_harmonized_analysis.py
+          scripts/generate_visuals.py
+          scripts/prepare_mapping_audit_sample.py
+          scripts/run_all.py
+          tests
+      - name: Lint database SQL
+        run: >-
+          sqlfluff lint sql/05_validate_five_country_database.sql
+          --dialect duckdb
+          --rules CP01
+      - name: Check generated documentation
+        run: python scripts/check_docs_consistency.py

@@ -1,0 +1,6 @@
+iso_alpha2,country_records,records_with_food_group_tags,records_with_crosswalked_food_groups,records_with_candidate_groups,records_compared,exact_group_set_matches,records_with_any_group_overlap,exact_group_set_match_pct,any_group_overlap_pct
+ID,9118,731,723,899,723,170,687,23.5131,95.0207
+MY,7426,564,551,690,551,98,516,17.7858,93.6479
+PH,9176,1171,1156,1371,1156,211,1110,18.2526,96.0208
+SG,11986,1700,1669,1976,1669,437,1550,26.1833,92.87
+TH,11343,4313,3932,5487,3932,857,3776,21.7955,96.0326

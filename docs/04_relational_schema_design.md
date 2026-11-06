@@ -2,11 +2,11 @@
 
 ## Purpose and Status
 
-The logical model and implementation assumptions below are approved for the initial relational build. The physical DuckDB schema is implemented by `sql/01_build_relational_database.sql`, validated by `sql/02_validate_relational_database.sql`, and orchestrated by `scripts/11_build_relational_database.py`. The database is a reproducible analytical derivative; the Parquet source remains unchanged.
+The logical model and implementation assumptions below support the canonical five-country relational build. The physical DuckDB schema is implemented by `sql/01_build_relational_database.sql`, validated by `sql/02_validate_relational_database.sql` and `sql/05_validate_five_country_database.sql`, and orchestrated by `scripts/11_build_relational_database.py`. The database is a reproducible analytical derivative; the Parquet source remains unchanged.
 
-The full Stage 4 database retains the earlier mapping state. For current Stage 5/6 work, `scripts/15_build_stage6_candidate_database.py` creates a separately validated 173,551,616-byte compact candidate containing only the required source projection, bridges, and mappings. It passed 13 checks, including content comparisons against the full database. This scope-limited candidate is not a full-schema rebuild, recovery copy, or replacement for the Stage 4 database.
+The canonical database is `data/processed/global_product_landscape_five_country.duckdb`. It contains the selected country scope, was built from the pinned source, and passed 15 scoped validation checks. The optional full-country database is retained separately and is not required for the portfolio. `scripts/15_build_stage6_candidate_database.py` creates a current-mapping candidate for analysis and validates it independently.
 
-Stage 2 is **sufficient to proceed to design, with mapping work deliberately deferred**. It is not a claim that every source value has been harmonized. Unresolved category tags remain explicitly represented in the crosswalk; unmapped brand values remain preserved in the raw source and are not treated as harmonized. Return to Stage 2 only when a concrete design or analysis requirement makes a specific decision material.
+Stage 2 has completed a bounded category and brand review for the selected analysis scope, not full harmonization. Unresolved category tags remain explicitly represented in the crosswalk; unmapped brand values remain preserved in the raw source and are not treated as harmonized. Reopen mapping decisions only when new evidence makes a specific decision material.
 
 ## Design Goals
 
@@ -21,9 +21,9 @@ Stage 2 is **sufficient to proceed to design, with mapping work deliberately def
 
 | Entity / relation | Proposed grain | Key and relationships | Purpose and status |
 |---|---|---|---|
-| `data_snapshot` | One row per source snapshot | `snapshot_id` primary key; source SHA-256 unique | Records the local file hash, byte size, row/column counts, and source path. Retrieval date remains unknown; extraction method is recorded as not determined. |
-| `source_product_record` | One row per physical source Parquet row | `source_record_id` is the one-based Parquet row ordinal; unique `(snapshot_id, source_row_ordinal)`; `code` is non-unique | Landing table preserves all 111 source columns plus the snapshot ID and row-identity fields. No source row is filtered or deduplicated. |
-| `country_unit` | One row per ISO 3166-1 alpha-2 reference unit | Unique `iso_alpha2` | All 249 entries in the project geography reference; the current mapped country profile reconciles 237 units with records. |
+| `data_snapshot` | One row per source snapshot | `snapshot_id` primary key; source SHA-256 unique | Records the pinned source identity, file hash, byte size, row/column counts, and source path. The source bytes are downloaded or verified against the immutable commit before the build. |
+| `source_product_record` | One row per source Parquet row in the selected country scope | `source_record_id` is the one-based Parquet row ordinal; unique `(snapshot_id, source_row_ordinal)`; `code` is non-unique | Landing table preserves all 111 source columns plus the snapshot ID and row-identity fields for source records linked to the five selected countries. No included source row is deduplicated. |
+| `country_unit` | One row per ISO 3166-1 alpha-2 reference unit | Unique `iso_alpha2` | All 249 entries in the project geography reference; the canonical analysis scope contains five mapped units. |
 | `country_source_tag_mapping` | One row per exact raw country tag and mapping version | Unique `source_country_tag` for this build | Stores the reviewed mapping, classification, status, basis, and note. Mapping version is a SHA-256 over the mapping input. |
 | `record_country_source_tag` | One row per source record and exact country tag | Unique `(source_record_id, source_country_tag)` | Retains tag-level lineage for the source's `countries_tags` assignments. |
 | `record_country` | One row per source record and mapped ISO unit | Unique `(source_record_id, iso_alpha2)` | Counts a record once per ISO unit even if multiple exact source tags map to that unit. Derived only from approved mappings. |
@@ -67,8 +67,8 @@ The DuckDB implementation uses unique indexes for the modeled key guarantees. It
 
 ## Mapping and Query Rules
 
-1. Load the raw Parquet snapshot without filtering records or expanding arrays into the raw record table.
-2. Assign each ingested source row a surrogate `source_record_id`; keep its original ordinal within the snapshot. Enforce uniqueness on the surrogate and `(snapshot_id, source_row_ordinal)`, not on `code`.
+1. Read the pinned raw Parquet snapshot unchanged. Select source records linked by approved country mappings to ID, MY, PH, SG, or TH for the canonical analytical database; do not expand arrays in the raw record table.
+2. Assign each selected source row a surrogate `source_record_id`; preserve its original ordinal within the complete snapshot. Enforce uniqueness on the surrogate and `(snapshot_id, source_row_ordinal)`, not on `code`.
 3. Expand country/category/brand-tag arrays into association tables while preserving exact source values. Keep a separate `record_country` bridge that deduplicates only `(source_record_id, iso_alpha2)` after exact approved country mappings.
 4. Store taxonomy parent edges independently of category-tag assignments. Use the category crosswalk as versioned candidate and decision inputs; preserve unresolved and excluded statuses, and do not auto-assign every candidate or residual tag as an approved analytical category.
 5. Use brand mappings only for exact full `brands` text values listed in the mapping. No regex, similarity, implicit case-folding, delimiter splitting, or `brands`/`brands_tags` crosswalk is implied.
@@ -76,23 +76,23 @@ The DuckDB implementation uses unique indexes for the modeled key guarantees. It
 
 ## Approved Implementation Decisions
 
-1. **Database target:** A DuckDB database file at `data/processed/global_product_landscape.duckdb`.
+1. **Database target:** The canonical five-country DuckDB file at `data/processed/global_product_landscape_five_country.duckdb`; a full-country database is optional.
 2. **Raw landing:** Retain all 111 source columns. Add `source_record_id`, `snapshot_id`, and `source_row_ordinal`; use the one-based Parquet row ordinal for stable record identity in this single-snapshot build.
 3. **Brand handling:** Preserve exact full `brands` strings and `brands_tags` independently. Apply only the existing exact mapping file; do not split, case-fold, or infer equivalence.
-4. **Category handling:** Preserve observed tags, taxonomy nodes/edges, owner decisions, candidates, and diagnostic-only statuses separately. Mapping work remains deferred unless an analysis requirement makes a specific decision material.
-5. **Snapshot identity:** Use the source file SHA-256 as `snapshot_id`; preserve duplicate codes and validate all 61 known duplicate-code groups.
+4. **Category handling:** Preserve observed tags, taxonomy nodes/edges, reviewed decisions, candidates, and diagnostic-only statuses separately. Keep unresolved tags out of substantive assignments.
+5. **Snapshot identity:** Use the source file SHA-256 as `snapshot_id`; preserve duplicate codes. The full snapshot has 61 known duplicate-code groups, while scoped validation is based on the selected-country build.
 6. **Overwrite safety:** The builder refuses to overwrite an existing database. Use a new output path for a separate build; replace an existing database only through an explicit, owner-controlled file operation.
 
 ## Stage 3 Exit Criteria and Stage 4 Status
 
-- Owner-approved database target, raw landing scope, and brand handling are recorded.
+- Database target, raw landing scope, and brand handling are recorded.
 - The relational model accounts for duplicate codes, many-to-many country/category/brand tags, raw-value preservation, and unresolved mappings.
 - Ordered SQL build and validation files exist under `sql/`, with `scripts/11_build_relational_database.py` as the guarded orchestration entry point.
-- Stage 4 build and validation passed on the current pinned inputs. The database contains 4,828,207 source rows with all 111 source columns, the 61 known duplicate-code groups remain intact, 237 mapped ISO units reconcile exactly, and all 15 checks pass in `outputs/quality/database_build_validation.csv`. The report's 5,079,894 country assignments are source-record-to-country-tag links; the deduplicated `record_country` bridge contains 5,004,567 record-to-ISO rows. The ISO reference table contains all 249 reference units.
+- The canonical five-country database was clean-built from the pinned inputs and passed all 15 scoped checks in `outputs/quality/database_build_validation_five_country.csv`. It contains 48,845 source records and 49,049 record-to-country links across ID/MY/PH/SG/TH, with all 111 source columns retained for included records. The ISO reference table contains all 249 reference units.
 
 ### Storage Footprint and Trade-off
 
-A read-only audit on 2026-10-29 measured the Parquet at 7,975,461,945 bytes and the DuckDB file at 15,109,992,448 bytes. DuckDB reports 14.0 GiB (rounded), 57,588 used 256-KiB blocks, 52 free blocks, and no WAL. The database contains 16 tables and 15 unique indexes.
+A read-only audit on 2026-10-29 measured the Parquet at 7,975,461,945 bytes and the optional full-country DuckDB file at 15,109,992,448 bytes. DuckDB reported 14.0 GiB (rounded), 57,588 used 256-KiB blocks, 52 free blocks, and no WAL. The optional database contains 16 tables and 15 unique indexes. The much smaller canonical five-country database is the reproducible analysis build.
 
 The database is not an uncompressed copy of the Parquet. Its source landing table preserves all 111 columns, including source arrays, while association tables materialize category, country-tag, record-to-country, and brand-tag relationships; unique indexes enforce modeled key guarantees. This supports raw-value auditability and relational queries but stores overlapping relationship information by design. DuckDB uses internal column compression; a per-table byte-accurate attribution has not been measured.
 
