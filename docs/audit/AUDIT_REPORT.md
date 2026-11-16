@@ -121,6 +121,13 @@ Target check: overall ≥8.5 met; D1 and D2 ≥9 met; every dimension now ≥8, 
 - `data/raw/`, `*.parquet`, `*.duckdb`; `requirements.txt` versions; `LICENSE` + data-license split.
 - `docs/06` owner decisions and `docs/03` numbers.
 
+## Release record
+
+- v1.1 published 2026-11-16 from `main` @ `86619d6`; release notes and the metadata record are in [`docs/08_github_release_metadata.md`](../08_github_release_metadata.md).
+- PR #1 landed `release/v1.1-stabilization` (rebase-merged to `baa52d5`); PR #2 landed this audit (merge commit `86619d6`). Both were green in CI before merging.
+- The branches had edited the same documentation, so each conflicted file was compared on both sides before resolution; the audit version was kept because it already contained the stabilization content.
+- Merged remote and local branches were deleted; tags `audit-baseline` and `v1.1` remain.
+
 ## Verification notes
 - Numbers cross-checked against tracked CSVs — consistent; now enforced by `scripts/18_check_headline_numbers.py` (109 assertions) in CI.
 - `scripts/support_check_docs_consistency.py` run and passing: "README and Stage 7 generated sections match validated CSV outputs."
