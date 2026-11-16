@@ -3,14 +3,17 @@
 Read-only guard against README/docs drift: no DuckDB, no pipeline re-run, no
 network access. Reads only tracked outputs under ``outputs/`` and fails loudly
 when a headline number quoted in the README or docs no longer matches the data.
+Also asserts that key static README strings are present outside generated blocks.
 """
 
+import re
 import sys
 from pathlib import Path
 
 import pandas as pd
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
+README_FILE = PROJECT_ROOT / "README.md"
 STAGE5_FILE = (
     PROJECT_ROOT / "outputs" / "profiling" / "stage5_country_peer_evidence.csv"
 )
@@ -30,6 +33,24 @@ EXPECTED_DERIVED = {
     "SG": {"candidate_share": 15.07, "approved_share": 2.19},
     "TH": {"candidate_share": 39.81, "approved_share": 5.93},
 }
+
+GENERATED_BLOCK_PATTERN = re.compile(
+    r"<!-- AUTO-GENERATED: [a-z0-9-]+:START -->"
+    r".*?"
+    r"<!-- AUTO-GENERATED: [a-z0-9-]+:END -->",
+    re.DOTALL,
+)
+
+EXPECTED_README_STATIC_STRINGS = (
+    "9,118",
+    "12.2%",
+    "788/9,118",
+    "8.64%",
+    "1.24%",
+    "0.34%",
+    "97 of 130",
+    "61/150",
+)
 
 EXPECTED_HEADLINES = {
     "ID": {
@@ -262,6 +283,17 @@ def check_audit_headlines(
     )
 
 
+def check_readme_static_strings(checker: Checker) -> None:
+    document = README_FILE.read_text(encoding="utf-8")
+    static_text = GENERATED_BLOCK_PATTERN.sub("", document)
+    for needle in EXPECTED_README_STATIC_STRINGS:
+        checker.equal(
+            f"README static text contains {needle!r}",
+            needle in static_text,
+            True,
+        )
+
+
 def main() -> None:
     stage5 = read_csv(STAGE5_FILE)
     scope = read_csv(STAGE6_SCOPE_FILE)
@@ -285,6 +317,7 @@ def main() -> None:
     audit_summary = read_csv(SEMANTIC_AUDIT_SUMMARY_FILE)
     online_audit = read_csv(ONLINE_AUDIT_FILE)
     check_audit_headlines(audit_summary, online_audit, checker)
+    check_readme_static_strings(checker)
 
     if checker.failures:
         print(
