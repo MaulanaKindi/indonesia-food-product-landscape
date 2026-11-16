@@ -6,4 +6,5 @@ readiness_and_contributor_diagnostics,"five-country scorecard, creator/year and 
 candidate_validation,15/15 passed,outputs/quality/stage6_candidate_build_validation.csv
 stage5_evidence,5 selected units validated,outputs/profiling/stage5_country_peer_evidence.csv
 stage6_analysis,11/11 passed,outputs/analysis/
-stage7_findings,dynamic result tables refreshed,docs/06_stage7_findings_and_recommendations.md
+semantic_mapping_audit,AI-assisted audit outputs validated and included in generated findings,outputs/quality/category_mapping_semantic_audit_*.csv
+stage7_findings,dynamic result tables refreshed,docs/07_stage7_findings_and_recommendations.md

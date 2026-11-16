@@ -1,4 +1,4 @@
-# Indonesia Food Product Landscape (In Revision)
+# Indonesia Food Product Landscape
 
 An evidence-based comparison of product records and data coverage in a pinned Open Food Facts snapshot—not a measure of food-market size or sales.
 
@@ -33,7 +33,7 @@ An evidence-based comparison of product records and data coverage in a pinned Op
 
 ### Field readiness
 
-Percentages are records with a non-empty field or valid value, using the definitions in [the reproduction guide](docs/REPRODUCE.md). Numeric nutrition and valid A–E Nutri-Score are separate measures.
+Percentages are records with a non-empty field or valid value, using the definitions in [the reproduction guide](docs/09_reproduction.md). Numeric nutrition and valid A–E Nutri-Score are separate measures.
 
 <!-- AUTO-GENERATED: readiness-scorecard:START -->
 | ISO | Brand text | Category tags | Ingredients | Numeric nutrition | Valid Nutri-Score | Packaging | Labels | Exact-approved brand map |
@@ -142,9 +142,8 @@ ORDER BY country.iso_alpha2;
 
 ## Reproduce and inspect
 
-- [Reproduction guide](docs/REPRODUCE.md): one-command workflow, requirements, data definitions, and SQL.
-- [Stage 7 findings](docs/06_stage7_findings_and_recommendations.md): detailed generated results, diagnostics, interpretation, and caveats.
-- [Data source and licensing](docs/01_data_source.md): pinned source, attribution, and third-party data conditions.
-- [Business brief](docs/00_business_brief.md): objective, questions, scope, and measurement rules; [GitHub metadata and v1.0 publication record](docs/GITHUB_RELEASE_METADATA.md), with the prepared [social preview](docs/img/social_preview.png).
+- [Repository architecture](docs/00_repository_architecture.md): directory roles, source-of-truth rules, and pipeline ownership.
+- [Reproduction guide](docs/09_reproduction.md): workflow, requirements, definitions, and SQL; [claim lineage](docs/10_claim_lineage.md): trace from key claims to inputs, transformations, outputs, and checks; [Stage 7 findings](docs/07_stage7_findings_and_recommendations.md): generated results and caveats.
+- [Business brief](docs/01_business_brief.md), [data source and licensing](docs/02_data_source.md), [GitHub metadata and v1.0 publication record](docs/08_github_release_metadata.md), and the prepared [social preview](docs/img/social_preview.png).
 
-Original project code and documentation are MIT-licensed. Open Food Facts data and third-party references have separate terms; see the [source and licensing note](docs/01_data_source.md).
+Original project code and documentation are MIT-licensed. Open Food Facts data and third-party references have separate terms; see the [source and licensing note](docs/02_data_source.md).

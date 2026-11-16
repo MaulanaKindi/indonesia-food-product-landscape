@@ -1,6 +1,7 @@
 from pathlib import Path
 
-import duckdb
+
+from support_duckdb_runtime import connect_duckdb
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -42,7 +43,7 @@ def main() -> None:
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
-    with duckdb.connect() as connection:
+    with connect_duckdb() as connection:
         columns = connection.execute(
             "DESCRIBE SELECT * FROM read_parquet(?)",
             [str(DATA_FILE)],
@@ -118,10 +119,7 @@ def main() -> None:
         f"{coverage_summary.loc[0, 'records_without_country_tags']:,}"
     )
     print(f"Output saved to: {OUTPUT_DIR / 'country_profile.csv'}")
-    print(
-        "Coverage summary saved to: "
-        f"{OUTPUT_DIR / 'country_coverage_summary.csv'}"
-    )
+    print(f"Coverage summary saved to: {OUTPUT_DIR / 'country_coverage_summary.csv'}")
 
 
 if __name__ == "__main__":

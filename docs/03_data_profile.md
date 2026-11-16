@@ -1,4 +1,4 @@
-# 02 Data Profile
+# Data Profile
 
 ## Purpose
 
@@ -199,7 +199,7 @@ The maintained mapping now covers 60 exact `brands` text values across 13 canoni
 
 ## Category Taxonomy Structure
 
-The local Parquet includes category tags but not the category hierarchy field. The audit in `scripts/06_category_taxonomy_audit.py` compares observed values with the versioned taxonomy snapshot documented in [01_data_source.md](01_data_source.md).
+The local Parquet includes category tags but not the category hierarchy field. The audit in `scripts/06_category_taxonomy_audit.py` compares observed values with the versioned taxonomy snapshot documented in [02_data_source.md](02_data_source.md).
 
 | Metric | Result |
 |----------|----------:|
@@ -306,7 +306,7 @@ The two Indonesia sensitivity results are equal because neither strong-food-sign
 
 #### Online Validation Limits
 
-The local Parquet SHA-256 and size match Hub metadata for three listed commits. This is a content match, not proof of the local retrieval commit or retrieval date; earlier history is unavailable beyond a squash boundary. The Hugging Face card describes food/beauty splits and Parquet production, but the split criterion was not documented on the inspected card. External claim-validation results are summarized in [01_data_source.md](01_data_source.md) and fully recorded in `online_validation_log.csv`.
+The local Parquet SHA-256 and size match Hub metadata for three listed commits. This is a content match, not proof of the local retrieval commit or retrieval date; earlier history is unavailable beyond a squash boundary. The Hugging Face card describes food/beauty splits and Parquet production, but the split criterion was not documented on the inspected card. External claim-validation results are summarized in [02_data_source.md](02_data_source.md) and fully recorded in `online_validation_log.csv`.
 
 ---
 

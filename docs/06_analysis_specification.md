@@ -21,7 +21,7 @@ The Stage 6 results below were regenerated after the eight bounded category deci
 | Brand mapping | 60 approved exact `brands` text values across 13 canonical groups | Apply only exact reviewed mappings; preserve unmapped values, do not split multi-brand text, and keep `brands_tags` separate. Broad brand coverage and entity identity are not established. |
 | Non-food audit | Record-level A/B sensitivity outputs exist; class C is discovery-only | Keep the baseline and both agreed A/B sensitivity scenarios. Never use class C as an exclusion. |
 
-Evidence sources: `outputs/profiling/normalized_country_coverage_summary.csv`, `country_comparison_shortlist.csv`, `nonfood_scope_country_impact.csv`, `category_reporting_group_candidate_status_summary.csv`, `category_reporting_group_candidate_country_overlap.csv`, `brand_name_manual_mapping_validation.csv`, `outputs/quality/database_build_validation_five_country.csv`, and `docs/02_data_profile.md`.
+Evidence sources: `outputs/profiling/normalized_country_coverage_summary.csv`, `country_comparison_shortlist.csv`, `nonfood_scope_country_impact.csv`, `category_reporting_group_candidate_status_summary.csv`, `category_reporting_group_candidate_country_overlap.csv`, `brand_name_manual_mapping_validation.csv`, `outputs/quality/database_build_validation_five_country.csv`, and `docs/03_data_profile.md`.
 
 The 107-unit country shortlist is a screening artifact from the full source profile, not the current analytical comparison set. The current Stage 5 evidence table is generated from the five-country canonical database and reports the focal country, contextual peers, and coverage contrast only. It reports source rows and distinct codes separately, reconciles denominators against the scoped database, and does not imply statistical representativeness.
 
@@ -185,8 +185,8 @@ The current outputs were generated from a compact candidate built from `data/pro
 | ID | Decision | Recommendation | Status |
 |---|---|---|---|
 | S5-01 | Country peers | Use ID as focal, MY/PH/SG as contextual peers, and TH as a separate coverage contrast; other screened units remain outside Stage 6. | Approved |
-| S5-02 | Category candidate assignments | Use single-group taxonomy candidates plus the 56 approved decisions in a clearly labeled candidate-derived main view; show approved-only assignments as a sensitivity view. | Approved; current Stage 6 validated |
-| S5-03 | Brand concentration | Report coverage and the 11 approved canonical groups only; defer HHI and broad concentration claims until the mapping universe/denominator is defensible. | Approved |
+| S5-02 | Category candidate assignments | Use single-group taxonomy candidates plus the 59 approved exact-tag decisions in a clearly labeled candidate-derived main view; show approved-only assignments as a sensitivity view. | Approved; current Stage 6 validated |
+| S5-03 | Brand concentration | Report coverage and the 13 approved canonical groups only; defer HHI and broad concentration claims until the mapping universe/denominator is defensible. | Approved |
 | S5-04 | Non-food sensitivity | Keep the baseline plus both A/B scenarios; keep class C discovery-only and non-category Indonesia signals diagnostic-only. | Previously agreed; reaffirmed |
 | S5-05 | Record unit | Keep source rows primary and code distinct counts diagnostic only until a validated identifier resolution rule exists. | Approved |
 | S5-06 | Efficiency boundary | Prefer one bounded, decision-relevant country evidence review; do not extend long-tail category/brand review or add arbitrary cutoffs absent a demonstrated material need. | Approved |

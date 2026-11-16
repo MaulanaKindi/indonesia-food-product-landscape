@@ -72,9 +72,7 @@ def synthetic_database() -> duckdb.DuckDBPyConnection:
         )
         """
     )
-    connection.execute(
-        "CREATE TABLE reporting_group (reporting_group_id VARCHAR)"
-    )
+    connection.execute("CREATE TABLE reporting_group (reporting_group_id VARCHAR)")
     connection.execute(
         """
         CREATE TABLE category_tag_group_candidate (
@@ -104,11 +102,7 @@ def synthetic_database() -> duckdb.DuckDBPyConnection:
                     if record_id % 4 == 0
                     else []
                 ),
-                (
-                    [{"name": "energy", "100g": 12.0}]
-                    if record_id % 5 == 0
-                    else []
-                ),
+                ([{"name": "energy", "100g": 12.0}] if record_id % 5 == 0 else []),
                 "A" if record_id % 7 == 0 else "unknown",
                 "box" if record_id % 8 == 0 else None,
                 ["en:box"] if record_id % 8 == 0 else [],

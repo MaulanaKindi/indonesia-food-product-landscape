@@ -1,8 +1,8 @@
 import argparse
 from pathlib import Path
 
-import duckdb
 import pandas as pd
+from support_duckdb_runtime import connect_duckdb
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -56,9 +56,7 @@ def main() -> None:
         for later_set in decision_set_order[selected_index + 1 :]
         for tag in DECISION_SETS[later_set]
     }
-    output_suffix = (
-        "" if args.decision_set == "initial-five" else "_additional_three"
-    )
+    output_suffix = "" if args.decision_set == "initial-five" else "_additional_three"
     tag_impact_file = OUTPUT_DIR / (
         f"stage2_selected_scope_mapping_tag_impact{output_suffix}.csv"
     )
@@ -172,7 +170,7 @@ def main() -> None:
         ~approved_after_map["source_category_tag"].isin(decision_set)
     ].copy()
 
-    with duckdb.connect() as connection:
+    with connect_duckdb() as connection:
         connection.register("approved_country_map", countries)
         connection.register(
             "selected_decisions",
@@ -271,8 +269,9 @@ def main() -> None:
                 """
             ).fetchdf()
             assignment_counts = (
-                assignments.groupby(["iso_alpha2", "source_record_id"])
-                ["proposed_group_id"]
+                assignments.groupby(["iso_alpha2", "source_record_id"])[
+                    "proposed_group_id"
+                ]
                 .nunique()
                 .rename("primary_group_count")
                 .reset_index()
@@ -293,9 +292,11 @@ def main() -> None:
             country_group_counts = assignments.groupby("iso_alpha2")[
                 "source_record_id"
             ].nunique()
-            country_overlap = assignment_counts.loc[
-                assignment_counts["primary_group_count"].gt(1)
-            ].groupby("iso_alpha2")["source_record_id"].nunique()
+            country_overlap = (
+                assignment_counts.loc[assignment_counts["primary_group_count"].gt(1)]
+                .groupby("iso_alpha2")["source_record_id"]
+                .nunique()
+            )
             country_metrics["records_with_primary_group"] = (
                 country_metrics["iso_alpha2"]
                 .map(country_group_counts)
@@ -314,9 +315,9 @@ def main() -> None:
 
             if not assignments.empty:
                 counts = (
-                    assignments.groupby(
-                        ["iso_alpha2", "proposed_group_id"]
-                    )["source_record_id"]
+                    assignments.groupby(["iso_alpha2", "proposed_group_id"])[
+                        "source_record_id"
+                    ]
                     .nunique()
                     .to_dict()
                 )

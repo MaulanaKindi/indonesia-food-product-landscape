@@ -4,15 +4,12 @@ import argparse
 import csv
 from pathlib import Path
 
-import duckdb
+from support_duckdb_runtime import connect_duckdb
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DATABASE_FILE = (
-    PROJECT_ROOT
-    / "data"
-    / "processed"
-    / "global_product_landscape_five_country.duckdb"
+    PROJECT_ROOT / "data" / "processed" / "global_product_landscape_five_country.duckdb"
 )
 OUTPUT_FILE = PROJECT_ROOT / "data" / "private" / "category_mapping_audit_sample.csv"
 SAMPLE_SIZE = 150
@@ -28,13 +25,15 @@ def main() -> None:
     database_file = args.database.resolve()
     output_file = args.output.resolve()
     if not database_file.is_file():
-        raise FileNotFoundError(f"Selected-country database is missing: {database_file}")
+        raise FileNotFoundError(
+            f"Selected-country database is missing: {database_file}"
+        )
     if output_file.exists():
         raise FileExistsError(
             f"Refusing to overwrite an existing manual-label file: {output_file}"
         )
 
-    with duckdb.connect(str(database_file), read_only=True) as connection:
+    with connect_duckdb(str(database_file), read_only=True) as connection:
         rows = connection.execute(
             """
             SELECT

@@ -36,7 +36,7 @@ Short records of decisions that affect scope, measurement, or reproducibility.
 
 **Decision:** Prepare a deterministic 150-record Indonesian mapping-audit sample locally and exclude it from Git.
 
-**Reason:** Labels must be supplied by a human reviewer. No precision estimate or confidence interval will be reported before those labels are complete and reviewed.
+**Reason:** This was the initial plan for a human annotation-based estimate. The 2026-11-06 decision below later authorized AI-assisted diagnostics with conditional intervals; those outputs are not human-derived accuracy estimates.
 
 ## 2026-11-06 — Publish AI-assisted mapping audit as diagnostic evidence
 
@@ -46,6 +46,26 @@ Short records of decisions that affect scope, measurement, or reproducibility.
 
 ## 2026-11-06 — Add targeted online evidence follow-up
 
-**Decision:** Search product-identifying information online for all 48 primary-sample records with disputed or uncertain AI assessments and publish a structured evidence log.
+**Decision:** Search product-identifying information online for the selected 48 cases with incorrect, ambiguous, or insufficient-evidence AI assessments (45 primary-sample and 3 census cases) and publish a structured evidence log.
 
 **Reason:** Exact product pages can help resolve particular records, but the follow-up is selected by observed uncertainty. Source match quality is recorded explicitly; no population-level precision or human-ground-truth claim is derived from it.
+
+## 2026-11-07 — Standardize repository navigation and pipeline ownership
+
+**Decision:** Add a repository architecture guide, use ordered lowercase snake-case names for project documentation, centralize pinned source metadata, apply one Ruff format across Python files, correct stale release and mapping counts, and skip duplicate crosswalk/review-queue generation when the full pipeline has just rebuilt those inputs.
+
+**Reason:** The architecture map makes authoritative inputs, generated evidence, optional tasks, and output ownership easier to locate. The shared source manifest and automated style/link checks reduce drift. The full pipeline regenerates mappings before database construction; a standalone refresh still regenerates them by default. Updated links and decision counts reduce navigation and interpretation drift.
+
+## 2026-11-07 - Standardize script roles and bound DuckDB temporary storage
+
+**Decision:** Reserve `NN_` names for workflow stages, name reusable/developer tools `support_*.py`, split large pipeline and reporting responsibilities into focused support modules, and route DuckDB temporary spill to `data/processed/.duckdb_temp/` with a 3 GB memory limit and 50 GB spill cap.
+
+**Reason:** The naming rule distinguishes ordered steps from helpers without assigning false pipeline order. Smaller modules make Stage 5 evidence, category mapping, non-food diagnostics, audit statistics, and generated reports easier to find and maintain. Explicit temp and memory settings keep large local rebuilds on the workspace volume and prevent unbounded use of the default system temp location.
+
+**Verification:** Rebuilt the pinned 4,828,207-row source into the canonical five-country database with 15/15 checks passing; rebuilt the Stage 6 candidate with 15/15 checks and Stage 6 analysis with 11/11 checks. Generated report consistency passed. The rebuild used temporary spill on D: and removed it after success.
+
+## 2026-11-07 - Avoid duplicate profile scans in the clean pipeline
+
+**Decision:** Let `run_all.py` pass `--skip-brand-profile-refresh` to Stage 16 after Stage 05 has validated brand mappings. Standalone Stage 16 refreshes continue to run Stage 05 by default.
+
+**Reason:** The clean run already scans the full source for category/brand profiles before building the database. Repeating that scan during the downstream refresh wastes several minutes without changing inputs or evidence.

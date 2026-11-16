@@ -5,23 +5,18 @@ import hashlib
 import tempfile
 from pathlib import Path
 
-import duckdb
 import pandas as pd
 
+from support_pinned_inputs import SNAPSHOT_SHA256, SNAPSHOT_SIZE_BYTES
+from support_duckdb_runtime import connect_duckdb
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 SOURCE_FILE = PROJECT_ROOT / "data" / "raw" / "food.parquet"
 BASELINE_DATABASE = (
-    PROJECT_ROOT
-    / "data"
-    / "processed"
-    / "global_product_landscape_five_country.duckdb"
+    PROJECT_ROOT / "data" / "processed" / "global_product_landscape_five_country.duckdb"
 )
 BASELINE_VALIDATION = (
-    PROJECT_ROOT
-    / "outputs"
-    / "quality"
-    / "database_build_validation_five_country.csv"
+    PROJECT_ROOT / "outputs" / "quality" / "database_build_validation_five_country.csv"
 )
 CANDIDATE_DATABASE = (
     PROJECT_ROOT
@@ -54,12 +49,13 @@ DISPOSITIONS_FILE = (
     PROJECT_ROOT / "data" / "mappings" / "category_tag_manual_dispositions.csv"
 )
 ANCHORS_FILE = (
-    PROJECT_ROOT / "data" / "mappings" / "category_reporting_group_anchor_candidates.csv"
+    PROJECT_ROOT
+    / "data"
+    / "mappings"
+    / "category_reporting_group_anchor_candidates.csv"
 )
-EXPECTED_SNAPSHOT_SHA256 = (
-    "DA39B2C5AAF1F85B2E637B904B5FC3A29780DD7E184254F4B660CFE0CD84999A"
-)
-EXPECTED_SOURCE_SIZE = 7_975_461_945
+EXPECTED_SNAPSHOT_SHA256 = SNAPSHOT_SHA256
+EXPECTED_SOURCE_SIZE = SNAPSHOT_SIZE_BYTES
 SELECTED_COUNTRIES = ("ID", "MY", "PH", "SG", "TH")
 
 
@@ -101,11 +97,9 @@ def build_candidate(
     brand_mapping_version: str,
 ) -> list[tuple[str, str, str]]:
     escaped_baseline = str(baseline_database.resolve()).replace("'", "''")
-    connection = duckdb.connect(str(output_file))
+    connection = connect_duckdb(str(output_file))
     try:
-        connection.execute(
-            f"ATTACH '{escaped_baseline}' AS baseline (READ_ONLY)"
-        )
+        connection.execute(f"ATTACH '{escaped_baseline}' AS baseline (READ_ONLY)")
         connection.register("current_crosswalk", crosswalk)
         connection.register("current_brand_mapping", brand_mapping)
         expected_source_rows = connection.execute(
@@ -443,7 +437,13 @@ def build_candidate(
                 str(len(brand_mapping)),
                 str(expected_present_brand_mapping_values),
                 str(len(crosswalk)),
-                str(int(crosswalk["assignment_status"].eq("manual_group_assignment").sum())),
+                str(
+                    int(
+                        crosswalk["assignment_status"]
+                        .eq("manual_group_assignment")
+                        .sum()
+                    )
+                ),
             ],
         ).fetchall()
     finally:
@@ -478,7 +478,9 @@ def main() -> None:
         if not path.is_file():
             raise FileNotFoundError(f"Required candidate-build input missing: {path}")
     if output_file.exists():
-        raise FileExistsError(f"Refusing to overwrite existing candidate: {output_file}")
+        raise FileExistsError(
+            f"Refusing to overwrite existing candidate: {output_file}"
+        )
     if validation_file.exists():
         raise FileExistsError(
             f"Refusing to overwrite existing validation report: {validation_file}"
@@ -494,7 +496,7 @@ def main() -> None:
         raise ValueError("Pinned Parquet SHA-256 does not match the expected snapshot.")
     validate_build_report(args.baseline_validation)
 
-    with duckdb.connect(str(baseline_database), read_only=True) as baseline:
+    with connect_duckdb(str(baseline_database), read_only=True) as baseline:
         snapshot_id = baseline.execute(
             "SELECT snapshot_id FROM data_snapshot"
         ).fetchone()[0]
@@ -526,7 +528,9 @@ def main() -> None:
             validation_report["check_name"].eq("source_product_record_rows"),
             "expected_value",
         ]
-        if len(expected_row_check) != 1 or source_rows != int(expected_row_check.iloc[0]):
+        if len(expected_row_check) != 1 or source_rows != int(
+            expected_row_check.iloc[0]
+        ):
             raise ValueError(
                 "Selected-scope build report does not reconcile to the baseline "
                 f"database row count ({source_rows})."
@@ -608,9 +612,7 @@ def main() -> None:
         raise ValueError("All manual brand mappings must be approved.")
     if not brand_mapping["decision_basis"].str.strip().ne("").all():
         raise ValueError("Manual brand mappings must include a decision basis.")
-    if brand_mapping[
-        ["source_brand_name", "canonical_brand_name"]
-    ].eq("").any().any():
+    if brand_mapping[["source_brand_name", "canonical_brand_name"]].eq("").any().any():
         raise ValueError(
             "Manual brand mappings must include source and canonical values."
         )

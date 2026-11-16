@@ -8,15 +8,23 @@ import tempfile
 from pathlib import Path
 from typing import Any
 
-import duckdb
 import pandas as pd
 
+from support_pinned_inputs import (
+    SNAPSHOT_COLUMN_COUNT,
+    SNAPSHOT_FILE,
+    SNAPSHOT_ROW_COUNT,
+    SNAPSHOT_SHA256,
+    SNAPSHOT_SIZE_BYTES,
+    TAXONOMY_FILE as PINNED_TAXONOMY_FILE,
+    TAXONOMY_RETRIEVED_ON,
+    TAXONOMY_SHA256,
+)
+from support_duckdb_runtime import connect_duckdb
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-PARQUET_FILE = PROJECT_ROOT / "data" / "raw" / "food.parquet"
-TAXONOMY_FILE = (
-    PROJECT_ROOT / "data" / "reference" / "off_categories_taxonomy_2026-10-25.json"
-)
+PARQUET_FILE = SNAPSHOT_FILE
+TAXONOMY_FILE = PINNED_TAXONOMY_FILE
 DATABASE_FILE = PROJECT_ROOT / "data" / "processed" / "global_product_landscape.duckdb"
 VALIDATION_FILE = PROJECT_ROOT / "outputs" / "quality" / "database_build_validation.csv"
 SELECTED_DATABASE_FILE = (
@@ -25,22 +33,16 @@ SELECTED_DATABASE_FILE = (
 SELECTED_VALIDATION_FILE = (
     PROJECT_ROOT / "outputs" / "quality" / "database_build_validation_five_country.csv"
 )
-EXPECTED_PARQUET_SHA256 = (
-    "DA39B2C5AAF1F85B2E637B904B5FC3A29780DD7E184254F4B660CFE0CD84999A"
-)
-EXPECTED_TAXONOMY_SHA256 = (
-    "EB03AEFABAE4C6269B5FBC3E89160F8DA84CA3300A53787E27EAB5FE2D1020D5"
-)
-EXPECTED_PARQUET_SIZE = 7_975_461_945
-EXPECTED_ROWS = 4_828_207
-EXPECTED_SOURCE_COLUMNS = 111
-TAXONOMY_VERSION = "2026-10-25"
+EXPECTED_PARQUET_SHA256 = SNAPSHOT_SHA256
+EXPECTED_TAXONOMY_SHA256 = TAXONOMY_SHA256
+EXPECTED_PARQUET_SIZE = SNAPSHOT_SIZE_BYTES
+EXPECTED_ROWS = SNAPSHOT_ROW_COUNT
+EXPECTED_SOURCE_COLUMNS = SNAPSHOT_COLUMN_COUNT
+TAXONOMY_VERSION = TAXONOMY_RETRIEVED_ON
 
 BUILD_SQL = PROJECT_ROOT / "sql" / "01_build_relational_database.sql"
 VALIDATE_SQL = PROJECT_ROOT / "sql" / "02_validate_relational_database.sql"
-SELECTED_VALIDATE_SQL = (
-    PROJECT_ROOT / "sql" / "05_validate_five_country_database.sql"
-)
+SELECTED_VALIDATE_SQL = PROJECT_ROOT / "sql" / "05_validate_five_country_database.sql"
 SELECTED_COUNTRIES = ("ID", "MY", "PH", "SG", "TH")
 INPUTS = (
     PARQUET_FILE,
@@ -49,10 +51,19 @@ INPUTS = (
     PROJECT_ROOT / "data" / "reference" / "category_reporting_group_framework.csv",
     PROJECT_ROOT / "data" / "mappings" / "country_tag_mapping.csv",
     PROJECT_ROOT / "data" / "mappings" / "category_tag_manual_dispositions.csv",
-    PROJECT_ROOT / "data" / "mappings" / "category_tag_reporting_group_manual_decisions.csv",
-    PROJECT_ROOT / "data" / "mappings" / "category_reporting_group_anchor_candidates.csv",
+    PROJECT_ROOT
+    / "data"
+    / "mappings"
+    / "category_tag_reporting_group_manual_decisions.csv",
+    PROJECT_ROOT
+    / "data"
+    / "mappings"
+    / "category_reporting_group_anchor_candidates.csv",
     PROJECT_ROOT / "data" / "mappings" / "brand_name_manual_decisions.csv",
-    PROJECT_ROOT / "outputs" / "profiling" / "category_reporting_group_candidate_crosswalk.csv",
+    PROJECT_ROOT
+    / "outputs"
+    / "profiling"
+    / "category_reporting_group_candidate_crosswalk.csv",
     PROJECT_ROOT / "outputs" / "profiling" / "normalized_country_profile.csv",
 )
 
@@ -150,10 +161,7 @@ def build_database(
     )
     category_mapping_version = sha256_files(
         (
-            PROJECT_ROOT
-            / "data"
-            / "mappings"
-            / "category_tag_manual_dispositions.csv",
+            PROJECT_ROOT / "data" / "mappings" / "category_tag_manual_dispositions.csv",
             PROJECT_ROOT
             / "data"
             / "mappings"
@@ -187,9 +195,7 @@ def build_database(
             "JOIN selected_country_source_tags AS selected "
             "ON source_country_tag.country_tag = selected.source_country_tag)"
         )
-        country_assignment_scope_filter = (
-            f"mapping.iso_alpha2 IN ({country_codes})"
-        )
+        country_assignment_scope_filter = f"mapping.iso_alpha2 IN ({country_codes})"
         validation_sql = SELECTED_VALIDATE_SQL
     else:
         scope_codes_filter = "TRUE"
@@ -208,7 +214,7 @@ def build_database(
         "{{COUNTRY_ASSIGNMENT_SCOPE_FILTER}}": country_assignment_scope_filter,
     }
 
-    connection = duckdb.connect(str(output_file))
+    connection = connect_duckdb(str(output_file))
     try:
         connection.register("taxonomy_nodes_input", load_taxonomy_nodes())
         connection.execute(read_sql(BUILD_SQL, replacements))
@@ -287,9 +293,7 @@ def main() -> None:
     validation_file = (args.validation_output or default_validation).resolve()
     output_file.parent.mkdir(parents=True, exist_ok=True)
     if output_file.exists() and not args.replace_existing:
-        raise FileExistsError(
-            f"Refusing to overwrite existing database: {output_file}"
-        )
+        raise FileExistsError(f"Refusing to overwrite existing database: {output_file}")
 
     os.chdir(PROJECT_ROOT)
     with tempfile.TemporaryDirectory(
@@ -299,7 +303,9 @@ def main() -> None:
         temporary_database = Path(temporary_directory) / output_file.name
         print("Loading source records and relational tables into DuckDB...", flush=True)
         validation_rows = build_database(temporary_database, args.scope)
-        print("All database validation checks passed; finalizing database...", flush=True)
+        print(
+            "All database validation checks passed; finalizing database...", flush=True
+        )
         temporary_database.replace(output_file)
 
     write_validation_output(validation_rows, output_file, validation_file)

@@ -292,8 +292,10 @@ Record-level annotations, product evidence, source URLs, and generated metrics: 
 
 ## Evidence and reproducibility
 
-- Specification and decisions: `docs/05_analysis_specification.md`
-- Workflow and quality gates: `docs/03_analysis_workflow.md`
+For a compact map from each headline claim to its pinned/reviewed input, SQL or Python transformation, evidence CSV, metric definition, and validation, see the [claim-to-evidence lineage](10_claim_lineage.md).
+
+- Specification and decisions: `docs/06_analysis_specification.md`
+- Workflow and quality gates: `docs/04_analysis_workflow.md`
 - Country evidence: `outputs/profiling/stage5_country_peer_evidence.csv`
 - Field availability: `outputs/profiling/data_readiness_scorecard.csv`
 - Contributor and creation-time diagnostics: `outputs/profiling/contributor_year_diagnostics.csv` and `outputs/profiling/record_creation_year.csv`
@@ -307,4 +309,4 @@ Record-level annotations, product evidence, source URLs, and generated metrics: 
 - Stage 6 checks: `outputs/analysis/stage6_validation.csv`
 - Canonical selected-country database: `data/processed/global_product_landscape_five_country.duckdb`
 - Candidate build checks: `outputs/quality/stage6_candidate_build_validation.csv` (15 passed)
-- Reproduce with `scripts/run_all.py`; details are in `docs/REPRODUCE.md`.
+- Reproduce with `scripts/run_all.py`; details are in `docs/09_reproduction.md`.

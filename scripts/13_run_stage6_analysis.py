@@ -6,9 +6,10 @@ import os
 import tempfile
 from pathlib import Path
 
-import duckdb
 import pandas as pd
 
+from support_pinned_inputs import SNAPSHOT_SHA256
+from support_duckdb_runtime import connect_duckdb
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DATABASE_FILE = (
@@ -18,10 +19,7 @@ DATABASE_FILE = (
     / "global_product_landscape_five_country_candidate.duckdb"
 )
 BUILD_VALIDATION_FILE = (
-    PROJECT_ROOT
-    / "outputs"
-    / "quality"
-    / "stage6_candidate_build_validation.csv"
+    PROJECT_ROOT / "outputs" / "quality" / "stage6_candidate_build_validation.csv"
 )
 COUNTRY_EVIDENCE_FILE = (
     PROJECT_ROOT / "outputs" / "profiling" / "stage5_country_peer_evidence.csv"
@@ -32,9 +30,6 @@ NONFOOD_SENSITIVITY_FILE = (
 ANALYSIS_SQL = PROJECT_ROOT / "sql" / "03_stage6_analysis.sql"
 VALIDATION_SQL = PROJECT_ROOT / "sql" / "04_stage6_validation.sql"
 OUTPUT_DIR = PROJECT_ROOT / "outputs" / "analysis"
-SNAPSHOT_SHA256 = (
-    "DA39B2C5AAF1F85B2E637B904B5FC3A29780DD7E184254F4B660CFE0CD84999A"
-)
 ANALYSIS_OUTPUTS = (
     "stage6_country_scope.csv",
     "stage6_country_category.csv",
@@ -68,8 +63,7 @@ def validate_inputs(
 
     build_checks = read_csv(build_validation_file)
     if not build_checks or any(
-        row["status"] != "passed"
-        or row["actual_value"] != row["expected_value"]
+        row["status"] != "passed" or row["actual_value"] != row["expected_value"]
         for row in build_checks
     ):
         raise ValueError(
@@ -81,7 +75,7 @@ def validate_inputs(
     if not role_codes.issubset({row["iso_alpha2"] for row in country_evidence}):
         raise ValueError("Stage 5 evidence is missing an owner-approved country.")
 
-    connection = duckdb.connect(str(database_file), read_only=True)
+    connection = connect_duckdb(str(database_file), read_only=True)
     try:
         snapshot_id = connection.execute(
             "SELECT snapshot_id FROM data_snapshot"
@@ -151,7 +145,7 @@ def main() -> None:
         dir=args.output_dir.parent,
     ) as temporary_directory:
         temporary_output = Path(temporary_directory)
-        connection = duckdb.connect(str(args.database), read_only=True)
+        connection = connect_duckdb(str(args.database), read_only=True)
         try:
             connection.execute(
                 sql_with_output_dir(
