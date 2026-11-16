@@ -99,6 +99,65 @@ The new retrieval date and any changed web content mean these evidence files are
 
 All reported rates use records in the stated country or comparison subset as the denominator unless a table explicitly names a different denominator. Repeated category assignments can overlap and should not be summed as a partition.
 
+## Example SQL queries
+
+The README shows one example query and points here for the full set. Run these against the canonical database `data/processed/global_product_landscape_five_country.duckdb`.
+
+```sql
+-- How many country records have category tags?
+SELECT country.iso_alpha2,
+       COUNT(DISTINCT country.source_record_id) AS records,
+       COUNT(DISTINCT category.source_record_id) AS category_tagged
+FROM record_country AS country
+LEFT JOIN record_category_tag AS category USING (source_record_id)
+GROUP BY country.iso_alpha2
+ORDER BY country.iso_alpha2;
+```
+
+```sql
+-- How does exact-approved brand mapping compare with raw brand text?
+SELECT country.iso_alpha2,
+       COUNT(DISTINCT record.source_record_id)
+           FILTER (WHERE NULLIF(trim(record.brands), '') IS NOT NULL)
+           AS records_with_brand_text,
+       COUNT(DISTINCT brand.source_record_id)
+           FILTER (WHERE mapping.review_status = 'approved')
+           AS records_with_exact_approved_mapping
+FROM record_country AS country
+JOIN source_product_record AS record USING (source_record_id)
+LEFT JOIN record_brand_source_value AS brand USING (source_record_id)
+LEFT JOIN brand_name_mapping AS mapping
+    ON brand.source_brand_name = mapping.source_brand_name
+GROUP BY country.iso_alpha2
+ORDER BY country.iso_alpha2;
+```
+
+```sql
+-- Compare candidate-derived and approved-only tagged-record assignment.
+SELECT country.iso_alpha2,
+       COUNT(DISTINCT category.source_record_id)
+           FILTER (
+               WHERE candidate.candidate_role IN (
+                   'single_group_candidate',
+                   'manual_group_assignment'
+               )
+               AND candidate.comparison_role = 'primary_candidate'
+               AND candidate.reporting_group_id <> 'other_unclassified'
+           )
+           AS candidate_assigned_records,
+       COUNT(DISTINCT category.source_record_id)
+           FILTER (WHERE decision.selected_group_id IS NOT NULL)
+           AS approved_only_assigned_records
+FROM record_country AS country
+JOIN record_category_tag AS category USING (source_record_id)
+LEFT JOIN category_tag_group_candidate AS candidate
+    USING (source_category_tag)
+LEFT JOIN category_tag_group_decision AS decision
+    USING (source_category_tag)
+GROUP BY country.iso_alpha2
+ORDER BY country.iso_alpha2;
+```
+
 ## AI-assisted semantic mapping audit
 
 The completed AI-assisted audit evaluates the fixed sample of 150 Indonesian category-tagged records and separately reports a census of eight Meat & poultry candidates. Its label file contains AI-assisted judgments and evidence references; it is not human annotation or ground truth. A web follow-up was performed for 48 cases with incorrect, ambiguous, or insufficient-evidence AI assessments (45 from the primary sample and 3 from the separate census). The separate online evidence log documents the URL, source type, exact-code match, access date, evidence summary, and unresolved cases. This targeted follow-up is published as a diagnostic under the project publication policy.

@@ -27,6 +27,8 @@ data/raw/food.parquet
 
 The project uses the immutable commit and file checksum as its reproducibility contract. `data/reference/pinned_sources.json` is the shared input manifest; `scripts/support_pinned_inputs.py` exposes it to the downloader and database builder. `scripts/00_download_snapshot.py` downloads that exact revision and verifies both values before placing the file at `data/raw/food.parquet`; the database builder verifies them again. The verified file profile is 4,828,207 rows and 111 columns. The local retrieval event is not part of the reproducibility claim.
 
+The README keeps only a one-line pointer to this record; the commit, expected size, and SHA-256 in the table above are the authoritative pin.
+
 ### Online Claim Validation
 
 The evidence log is `outputs/profiling/online_validation_log.csv`; commit metadata is in `outputs/profiling/online_validation_hf_commits.csv`. On 2026-10-26, the supplied official tutorial documented `product_type` values `beauty`, `food`, `petfood`, and `product`. The local 111-column inventory contains no `product_type`-like field. GitHub issue #11330, dated 2025-02-06, reports about 12,000 beauty-type records and gives an exact count of 12,566; this is an issue statement, not a count verified against this local snapshot.
