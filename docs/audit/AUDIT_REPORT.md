@@ -102,7 +102,7 @@ All headline numbers match tracked outputs — no drift found:
 | D2 | Analytical integrity & limitations | 20% | 9 | 9 | Unchanged; limitations preserved verbatim in substance |
 | D3 | Documentation & navigability | 10% | 8 | 8.5 | Glossary in `docs/01`, three SQL queries in `docs/09`, derived-metric lineage, architecture updated |
 | D4 | Reproducibility | 15% | 7 | 8.5 | Data-free quick-look path, friendly preflight, re-render without DB, CI-enforced checks |
-| D5 | Code & SQL quality | 15% | 8 | 8 | Unchanged; mypy not runnable locally, so no claim of improvement |
+| D5 | Code & SQL quality | 15% | 8 | 8 | Unchanged in substance; verified clean locally (`mypy` 40 files, `ruff`, `sqlfluff`) |
 | D6 | Validation & testing | 10% | 7 | 9 | 109-assertion guard in CI plus seven renderer tests, mutation-verified |
 | D7 | Communication of results | 10% | 6 | 8.5 | Five charts with captions, Okabe-Ito palette (series separated from country hues), full country names, derived shares, fit-for-purpose |
 | D8 | Repo hygiene | 5% | 9 | 9 | Unchanged; `docs/audit/` still untracked |
@@ -124,6 +124,6 @@ Target check: overall ≥8.5 met; D1 and D2 ≥9 met; every dimension now ≥8, 
 ## Verification notes
 - Numbers cross-checked against tracked CSVs — consistent; now enforced by `scripts/18_check_headline_numbers.py` (109 assertions) in CI.
 - `scripts/support_check_docs_consistency.py` run and passing: "README and Stage 7 generated sections match validated CSV outputs."
-- `pytest` 36 passed; `ruff check`/`ruff format --check` clean; `sqlfluff` clean.
-- `mypy` and `pytest-cov` are not installed in the local audit venv, so CI is the authoritative check for those two steps.
+- `pytest` 41 passed; `ruff check`/`ruff format --check` clean; `sqlfluff` clean.
+- `mypy scripts` clean (40 source files) and `pytest --cov=scripts` run locally after syncing `requirements-dev.txt` into the venv; coverage is 16% overall because the pipeline scripts need the 8 GB snapshot, while `support_generate_visuals.py` is at 89%.
 - No pipeline script (including 11 and 16) was run; generated sections were re-rendered from tracked CSVs by `scripts/support_rerender_generated_sections.py`.

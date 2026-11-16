@@ -60,7 +60,7 @@
 - `support_check_docs_consistency.py`: PASS — "README and Stage 7 generated sections match validated CSV outputs." (README trimmed from 170 to 144 lines by dropping one SQL example to satisfy the 150-line presentation limit.)
 - `README.md`, `docs/09_reproduction.md`, `scripts/run_all.py`: static edits only; generated README blocks untouched; no headline numbers changed.
 - Commits (per item, per-file `git add`): `288dcd1` (P0-0), `570dcef` (P0-1+P1-4), `c5b275e` (P1-2), `77868bb` (P0-2), `fa41464` (P1-3).
-- mypy not installed in this venv (audit constraint: no installs); CI covers it.
+- `mypy` was not installed in this venv at the time (audit constraint: no installs); it is installed now and `mypy scripts` passes (see the P1-1 notes).
 
 ## Verification notes (P1-5)
 - `46f3f04` (P1-5a): renderers now emit full country names, plain-language role labels, derived share-of-all-records columns; README country table lost the brand column; AI headline bullet shortened. New `scripts/support_rerender_generated_sections.py` re-renders generated blocks from tracked CSVs only (no DB, no charts, no Stage 16).
@@ -74,10 +74,11 @@
 - New `tests/test_generated_visuals.py` (5 tests): all five PNGs written, valid PNG signature, >5 KB; palette distinctness regression guard; chart follows the largest-share CSV row (mutation-verified); `KeyError` when `group_source_rows` or the `Brand text` metric is missing.
 - README: figures renumbered 1–5 with captions (146 lines, ≤150); `docs/09` now says "five static charts".
 - Images regenerated from tracked CSVs only; no headline number changed; `data_readiness_scorecard.png` byte-identical (no code change in that function).
+- Local venv synced from `requirements-dev.txt`: `mypy scripts` clean across 40 files; `pytest -q --cov=scripts` → 41 passed, 16% overall coverage (pipeline scripts need the 8 GB snapshot), `support_generate_visuals.py` 89%.
 
 ## Gate
 - **Current:** GATE 5 — implementation complete, final score 8.75/10. P1-1 verified: `pytest` (41 tests) green, `ruff`/`sqlfluff` clean, docs-consistency PASS, script 18 OK, README = 150 lines (at the limit).
-- **Remaining (each needs a decision):** P2-2 social-preview upload (manual, GitHub Settings), release hygiene (PR `audit/quality-improvement` → `main`, tag `v1.1`, update release notes), and local venv sync (`mypy`, `pytest-cov`, `pre-commit` are in `requirements-dev.txt` but absent from the local audit venv; CI is authoritative for those steps).
+- **Remaining (each needs a decision):** P2-2 social-preview upload (manual, GitHub Settings) and release hygiene (PR `audit/quality-improvement` → `main`, tag `v1.1`, update release notes). Local venv sync is done, so `mypy`, `pytest-cov`, and `pre-commit` all run locally.
 - **Presentation limit:** README is exactly at the 150-line gate (`support_check_docs_consistency.py` fails above 150). Further additions must be offset by trimming prose, not by removing figures or captions.
 - **Known intentional divergence:** `docs/04` and `docs/06` keep the original spec terms ("focal", "contextual peers", "coverage contrast") because they are approved records; `docs/01` §6.7 maps them to the plain-language README terms.
 - **Coverage note:** renderer logic is covered by `tests/test_generated_report_rendering.py` and chart generation by `tests/test_generated_visuals.py`; mutation checks confirmed the derived-share test fails when the denominator switches to tagged records, and the largest-group test fails when the plotted CSV row changes.
