@@ -77,3 +77,11 @@ Short records of decisions that affect scope, measurement, or reproducibility.
 **Reason:** A 60-second reader needs the answer before the method, and plain-language role names reduce decoding cost. Derived shares label their denominator explicitly so tagged-record coverage is not confused with all-record coverage. Automated assertions keep published numbers and required static strings from drifting from the tracked CSVs.
 
 **Verification:** `scripts/support_check_docs_consistency.py` passes; `scripts/18_check_headline_numbers.py` passes 109 assertions; `ruff check` and `ruff format --check` are clean; the README is 142 lines, within the 150-line presentation limit. Generated sections are re-rendered from tracked CSVs by `scripts/support_rerender_generated_sections.py` without rebuilding the database.
+
+## 2026-11-16 - Add accessible charts and publish v1.1
+
+**Decision:** Add a largest-reporting-group chart and a brand-text versus exact-approved-mapping chart, generate all five charts only from tracked CSVs, move the country palette to an Okabe-Ito subset with series colours that are disjoint from country colours, and publish the stabilization and audit work together as v1.1.
+
+**Reason:** The 60-second reader needs two visuals that the text cannot carry as fast: which reporting group dominates recorded rows, and how far brand-text availability sits from exact-approved brand coverage. Sharing hues between the country palette and the two-series charts would make one colour mean two different things, so series colours are deliberately disjoint. Publishing the stabilization branch and the audit branch in one release keeps the README, charts, and CI gates consistent for anyone who reads only the tagged state.
+
+**Verification:** `pytest` 41 passed; `ruff check` and `ruff format --check` clean; `mypy scripts` clean across 40 files; `sqlfluff` clean; `scripts/support_check_docs_consistency.py` passes; `scripts/18_check_headline_numbers.py` passes 109 assertions; the README is 150 lines, exactly at the presentation limit; `tests/test_generated_visuals.py` covers all five charts, palette distinctness, and the source columns each chart reads.

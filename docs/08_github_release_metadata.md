@@ -1,6 +1,6 @@
-# GitHub repository metadata and v1.0 publication record
+# GitHub repository metadata and release records
 
-Prepared for `MaulanaKindi/indonesia-food-product-landscape`. The description and topics below are applied, and release `v1.0` is published. The social preview still needs to be uploaded in the repository's Settings page.
+Prepared for `MaulanaKindi/indonesia-food-product-landscape`. The description and topics below are applied, and releases `v1.0` and `v1.1` are published. The social preview still needs to be uploaded in the repository's Settings page.
 
 ## About
 
@@ -10,7 +10,27 @@ Prepared for `MaulanaKindi/indonesia-food-product-landscape`. The description an
 
 **Social preview:** [`docs/img/social_preview.png`](../docs/img/social_preview.png) - 1280 x 640 PNG, generated from the project's fixed-snapshot category-tag coverage values. Upload it from **Settings → Social preview → Edit**. GitHub recommends 1280 x 640 pixels for best display and accepts PNG/JPG/GIF under 1 MB ([instructions](https://docs.github.com/en/enterprise-cloud@latest/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/customizing-your-repositorys-social-media-preview)).
 
-## Published release
+## Published releases
+
+### v1.1 (2026-11-16)
+
+**Tag:** `v1.1`
+
+**Title:** Indonesia Food Product Landscape v1.1
+
+**Release:** [Indonesia Food Product Landscape v1.1](https://github.com/MaulanaKindi/indonesia-food-product-landscape/releases/tag/v1.1) - published 2026-11-16 WIB.
+
+**Prerelease:** No.
+
+**Notes:**
+
+- Stabilization: pipeline architecture refactor, hardened pinned-taxonomy integrity validation, documentation alignment, and repository quality gates (Ruff strict, mypy, pre-commit, coverage).
+- Reporting: README rewritten for a 60-second first read (bottom line, decisions supported, glossary, fit-for-purpose table), plain-language country roles, and derived share-of-all-records columns.
+- Five generated charts built from tracked CSVs, including two new ones (largest candidate-derived reporting group; brand text versus exact-approved mapping), on an Okabe-Ito palette that keeps country colours and series colours distinct.
+- Verification is enforced in CI: 41 tests, `ruff`, `mypy`, `sqlfluff`, documentation consistency, and a 109-assertion headline-number and static-string guard.
+- No headline number, mapping decision, or Stage 5-7 logic changed in this release.
+
+### v1.0 (2026-11-07)
 
 **Tag:** `v1.0` (published from commit `3164c9b`)
 
