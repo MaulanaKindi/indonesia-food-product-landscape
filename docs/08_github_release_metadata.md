@@ -4,7 +4,7 @@ Prepared for `MaulanaKindi/indonesia-food-product-landscape`. The description an
 
 ## About
 
-**Description:** Exploratory comparison of Open Food Facts product records and data coverage across Indonesia and four Southeast Asian peers.
+**Description:** Data-coverage study of Open Food Facts product records for Indonesia (ID), with Malaysia (MY), the Philippines (PH), and Singapore (SG) as comparison countries and Thailand (TH) as a high-coverage contrast.
 
 **Topics:** `open-food-facts`, `food-data`, `indonesia`, `southeast-asia`, `data-quality`, `market-intelligence`, `python`, `duckdb`, `sql`, `data-analysis`
 

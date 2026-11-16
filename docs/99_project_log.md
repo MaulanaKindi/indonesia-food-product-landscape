@@ -69,3 +69,11 @@ Short records of decisions that affect scope, measurement, or reproducibility.
 **Decision:** Let `run_all.py` pass `--skip-brand-profile-refresh` to Stage 16 after Stage 05 has validated brand mappings. Standalone Stage 16 refreshes continue to run Stage 05 by default.
 
 **Reason:** The clean run already scans the full source for category/brand profiles before building the database. Repeating that scan during the downstream refresh wastes several minutes without changing inputs or evidence.
+
+## 2026-11-16 - Add business framing and plain-language reporting
+
+**Decision:** Lead the README with a bottom-line answer and the decisions it supports, add a plain-language glossary and fit-for-purpose table, rename the report roles to study country, comparison country, and high-coverage contrast, add derived share-of-all-records columns, and assert headline numbers, derived metrics, and required static README strings in `scripts/18_check_headline_numbers.py`.
+
+**Reason:** A 60-second reader needs the answer before the method, and plain-language role names reduce decoding cost. Derived shares label their denominator explicitly so tagged-record coverage is not confused with all-record coverage. Automated assertions keep published numbers and required static strings from drifting from the tracked CSVs.
+
+**Verification:** `scripts/support_check_docs_consistency.py` passes; `scripts/18_check_headline_numbers.py` passes 109 assertions; `ruff check` and `ruff format --check` are clean; the README is 142 lines, within the 150-line presentation limit. Generated sections are re-rendered from tracked CSVs by `scripts/support_rerender_generated_sections.py` without rebuilding the database.
