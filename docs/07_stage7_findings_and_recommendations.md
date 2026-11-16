@@ -27,13 +27,13 @@ Stage 6 was rerun against the separately validated five-country candidate databa
 ### 1. Country record counts are measurable; category coverage differs materially
 
 <!-- AUTO-GENERATED: country-scope:START -->
-| ISO | Role | Source rows | Rows with `categories_tags` | Category-tag coverage |
+| Country | Role | Source rows | Rows with `categories_tags` | Category-tag coverage |
 |---|---|---:|---:|---:|
-| ID | Focal | 9,118 | 1,111 | 12.1847% |
-| MY | Contextual peer | 7,426 | 840 | 11.3116% |
-| PH | Contextual peer | 9,176 | 1,535 | 16.7284% |
-| SG | Contextual peer | 11,986 | 2,074 | 17.3035% |
-| TH | Coverage contrast | 11,343 | 7,104 | 62.6289% |
+| Indonesia (ID) | Study country | 9,118 | 1,111 | 12.1847% |
+| Malaysia (MY) | Comparison country | 7,426 | 840 | 11.3116% |
+| Philippines (PH) | Comparison country | 9,176 | 1,535 | 16.7284% |
+| Singapore (SG) | Comparison country | 11,986 | 2,074 | 17.3035% |
+| Thailand (TH) | High-coverage contrast | 11,343 | 7,104 | 62.6289% |
 <!-- AUTO-GENERATED: country-scope:END -->
 
 **Interpretation:** ID, MY, PH, and SG have broadly closer observed category-tag coverage to one another than to TH. TH's much higher coverage is why it is used as a separate contrast, not treated as an equivalent peer. This only describes category-tag availability in this snapshot; it does not establish statistical comparability or market representativeness.
@@ -45,13 +45,13 @@ All counts are source-record counts. The matching distinct-code counts happen to
 The largest candidate-derived reporting groups by assigned source rows in each country, baseline:
 
 <!-- AUTO-GENERATED: top-groups:START -->
-| ISO | Largest group | Rows | Share of country rows | Next largest | Rows | Third largest | Rows |
+| Country | Largest group | Rows | Share of country rows | Next largest | Rows | Third largest | Rows |
 |---|---|---:|---:|---|---:|---|---:|
-| ID | Beverages | 231 | 2.5335% | Sweet foods & desserts | 227 | Cereals, potatoes & bakery | 140 |
-| MY | Sweet foods & desserts | 184 | 2.4778% | Beverages | 151 | Cereals, potatoes & bakery | 126 |
-| PH | Sweet foods & desserts | 371 | 4.0432% | Beverages | 316 | Cereals, potatoes & bakery | 189 |
-| SG | Beverages | 630 | 5.2561% | Cereals, potatoes & bakery | 318 | Sweet foods & desserts | 315 |
-| TH | Sweet foods & desserts | 1,235 | 10.8878% | Beverages | 1,220 | Cereals, potatoes & bakery | 705 |
+| Indonesia (ID) | Beverages | 231 | 2.5335% | Sweet foods & desserts | 227 | Cereals, potatoes & bakery | 140 |
+| Malaysia (MY) | Sweet foods & desserts | 184 | 2.4778% | Beverages | 151 | Cereals, potatoes & bakery | 126 |
+| Philippines (PH) | Sweet foods & desserts | 371 | 4.0432% | Beverages | 316 | Cereals, potatoes & bakery | 189 |
+| Singapore (SG) | Beverages | 630 | 5.2561% | Cereals, potatoes & bakery | 318 | Sweet foods & desserts | 315 |
+| Thailand (TH) | Sweet foods & desserts | 1,235 | 10.8878% | Beverages | 1,220 | Cereals, potatoes & bakery | 705 |
 <!-- AUTO-GENERATED: top-groups:END -->
 
 **Interpretation:** These are the highest observed record counts in the candidate-derived assignment view. The country/category rows are not mutually exclusive: a record can be assigned to multiple groups. Candidate-derived assignments include taxonomy-based candidates that are not all covered by explicit approved decisions. Do not frame the table as a complete category census, unique-product variety ranking, or evidence of consumer demand.
@@ -61,13 +61,13 @@ The largest candidate-derived reporting groups by assigned source rows in each c
 For baseline, the number of category-tagged rows assigned to at least one substantive group differs considerably by mapping basis:
 
 <!-- AUTO-GENERATED: category-coverage:START -->
-| ISO | Category-tagged rows | Candidate-derived assigned | Candidate-derived tagged rows without assignment | Approved-only assigned | Approved-only tagged rows without assignment |
+| Country | Category-tagged rows | Candidate-derived assigned | Candidate-derived tagged rows without assignment | Approved-only assigned | Approved-only tagged rows without assignment |
 |---|---:|---:|---:|---:|---:|
-| ID | 1,111 | 788 | 323 | 113 | 998 |
-| MY | 840 | 620 | 220 | 84 | 756 |
-| PH | 1,535 | 1,273 | 262 | 158 | 1,377 |
-| SG | 2,074 | 1,806 | 268 | 263 | 1,811 |
-| TH | 7,104 | 4,516 | 2,588 | 673 | 6,431 |
+| Indonesia (ID) | 1,111 | 788 | 323 | 113 | 998 |
+| Malaysia (MY) | 840 | 620 | 220 | 84 | 756 |
+| Philippines (PH) | 1,535 | 1,273 | 262 | 158 | 1,377 |
+| Singapore (SG) | 2,074 | 1,806 | 268 | 263 | 1,811 |
+| Thailand (TH) | 7,104 | 4,516 | 2,588 | 673 | 6,431 |
 <!-- AUTO-GENERATED: category-coverage:END -->
 
 <!-- AUTO-GENERATED: category-overlap:START -->
@@ -81,13 +81,13 @@ There are also rows assigned to multiple groups in the candidate-derived view: I
 Stage 5 evidence reports records with an approved exact brand mapping as follows:
 
 <!-- AUTO-GENERATED: brand-coverage:START -->
-| ISO | Rows with approved exact brand mapping | Share of country rows |
+| Country | Rows with approved exact brand mapping | Share of country rows |
 |---|---:|---:|
-| ID | 31 | 0.3400% |
-| MY | 64 | 0.8618% |
-| PH | 88 | 0.9590% |
-| SG | 341 | 2.8450% |
-| TH | 46 | 0.4055% |
+| Indonesia (ID) | 31 | 0.3400% |
+| Malaysia (MY) | 64 | 0.8618% |
+| Philippines (PH) | 88 | 0.9590% |
+| Singapore (SG) | 341 | 2.8450% |
+| Thailand (TH) | 46 | 0.4055% |
 <!-- AUTO-GENERATED: brand-coverage:END -->
 
 <!-- AUTO-GENERATED: brand-assignment-note:START -->
@@ -101,13 +101,13 @@ Stage 6's 159 rows are assignments across scenarios, assignment bases, country-c
 The source-row exclusions from baseline are:
 
 <!-- AUTO-GENERATED: nonfood-sensitivity:START -->
-| ISO | `exclude_A_B_except_strong_food_signals` | `exclude_all_A_B` |
+| Country | `exclude_A_B_except_strong_food_signals` | `exclude_all_A_B` |
 |---|---:|---:|
-| ID | 63 | 63 |
-| MY | 1 | 1 |
-| PH | 1 | 1 |
-| SG | 1 | 1 |
-| TH | 2 | 2 |
+| Indonesia (ID) | 63 | 63 |
+| Malaysia (MY) | 1 | 1 |
+| Philippines (PH) | 1 | 1 |
+| Singapore (SG) | 1 | 1 |
+| Thailand (TH) | 2 | 2 |
 <!-- AUTO-GENERATED: nonfood-sensitivity:END -->
 
 The two sensitivity scenarios produce equal country row counts for these selected units because no A/B-flagged record in this scope met the existing strong-food-signal rule. Keep baseline and both sensitivities visible; the small count impact does not establish that classifications are error-free or that exclusions should replace the baseline.
@@ -117,13 +117,13 @@ The two sensitivity scenarios produce equal country row counts for these selecte
 The scorecard separates raw field availability from exact-approved brand harmonization. “Numeric nutrition” means at least one numeric nutrient value; a Nutri-Score is counted only for valid A–E grades.
 
 <!-- AUTO-GENERATED: data-readiness:START -->
-| ISO | Brand text | Category tags | Ingredient text | Numeric nutrition | Valid Nutri-Score | Packaging | Labels | Exact-approved brand map |
+| Country | Brand text | Category tags | Ingredient text | Numeric nutrition | Valid Nutri-Score | Packaging | Labels | Exact-approved brand map |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
-| ID | 38.8% | 12.2% | 17.3% | 31.0% | 5.5% | 4.0% | 28.9% | 0.3% |
-| MY | 46.2% | 11.3% | 8.6% | 39.7% | 4.6% | 3.4% | 15.1% | 0.9% |
-| PH | 60.4% | 16.7% | 13.8% | 52.2% | 10.9% | 4.6% | 10.1% | 1.0% |
-| SG | 64.6% | 17.3% | 13.6% | 57.6% | 11.0% | 7.4% | 14.6% | 2.8% |
-| TH | 80.4% | 62.6% | 55.6% | 81.2% | 45.6% | 29.9% | 17.2% | 0.4% |
+| Indonesia (ID) | 38.8% | 12.2% | 17.3% | 31.0% | 5.5% | 4.0% | 28.9% | 0.3% |
+| Malaysia (MY) | 46.2% | 11.3% | 8.6% | 39.7% | 4.6% | 3.4% | 15.1% | 0.9% |
+| Philippines (PH) | 60.4% | 16.7% | 13.8% | 52.2% | 10.9% | 4.6% | 10.1% | 1.0% |
+| Singapore (SG) | 64.6% | 17.3% | 13.6% | 57.6% | 11.0% | 7.4% | 14.6% | 2.8% |
+| Thailand (TH) | 80.4% | 62.6% | 55.6% | 81.2% | 45.6% | 29.9% | 17.2% | 0.4% |
 <!-- AUTO-GENERATED: data-readiness:END -->
 
 **Interpretation:** A field's availability is not a guarantee of accuracy, freshness, or representativeness. Use each field only for questions its observed coverage can support. In particular, raw brand text availability must not be confused with exact-approved brand mapping coverage.
@@ -181,13 +181,13 @@ The source record remains the unit of analysis. A shared code can reflect an ide
 An explicit, conservative crosswalk compares food-group tags with the project's candidate-derived reporting groups. The crosswalk is marked diagnostic-only and does not feed category assignment.
 
 <!-- AUTO-GENERATED: food-groups-crosscheck:START -->
-| ISO | Rows with food-group tags | Rows covered by diagnostic crosswalk | Rows compared to candidate groups | Exact group-set agreement | Any group overlap |
+| Country | Rows with food-group tags | Rows covered by diagnostic crosswalk | Rows compared to candidate groups | Exact group-set agreement | Any group overlap |
 |---|---:|---:|---:|---:|---:|
-| ID | 731 | 723 | 723 | 23.51% | 95.02% |
-| MY | 564 | 551 | 551 | 17.79% | 93.65% |
-| PH | 1,171 | 1,156 | 1,156 | 18.25% | 96.02% |
-| SG | 1,700 | 1,669 | 1,669 | 26.18% | 92.87% |
-| TH | 4,313 | 3,932 | 3,932 | 21.80% | 96.03% |
+| Indonesia (ID) | 731 | 723 | 723 | 23.51% | 95.02% |
+| Malaysia (MY) | 564 | 551 | 551 | 17.79% | 93.65% |
+| Philippines (PH) | 1,171 | 1,156 | 1,156 | 18.25% | 96.02% |
+| Singapore (SG) | 1,700 | 1,669 | 1,669 | 26.18% | 92.87% |
+| Thailand (TH) | 4,313 | 3,932 | 3,932 | 21.80% | 96.03% |
 <!-- AUTO-GENERATED: food-groups-crosscheck:END -->
 
 Agreement is not a precision estimate or semantic validation: the food-group tags are not an independent gold standard, and only tags included in the documented crosswalk can be compared.

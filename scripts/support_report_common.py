@@ -10,13 +10,20 @@ ONLINE_AUDIT_FILE = QUALITY_DIR / "category_mapping_online_evidence_audit.csv"
 
 COUNTRIES = ("ID", "MY", "PH", "SG", "TH")
 
+COUNTRY_NAMES = {
+    "ID": "Indonesia",
+    "MY": "Malaysia",
+    "PH": "Philippines",
+    "SG": "Singapore",
+    "TH": "Thailand",
+}
 
 COUNTRY_ROLES = {
-    "ID": "Focal",
-    "MY": "Contextual peer",
-    "PH": "Contextual peer",
-    "SG": "Contextual peer",
-    "TH": "Coverage contrast",
+    "ID": "Study country",
+    "MY": "Comparison country",
+    "PH": "Comparison country",
+    "SG": "Comparison country",
+    "TH": "High-coverage contrast",
 }
 
 

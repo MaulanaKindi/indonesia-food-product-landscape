@@ -3,6 +3,7 @@
 import pandas as pd
 from support_report_common import (
     COUNTRIES,
+    COUNTRY_NAMES,
     COUNTRY_ROLES,
     ONLINE_AUDIT_FILE,
     read_csv,
@@ -124,7 +125,7 @@ def _render_core_sections(
     for iso in COUNTRIES:
         row = scope_baseline.loc[iso]
         country_rows.append(
-            f"| {iso} | {COUNTRY_ROLES[iso]} | {int(row['source_rows']):,} "
+            f"| {COUNTRY_NAMES[iso]} ({iso}) | {COUNTRY_ROLES[iso]} | {int(row['source_rows']):,} "
             f"| {int(row['source_rows_with_category_tags']):,} "
             f"| {float(row['category_tags_coverage_pct']):.4f}% |"
         )
@@ -133,7 +134,7 @@ def _render_core_sections(
         "country-scope",
         "\n".join(
             [
-                "| ISO | Role | Source rows | Rows with `categories_tags` | Category-tag coverage |",
+                "| Country | Role | Source rows | Rows with `categories_tags` | Category-tag coverage |",
                 "|---|---|---:|---:|---:|",
                 *country_rows,
             ]
@@ -149,7 +150,7 @@ def _render_core_sections(
             raise ValueError(f"Expected three candidate groups for {iso}.")
         first, second, third = rows.itertuples(index=False)
         top_group_rows.append(
-            f"| {iso} | {first.reporting_group_label} | "
+            f"| {COUNTRY_NAMES[iso]} ({iso}) | {first.reporting_group_label} | "
             f"{int(first.group_source_rows):,} | "
             f"{float(first.group_share_of_country_rows_pct):.4f}% | "
             f"{second.reporting_group_label} | "
@@ -162,7 +163,7 @@ def _render_core_sections(
         "top-groups",
         "\n".join(
             [
-                "| ISO | Largest group | Rows | Share of country rows | Next largest | Rows | Third largest | Rows |",
+                "| Country | Largest group | Rows | Share of country rows | Next largest | Rows | Third largest | Rows |",
                 "|---|---|---:|---:|---|---:|---|---:|",
                 *top_group_rows,
             ]
@@ -180,7 +181,7 @@ def _render_core_sections(
         candidate = by_basis.loc["candidate_derived"]
         approved = by_basis.loc["approved_only"]
         coverage_rows.append(
-            f"| {iso} | {int(candidate['source_rows_with_category_tags']):,} "
+            f"| {COUNTRY_NAMES[iso]} ({iso}) | {int(candidate['source_rows_with_category_tags']):,} "
             f"| {int(candidate['source_rows_assigned_to_any_substantive_group']):,} "
             f"| {int(candidate['category_tagged_rows_without_substantive_group_assignment']):,} "
             f"| {int(approved['source_rows_assigned_to_any_substantive_group']):,} "
@@ -191,7 +192,7 @@ def _render_core_sections(
         "category-coverage",
         "\n".join(
             [
-                "| ISO | Category-tagged rows | Candidate-derived assigned | Candidate-derived tagged rows without assignment | Approved-only assigned | Approved-only tagged rows without assignment |",
+                "| Country | Category-tagged rows | Candidate-derived assigned | Candidate-derived tagged rows without assignment | Approved-only assigned | Approved-only tagged rows without assignment |",
                 "|---|---:|---:|---:|---:|---:|",
                 *coverage_rows,
             ]
@@ -222,7 +223,7 @@ def _render_core_sections(
     for iso in COUNTRIES:
         row = evidence_by_country.loc[iso]
         brand_rows.append(
-            f"| {iso} | {int(row['source_rows_with_approved_brand_mapping']):,} "
+            f"| {COUNTRY_NAMES[iso]} ({iso}) | {int(row['source_rows_with_approved_brand_mapping']):,} "
             f"| {float(row['approved_brand_mapping_coverage_pct_of_country_rows']):.4f}% |"
         )
     document = replace_generated_section(
@@ -230,7 +231,7 @@ def _render_core_sections(
         "brand-coverage",
         "\n".join(
             [
-                "| ISO | Rows with approved exact brand mapping | Share of country rows |",
+                "| Country | Rows with approved exact brand mapping | Share of country rows |",
                 "|---|---:|---:|",
                 *brand_rows,
             ]
@@ -256,13 +257,15 @@ def _render_core_sections(
             ]
         )
         all_a_b = int(country_scenarios.loc["exclude_all_A_B", "excluded_source_rows"])
-        sensitivity_rows.append(f"| {iso} | {except_strong:,} | {all_a_b:,} |")
+        sensitivity_rows.append(
+            f"| {COUNTRY_NAMES[iso]} ({iso}) | {except_strong:,} | {all_a_b:,} |"
+        )
     document = replace_generated_section(
         document,
         "nonfood-sensitivity",
         "\n".join(
             [
-                "| ISO | `exclude_A_B_except_strong_food_signals` | `exclude_all_A_B` |",
+                "| Country | `exclude_A_B_except_strong_food_signals` | `exclude_all_A_B` |",
                 "|---|---:|---:|",
                 *sensitivity_rows,
             ]
@@ -298,13 +301,15 @@ def _render_readiness_sections(
             f"{float(readiness_by_field.loc[(iso, metric), 'coverage_pct']):.1f}%"
             for metric, _ in readiness_metrics
         ]
-        readiness_rows.append(f"| {iso} | " + " | ".join(values) + " |")
+        readiness_rows.append(
+            f"| {COUNTRY_NAMES[iso]} ({iso}) | " + " | ".join(values) + " |"
+        )
     document = replace_generated_section(
         document,
         "data-readiness",
         "\n".join(
             [
-                "| ISO | Brand text | Category tags | Ingredient text | Numeric nutrition | Valid Nutri-Score | Packaging | Labels | Exact-approved brand map |",
+                "| Country | Brand text | Category tags | Ingredient text | Numeric nutrition | Valid Nutri-Score | Packaging | Labels | Exact-approved brand map |",
                 "|---|---:|---:|---:|---:|---:|---:|---:|---:|",
                 *readiness_rows,
             ]
@@ -381,7 +386,7 @@ def _render_readiness_sections(
     )
 
     food_group_rows = [
-        f"| {row.iso_alpha2} | {int(row.records_with_food_group_tags):,} | "
+        f"| {COUNTRY_NAMES[row.iso_alpha2]} ({row.iso_alpha2}) | {int(row.records_with_food_group_tags):,} | "
         f"{int(row.records_with_crosswalked_food_groups):,} | "
         f"{int(row.records_compared):,} | "
         f"{float(row.exact_group_set_match_pct):.2f}% | "
@@ -393,7 +398,7 @@ def _render_readiness_sections(
         "food-groups-crosscheck",
         "\n".join(
             [
-                "| ISO | Rows with food-group tags | Rows covered by diagnostic crosswalk | Rows compared to candidate groups | Exact group-set agreement | Any group overlap |",
+                "| Country | Rows with food-group tags | Rows covered by diagnostic crosswalk | Rows compared to candidate groups | Exact group-set agreement | Any group overlap |",
                 "|---|---:|---:|---:|---:|---:|",
                 *food_group_rows,
             ]

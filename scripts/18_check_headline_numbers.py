@@ -16,6 +16,20 @@ STAGE5_FILE = (
 )
 STAGE6_SCOPE_FILE = PROJECT_ROOT / "outputs" / "analysis" / "stage6_country_scope.csv"
 READINESS_FILE = PROJECT_ROOT / "outputs" / "profiling" / "data_readiness_scorecard.csv"
+SEMANTIC_AUDIT_SUMMARY_FILE = (
+    PROJECT_ROOT / "outputs" / "quality" / "category_mapping_semantic_audit_summary.csv"
+)
+ONLINE_AUDIT_FILE = (
+    PROJECT_ROOT / "outputs" / "quality" / "category_mapping_online_evidence_audit.csv"
+)
+
+EXPECTED_DERIVED = {
+    "ID": {"candidate_share": 8.64, "approved_share": 1.24},
+    "MY": {"candidate_share": 8.35, "approved_share": 1.13},
+    "PH": {"candidate_share": 13.87, "approved_share": 1.72},
+    "SG": {"candidate_share": 15.07, "approved_share": 2.19},
+    "TH": {"candidate_share": 39.81, "approved_share": 5.93},
+}
 
 EXPECTED_HEADLINES = {
     "ID": {
@@ -195,6 +209,58 @@ def check_country(
         float(expected["brand_coverage_pct"]),
     )
 
+    derived = EXPECTED_DERIVED[iso_alpha2]
+    checker.equal(
+        f"{iso_alpha2} candidate-derived share of all records",
+        round(100 * candidate / rows, 2),
+        derived["candidate_share"],
+    )
+    checker.equal(
+        f"{iso_alpha2} approved-only share of all records",
+        round(100 * approved / rows, 2),
+        derived["approved_share"],
+    )
+
+
+def check_audit_headlines(
+    summary: pd.DataFrame,
+    online: pd.DataFrame,
+    checker: Checker,
+) -> None:
+    primary = summary.loc[summary["analysis_scope"].eq("primary_sample")].iloc[0]
+    checker.equal("audit correct assignments", int(primary["correct_assignments"]), 97)
+    checker.equal(
+        "audit candidate pairs", int(primary["candidate_assignment_pairs"]), 130
+    )
+    checker.equal(
+        "audit incorrect assignments", int(primary["incorrect_assignments"]), 16
+    )
+    checker.equal(
+        "audit ambiguous assignments", int(primary["ambiguous_assignments"]), 8
+    )
+    checker.equal(
+        "audit insufficient-evidence assignments",
+        int(primary["insufficient_evidence_assignments"]),
+        9,
+    )
+    checker.equal("audit exact-set matches", int(primary["exact_set_matches"]), 61)
+    checker.equal("audit records reviewed", int(primary["records_reviewed"]), 150)
+    checker.equal(
+        "online supported cases",
+        int(online["online_review_status"].eq("researched_supports").sum()),
+        30,
+    )
+    checker.equal(
+        "online cases with source URL",
+        int(online["source_url"].ne("").sum()),
+        36,
+    )
+    checker.equal(
+        "online exact-code matches",
+        int(online["identifier_match"].eq("yes").sum()),
+        29,
+    )
+
 
 def main() -> None:
     stage5 = read_csv(STAGE5_FILE)
@@ -215,6 +281,10 @@ def main() -> None:
 
     for iso_alpha2, expected in EXPECTED_HEADLINES.items():
         check_country(iso_alpha2, expected, stage5, baseline, readiness, checker)
+
+    audit_summary = read_csv(SEMANTIC_AUDIT_SUMMARY_FILE)
+    online_audit = read_csv(ONLINE_AUDIT_FILE)
+    check_audit_headlines(audit_summary, online_audit, checker)
 
     if checker.failures:
         print(

@@ -14,7 +14,7 @@ An evidence-based comparison of product records and data coverage in a pinned Op
 - **Category coverage:** 12.2% of Indonesian records are tagged, versus 11.3%–17.3% in the contextual peers and 62.6% in Thailand, the separate coverage contrast.
 - **Category assignments in Indonesia:** 788 of 1,111 tagged records (70.9%) receive at least one candidate-derived group; 113 (10.2%) do under the stricter approved-only view.
 - **Brand evidence:** raw brand text is present for 38.8% of Indonesian records, while exact-approved mapping covers only 0.34%.
-- **AI + online mapping audit:** 97/130 candidate assignments were judged correct (26 also align with exact-reviewed mappings); 16 disagreed and 17 were unresolved. Exact group-set agreement was 61/150 (40.7%). Online follow-up found supporting product evidence for 30/48 cases; 36 have a source URL and 29 match the exact product code. Targeted, non-random, and not human ground truth; [AI audit](outputs/quality/category_mapping_semantic_audit_records.csv) · [online evidence](outputs/quality/category_mapping_online_evidence_audit.csv).
+- **AI + online mapping audit:** 97/130 candidate assignments were judged correct on a targeted, non-random sample; this is a diagnostic, not human ground truth (details in Method quality and the Stage 7 findings).
 <!-- AUTO-GENERATED: headline-metrics:END -->
 
 ![Category-tag coverage by country](docs/img/category_coverage.png)
@@ -26,13 +26,13 @@ An evidence-based comparison of product records and data coverage in a pinned Op
 “Assigned” means a record has at least one substantive reporting-group assignment. Groups can overlap. Candidate-derived mappings are not all approved.
 
 <!-- AUTO-GENERATED: country-comparison:START -->
-| Country | Role | Records | Category-tagged | Tag coverage | Candidate-derived assigned | Approved-only assigned | Exact-approved brand mapped |
-|---|---|---:|---:|---:|---:|---:|---:|
-| ID | Focal | 9,118 | 1,111 | 12.18% | 788 (70.9%) | 113 (10.2%) | 31 (0.34%) |
-| MY | Contextual peer | 7,426 | 840 | 11.31% | 620 (73.8%) | 84 (10.0%) | 64 (0.86%) |
-| PH | Contextual peer | 9,176 | 1,535 | 16.73% | 1,273 (82.9%) | 158 (10.3%) | 88 (0.96%) |
-| SG | Contextual peer | 11,986 | 2,074 | 17.30% | 1,806 (87.1%) | 263 (12.7%) | 341 (2.85%) |
-| TH | Coverage contrast | 11,343 | 7,104 | 62.63% | 4,516 (63.6%) | 673 (9.5%) | 46 (0.41%) |
+| Country | Role | Records | Category-tagged | Tag coverage | Candidate-derived assigned | Approved-only assigned | Candidate-derived, share of all records | Approved-only, share of all records |
+|---|---|---|---|---|---|---|---:|---:|
+| Indonesia (ID) | Study country | 9,118 | 1,111 | 12.18% | 788 (70.9%) | 113 (10.2%) | 8.64% | 1.24% |
+| Malaysia (MY) | Comparison country | 7,426 | 840 | 11.31% | 620 (73.8%) | 84 (10.0%) | 8.35% | 1.13% |
+| Philippines (PH) | Comparison country | 9,176 | 1,535 | 16.73% | 1,273 (82.9%) | 158 (10.3%) | 13.87% | 1.72% |
+| Singapore (SG) | Comparison country | 11,986 | 2,074 | 17.30% | 1,806 (87.1%) | 263 (12.7%) | 15.07% | 2.19% |
+| Thailand (TH) | High-coverage contrast | 11,343 | 7,104 | 62.63% | 4,516 (63.6%) | 673 (9.5%) | 39.81% | 5.93% |
 <!-- AUTO-GENERATED: country-comparison:END -->
 
 **Reading the terms:**
@@ -54,13 +54,13 @@ An evidence-based comparison of product records and data coverage in a pinned Op
 Percentages are records with a non-empty field or valid value, using the definitions in [the reproduction guide](docs/09_reproduction.md). Numeric nutrition and valid A–E Nutri-Score are separate measures.
 
 <!-- AUTO-GENERATED: readiness-scorecard:START -->
-| ISO | Brand text | Category tags | Ingredients | Numeric nutrition | Valid Nutri-Score | Packaging | Labels | Exact-approved brand map |
+| Country | Brand text | Category tags | Ingredients | Numeric nutrition | Valid Nutri-Score | Packaging | Labels | Exact-approved brand map |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
-| ID | 38.8% | 12.2% | 17.3% | 31.0% | 5.5% | 4.0% | 28.9% | 0.3% |
-| MY | 46.2% | 11.3% | 8.6% | 39.7% | 4.6% | 3.4% | 15.1% | 0.9% |
-| PH | 60.4% | 16.7% | 13.8% | 52.2% | 10.9% | 4.6% | 10.1% | 1.0% |
-| SG | 64.6% | 17.3% | 13.6% | 57.6% | 11.0% | 7.4% | 14.6% | 2.8% |
-| TH | 80.4% | 62.6% | 55.6% | 81.2% | 45.6% | 29.9% | 17.2% | 0.4% |
+| Indonesia (ID) | 38.8% | 12.2% | 17.3% | 31.0% | 5.5% | 4.0% | 28.9% | 0.3% |
+| Malaysia (MY) | 46.2% | 11.3% | 8.6% | 39.7% | 4.6% | 3.4% | 15.1% | 0.9% |
+| Philippines (PH) | 60.4% | 16.7% | 13.8% | 52.2% | 10.9% | 4.6% | 10.1% | 1.0% |
+| Singapore (SG) | 64.6% | 17.3% | 13.6% | 57.6% | 11.0% | 7.4% | 14.6% | 2.8% |
+| Thailand (TH) | 80.4% | 62.6% | 55.6% | 81.2% | 45.6% | 29.9% | 17.2% | 0.4% |
 <!-- AUTO-GENERATED: readiness-scorecard:END -->
 
 ![Data-readiness scorecard](docs/img/data_readiness_scorecard.png)
