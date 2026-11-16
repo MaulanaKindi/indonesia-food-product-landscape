@@ -3,9 +3,8 @@
 import pandas as pd
 from support_report_common import (
     COUNTRIES,
+    COUNTRY_NAMES,
     COUNTRY_ROLES,
-    ONLINE_AUDIT_FILE,
-    read_csv,
     replace_readme_section,
 )
 
@@ -49,23 +48,14 @@ def render_readme(
     audit = semantic_audit_summary.loc[
         semantic_audit_summary["analysis_scope"].eq("primary_sample")
     ].iloc[0]
-    audit_unresolved = int(audit["ambiguous_assignments"]) + int(
-        audit["insufficient_evidence_assignments"]
-    )
-    online_audit = read_csv(ONLINE_AUDIT_FILE)
-    online_source_count = int(online_audit["source_url"].ne("").sum())
-    online_exact_code_count = int(online_audit["identifier_match"].eq("yes").sum())
-    online_supported_count = int(
-        online_audit["online_review_status"].eq("researched_supports").sum()
-    )
     headline = "\n".join(
         [
             (
                 f"- **Category coverage:** {float(indonesia['category_tags_coverage_pct']):.1f}% "
                 f"of Indonesian records are tagged, versus {min(peers):.1f}%–"
-                f"{max(peers):.1f}% in the contextual peers and "
+                f"{max(peers):.1f}% in the comparison countries and "
                 f"{float(scope_baseline.loc['TH', 'category_tags_coverage_pct']):.1f}% "
-                "in Thailand, the separate coverage contrast."
+                "in Thailand, the high-coverage contrast."
             ),
             (
                 f"- **Category assignments in Indonesia:** "
@@ -86,17 +76,9 @@ def render_readme(
             (
                 f"- **AI + online mapping audit:** {int(audit['correct_assignments'])}/"
                 f"{int(audit['candidate_assignment_pairs'])} candidate assignments "
-                f"were judged correct ({int(audit['manual_exact_overlap_assignment_pairs'])} "
-                f"also align with exact-reviewed mappings); {int(audit['incorrect_assignments'])} disagreed "
-                f"and {audit_unresolved} were unresolved. Exact group-set agreement "
-                f"was {int(audit['exact_set_matches'])}/"
-                f"{int(audit['records_reviewed'])} "
-                f"({100 * float(audit['record_exact_set_agreement_all_records']):.1f}%). "
-                f"Online follow-up found supporting product evidence for {online_supported_count}/48 cases; "
-                f"{online_source_count} have a source URL and {online_exact_code_count} match the exact product code. "
-                "Targeted, non-random, and not human ground truth; "
-                "[AI audit](outputs/quality/category_mapping_semantic_audit_records.csv) · "
-                "[online evidence](outputs/quality/category_mapping_online_evidence_audit.csv)."
+                "were judged correct on a targeted, non-random sample; this is a "
+                "diagnostic, not human ground truth (details in Method quality and "
+                "the Stage 7 findings)."
             ),
         ]
     )
@@ -107,25 +89,31 @@ def render_readme(
         row = scope_baseline.loc[iso]
         candidate_row = candidate.loc[iso]
         approved_row = approved.loc[iso]
-        brand_row = evidence_by_country.loc[iso]
+        rows = int(row["source_rows"])
+        candidate_assigned = int(
+            candidate_row["source_rows_assigned_to_any_substantive_group"]
+        )
+        approved_assigned = int(
+            approved_row["source_rows_assigned_to_any_substantive_group"]
+        )
         country_rows.append(
-            f"| {iso} | {COUNTRY_ROLES[iso]} | {int(row['source_rows']):,} | "
+            f"| {COUNTRY_NAMES[iso]} ({iso}) | {COUNTRY_ROLES[iso]} | {rows:,} | "
             f"{int(row['source_rows_with_category_tags']):,} | "
             f"{float(row['category_tags_coverage_pct']):.2f}% | "
-            f"{int(candidate_row['source_rows_assigned_to_any_substantive_group']):,} "
+            f"{candidate_assigned:,} "
             f"({float(candidate_row['substantive_group_assignment_coverage_of_category_tagged_rows_pct']):.1f}%) | "
-            f"{int(approved_row['source_rows_assigned_to_any_substantive_group']):,} "
+            f"{approved_assigned:,} "
             f"({float(approved_row['substantive_group_assignment_coverage_of_category_tagged_rows_pct']):.1f}%) | "
-            f"{int(brand_row['source_rows_with_approved_brand_mapping']):,} "
-            f"({float(brand_row['approved_brand_mapping_coverage_pct_of_country_rows']):.2f}%) |"
+            f"{100 * candidate_assigned / rows:.2f}% | "
+            f"{100 * approved_assigned / rows:.2f}% |"
         )
     document = replace_readme_section(
         document,
         "country-comparison",
         "\n".join(
             [
-                "| Country | Role | Records | Category-tagged | Tag coverage | Candidate-derived assigned | Approved-only assigned | Exact-approved brand mapped |",
-                "|---|---|---:|---:|---:|---:|---:|---:|",
+                "| Country | Role | Records | Category-tagged | Tag coverage | Candidate-derived assigned | Approved-only assigned | Candidate-derived, share of all records | Approved-only, share of all records |",
+                "|---|---|---|---|---|---|---|---:|---:|",
                 *country_rows,
             ]
         ),
@@ -147,13 +135,15 @@ def render_readme(
             f"{float(readiness_by_field.loc[(iso, metric), 'coverage_pct']):.1f}%"
             for metric, _ in readiness_metrics
         ]
-        readiness_rows.append(f"| {iso} | " + " | ".join(cells) + " |")
+        readiness_rows.append(
+            f"| {COUNTRY_NAMES[iso]} ({iso}) | " + " | ".join(cells) + " |"
+        )
     document = replace_readme_section(
         document,
         "readiness-scorecard",
         "\n".join(
             [
-                "| ISO | Brand text | Category tags | Ingredients | Numeric nutrition | Valid Nutri-Score | Packaging | Labels | Exact-approved brand map |",
+                "| Country | Brand text | Category tags | Ingredients | Numeric nutrition | Valid Nutri-Score | Packaging | Labels | Exact-approved brand map |",
                 "|---|---:|---:|---:|---:|---:|---:|---:|---:|",
                 *readiness_rows,
             ]

@@ -35,3 +35,5 @@ jobs:
           --rules CP01
       - name: Check generated documentation
         run: python scripts/support_check_docs_consistency.py
+      - name: Check headline numbers and static README strings
+        run: python scripts/18_check_headline_numbers.py

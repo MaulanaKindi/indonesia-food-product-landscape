@@ -2,6 +2,17 @@
 
 This guide rebuilds the canonical five-country analysis from the pinned Open Food Facts snapshot. It does not require the optional full-country database.
 
+## Quick look without the 8 GB download
+
+You do not need the source snapshot, DuckDB, or network access to inspect the published results. Every number and chart in the README is committed to the repository and can be verified or regenerated from a clean clone with only the Python dependencies:
+
+```powershell
+.\.venv\Scripts\python.exe .\scripts\support_generate_visuals.py
+.\.venv\Scripts\python.exe .\scripts\18_check_headline_numbers.py
+```
+
+The first command rebuilds the five static charts under `docs/img/` from tracked CSVs (`outputs/analysis/stage6_country_scope.csv`, `stage6_country_category.csv`, and `outputs/profiling/data_readiness_scorecard.csv`). The second is a read-only guard that asserts every headline number in this guide and the README against those same tracked CSVs; it fails loudly if a number drifts. On macOS or Linux, replace the Windows virtual-environment Python path with `.venv/bin/python`.
+
 ## Requirements
 
 - Python 3.13
@@ -88,6 +99,65 @@ The new retrieval date and any changed web content mean these evidence files are
 
 All reported rates use records in the stated country or comparison subset as the denominator unless a table explicitly names a different denominator. Repeated category assignments can overlap and should not be summed as a partition.
 
+## Example SQL queries
+
+The README shows one example query and points here for the full set. Run these against the canonical database `data/processed/global_product_landscape_five_country.duckdb`.
+
+```sql
+-- How many country records have category tags?
+SELECT country.iso_alpha2,
+       COUNT(DISTINCT country.source_record_id) AS records,
+       COUNT(DISTINCT category.source_record_id) AS category_tagged
+FROM record_country AS country
+LEFT JOIN record_category_tag AS category USING (source_record_id)
+GROUP BY country.iso_alpha2
+ORDER BY country.iso_alpha2;
+```
+
+```sql
+-- How does exact-approved brand mapping compare with raw brand text?
+SELECT country.iso_alpha2,
+       COUNT(DISTINCT record.source_record_id)
+           FILTER (WHERE NULLIF(trim(record.brands), '') IS NOT NULL)
+           AS records_with_brand_text,
+       COUNT(DISTINCT brand.source_record_id)
+           FILTER (WHERE mapping.review_status = 'approved')
+           AS records_with_exact_approved_mapping
+FROM record_country AS country
+JOIN source_product_record AS record USING (source_record_id)
+LEFT JOIN record_brand_source_value AS brand USING (source_record_id)
+LEFT JOIN brand_name_mapping AS mapping
+    ON brand.source_brand_name = mapping.source_brand_name
+GROUP BY country.iso_alpha2
+ORDER BY country.iso_alpha2;
+```
+
+```sql
+-- Compare candidate-derived and approved-only tagged-record assignment.
+SELECT country.iso_alpha2,
+       COUNT(DISTINCT category.source_record_id)
+           FILTER (
+               WHERE candidate.candidate_role IN (
+                   'single_group_candidate',
+                   'manual_group_assignment'
+               )
+               AND candidate.comparison_role = 'primary_candidate'
+               AND candidate.reporting_group_id <> 'other_unclassified'
+           )
+           AS candidate_assigned_records,
+       COUNT(DISTINCT category.source_record_id)
+           FILTER (WHERE decision.selected_group_id IS NOT NULL)
+           AS approved_only_assigned_records
+FROM record_country AS country
+JOIN record_category_tag AS category USING (source_record_id)
+LEFT JOIN category_tag_group_candidate AS candidate
+    USING (source_category_tag)
+LEFT JOIN category_tag_group_decision AS decision
+    USING (source_category_tag)
+GROUP BY country.iso_alpha2
+ORDER BY country.iso_alpha2;
+```
+
 ## AI-assisted semantic mapping audit
 
 The completed AI-assisted audit evaluates the fixed sample of 150 Indonesian category-tagged records and separately reports a census of eight Meat & poultry candidates. Its label file contains AI-assisted judgments and evidence references; it is not human annotation or ground truth. A web follow-up was performed for 48 cases with incorrect, ambiguous, or insufficient-evidence AI assessments (45 from the primary sample and 3 from the separate census). The separate online evidence log documents the URL, source type, exact-code match, access date, evidence summary, and unresolved cases. This targeted follow-up is published as a diagnostic under the project publication policy.
@@ -117,9 +187,10 @@ ruff check scripts tests
 ruff format --check scripts tests
 sqlfluff lint sql/02_validate_relational_database.sql sql/05_validate_five_country_database.sql --dialect duckdb --rules CP01
 python scripts/support_check_docs_consistency.py
+python scripts/18_check_headline_numbers.py
 ```
 
-The documentation checker verifies local Markdown links, recomputes generated README and Stage 7 sections from tracked CSV outputs, and fails if a link or generated value drifts. The GitHub Actions workflow runs tests, Ruff lint and formatting checks across all Python scripts and tests, SQLFluff on standalone DuckDB validation SQL, and this consistency check on pushes and pull requests.
+The documentation checker verifies local Markdown links, recomputes generated README and Stage 7 sections from tracked CSV outputs, and fails if a link or generated value drifts. The headline-number checker re-asserts every published headline number against the tracked CSVs without running the pipeline. The GitHub Actions workflow runs tests, Ruff lint and formatting checks across all Python scripts and tests, SQLFluff on standalone DuckDB validation SQL, and this consistency check on pushes and pull requests.
 
 ## Outputs and attribution
 

@@ -88,6 +88,12 @@ The final country and category scope is determined by data profiling, mapping qu
 - Include Indonesia as a focal comparison where data quality and coverage are adequate; report any limitations that make a direct comparison unsuitable.
 - Publish the selection rules and the resulting included/excluded country and category scopes before drawing conclusions.
 
+### 6.7 Plain-language terms
+
+The reader-facing README uses plain-language role names that map to this brief as follows: **study country** = focal (Indonesia); **comparison country** = contextual peer (Malaysia, the Philippines, Singapore); **high-coverage contrast** = coverage contrast (Thailand).
+
+A **record** is one source row in the pinned snapshot, not necessarily a unique real-world product. A **snapshot** is one pinned download identified by commit and checksum. A **reporting group** is one fixed food group used to group category tags for comparison, for example Beverages, Sweet foods & desserts, or Cereals, potatoes & bakery.
+
 ## 7. Data and Interpretation Principles
 
 - Product counts represent records in Open Food Facts, not all products sold in a market.

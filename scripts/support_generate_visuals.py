@@ -1,4 +1,4 @@
-"""Generate the three static charts used by the project README."""
+"""Generate the five static charts used by the project README."""
 
 import argparse
 from pathlib import Path
@@ -19,12 +19,14 @@ COUNTRY_NAMES = {
     "TH": "Thailand",
 }
 COLORS = {
-    "ID": "#0B6E69",
-    "MY": "#4C78A8",
-    "PH": "#F58518",
-    "SG": "#72B7B2",
-    "TH": "#E45756",
+    "ID": "#009E73",
+    "MY": "#56B4E9",
+    "PH": "#E69F00",
+    "SG": "#CC79A7",
+    "TH": "#D55E00",
 }
+CANDIDATE_COLOR = "#0072B2"
+APPROVED_COLOR = "#999999"
 
 
 def save_category_coverage(analysis_dir: Path, output_dir: Path) -> None:
@@ -66,14 +68,14 @@ def save_assignment_coverage(analysis_dir: Path, output_dir: Path) -> None:
         coverage["candidate_derived"],
         width,
         label="Candidate-derived",
-        color="#4C78A8",
+        color=CANDIDATE_COLOR,
     )
     approved = axis.bar(
         [position + width / 2 for position in x_positions],
         coverage["approved_only"],
         width,
         label="Approved-only",
-        color="#F58518",
+        color=APPROVED_COLOR,
     )
     axis.set_xticks(x_positions, [COUNTRY_NAMES[code] for code in COUNTRIES])
     axis.set_ylabel("Category-tagged records assigned to ≥1 group (%)")
@@ -136,6 +138,85 @@ def save_readiness_heatmap(readiness_file: Path, output_dir: Path) -> None:
     plt.close(fig)
 
 
+def save_largest_category_group(analysis_dir: Path, output_dir: Path) -> None:
+    categories = pd.read_csv(analysis_dir / "stage6_country_category.csv")
+    baseline = categories.loc[
+        categories["scenario"].eq("baseline")
+        & categories["assignment_basis"].eq("candidate_derived")
+    ]
+    largest = (
+        baseline.loc[baseline.groupby("iso_alpha2")["group_source_rows"].idxmax()]
+        .set_index("iso_alpha2")
+        .loc[list(COUNTRIES)]
+    )
+    shares = largest["group_share_of_country_rows_pct"]
+    labels = largest["reporting_group_label"]
+
+    fig, axis = plt.subplots(figsize=(9.5, 4.2), constrained_layout=True)
+    positions = list(range(len(COUNTRIES)))
+    bars = axis.bar(
+        positions,
+        shares,
+        width=0.6,
+        color=[COLORS[code] for code in COUNTRIES],
+    )
+    axis.set_xticks(
+        positions,
+        [
+            f"{COUNTRY_NAMES[code]}\n{label}"
+            for code, label in zip(COUNTRIES, labels, strict=True)
+        ],
+        fontsize=8,
+    )
+    axis.set_ylabel("Largest group share of country rows (%)")
+    axis.set_title("One candidate-derived group dominates recorded category rows")
+    axis.set_ylim(0, shares.max() * 1.22)
+    axis.grid(axis="y", alpha=0.25)
+    axis.set_axisbelow(True)
+    axis.bar_label(bars, fmt="%.1f%%", padding=2, fontsize=8)
+    fig.savefig(output_dir / "largest_category_group.png", dpi=180)
+    plt.close(fig)
+
+
+def save_brand_mapping_gap(readiness_file: Path, output_dir: Path) -> None:
+    readiness = pd.read_csv(readiness_file)
+    metrics = ("Brand text", "Exact-approved brand mapping")
+    matrix = readiness.pivot(
+        index="iso_alpha2",
+        columns="metric",
+        values="coverage_pct",
+    ).loc[list(COUNTRIES), list(metrics)]
+    x_positions = list(range(len(COUNTRIES)))
+    width = 0.36
+
+    fig, axis = plt.subplots(figsize=(9, 4.8), constrained_layout=True)
+    raw = axis.bar(
+        [position - width / 2 for position in x_positions],
+        matrix["Brand text"],
+        width,
+        label="Raw brand text",
+        color=CANDIDATE_COLOR,
+    )
+    mapped = axis.bar(
+        [position + width / 2 for position in x_positions],
+        matrix["Exact-approved brand mapping"],
+        width,
+        label="Exact-approved brand mapping",
+        color=APPROVED_COLOR,
+    )
+    axis.set_xticks(x_positions, [COUNTRY_NAMES[code] for code in COUNTRIES])
+    axis.set_ylabel("Records with field/value (%)")
+    axis.set_title("Brand text is common; exact-approved brand mapping stays rare")
+    axis.set_ylim(0, 100)
+    axis.grid(axis="y", alpha=0.25)
+    axis.set_axisbelow(True)
+    axis.legend(frameon=False, loc="upper left")
+    axis.bar_label(raw, fmt="%.1f%%", padding=2, fontsize=8)
+    axis.bar_label(mapped, fmt="%.1f%%", padding=2, fontsize=8)
+    fig.savefig(output_dir / "brand_mapping_gap.png", dpi=180)
+    plt.close(fig)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--analysis-dir", type=Path, required=True)
@@ -146,7 +227,9 @@ def main() -> None:
 
     save_category_coverage(args.analysis_dir, args.output_dir)
     save_assignment_coverage(args.analysis_dir, args.output_dir)
+    save_largest_category_group(args.analysis_dir, args.output_dir)
     save_readiness_heatmap(args.readiness, args.output_dir)
+    save_brand_mapping_gap(args.readiness, args.output_dir)
     print(f"Charts generated under {args.output_dir}")
 
 
