@@ -1,10 +1,13 @@
-import json
 import hashlib
 from functools import lru_cache
 from pathlib import Path
 
 import pandas as pd
 
+from support_fetch_pinned_taxonomy import (
+    validate_json_syntax,
+    validate_taxonomy_structure,
+)
 from support_pinned_inputs import (
     TAXONOMY_FILE,
     TAXONOMY_RETRIEVED_ON,
@@ -39,7 +42,8 @@ def main() -> None:
             f"found {taxonomy_sha256}."
         )
 
-    taxonomy = json.loads(taxonomy_bytes)
+    taxonomy = validate_json_syntax(taxonomy_bytes)
+    validate_taxonomy_structure(taxonomy)
     category_profile = pd.read_csv(CATEGORY_PROFILE_FILE, dtype={"source_value": str})
     required_columns = {"source_value", "records_with_value"}
     missing_columns = required_columns - set(category_profile.columns)

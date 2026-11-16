@@ -1,7 +1,9 @@
 import csv
+import hashlib
 import importlib.util
 import re
 import sys
+import urllib.error
 from pathlib import Path
 
 import pytest
@@ -375,6 +377,266 @@ def test_mapping_inputs_have_no_conflicting_decisions_or_invalid_groups() -> Non
         and row["reporting_group_id"] in valid_groups
         for row in food_group_crosswalk
     )
+
+
+class _FakeUrlResponse:
+    def __init__(self, data: bytes) -> None:
+        self._data = data
+        self._offset = 0
+
+    def read(self, size: int) -> bytes:
+        chunk = self._data[self._offset : self._offset + size]
+        self._offset += len(chunk)
+        return chunk
+
+    def __enter__(self) -> "_FakeUrlResponse":
+        return self
+
+    def __exit__(self, *args: object) -> None:
+        return None
+
+
+def _match_expected_metadata(monkeypatch: pytest.MonkeyPatch, data: bytes) -> None:
+    monkeypatch.setattr(taxonomy_fetch, "EXPECTED_SIZE_BYTES", len(data))
+    monkeypatch.setattr(
+        taxonomy_fetch,
+        "EXPECTED_SHA256",
+        hashlib.sha256(data).hexdigest().upper(),
+    )
+
+
+def test_validate_taxonomy_structure_accepts_valid_taxonomy() -> None:
+    taxonomy_fetch.validate_taxonomy_structure(
+        {"en:beverages": {"name": {"en": "Beverages"}, "parents": []}}
+    )
+
+
+def test_validate_taxonomy_structure_rejects_non_dict_top_level() -> None:
+    with pytest.raises(ValueError, match="must be a JSON object"):
+        taxonomy_fetch.validate_taxonomy_structure([1, 2, 3])
+
+
+def test_validate_taxonomy_structure_rejects_non_dict_entry() -> None:
+    with pytest.raises(ValueError, match="must be an object"):
+        taxonomy_fetch.validate_taxonomy_structure({"en:x": "not a dict"})
+
+
+def test_validate_taxonomy_structure_rejects_invalid_parents() -> None:
+    with pytest.raises(ValueError, match="invalid 'parents'"):
+        taxonomy_fetch.validate_taxonomy_structure({"en:x": {"parents": "not a list"}})
+
+
+def test_validate_taxonomy_structure_rejects_invalid_name() -> None:
+    with pytest.raises(ValueError, match="invalid 'name'"):
+        taxonomy_fetch.validate_taxonomy_structure({"en:x": {"name": "not a dict"}})
+
+
+def test_download_if_missing_uses_local_when_checksum_matches(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture
+) -> None:
+    payload = b'{"en:beverages": {"name": {"en": "Beverages"}, "parents": []}}'
+    target = tmp_path / "taxonomy.json"
+    target.write_bytes(payload)
+    _match_expected_metadata(monkeypatch, payload)
+
+    called = {"value": False}
+
+    def _fail_urlopen(*args: object, **kwargs: object) -> "_FakeUrlResponse":
+        called["value"] = True
+        raise AssertionError("urlopen should not be called when local file exists")
+
+    monkeypatch.setattr(taxonomy_fetch.urllib.request, "urlopen", _fail_urlopen)
+    monkeypatch.setattr(taxonomy_fetch, "TARGET_FILE", target)
+
+    taxonomy_fetch.download_if_missing()
+
+    assert called["value"] is False
+    captured = capsys.readouterr()
+    assert "Verified existing taxonomy snapshot" in captured.out
+
+
+def test_download_if_missing_rejects_local_checksum_mismatch(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    target = tmp_path / "taxonomy.json"
+    target.write_bytes(b'{"corrupted": true}')
+    monkeypatch.setattr(taxonomy_fetch, "TARGET_FILE", target)
+
+    with pytest.raises(ValueError, match="does not match the pinned snapshot"):
+        taxonomy_fetch.download_if_missing()
+
+    assert target.read_bytes() == b'{"corrupted": true}'
+
+
+def test_download_if_missing_downloads_when_absent_and_validates(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture
+) -> None:
+    payload = b'{"en:beverages": {"name": {"en": "Beverages"}, "parents": []}}'
+    target = tmp_path / "taxonomy.json"
+    _match_expected_metadata(monkeypatch, payload)
+
+    def _fake_urlopen(*args: object, **kwargs: object) -> "_FakeUrlResponse":
+        return _FakeUrlResponse(payload)
+
+    monkeypatch.setattr(taxonomy_fetch.urllib.request, "urlopen", _fake_urlopen)
+    monkeypatch.setattr(taxonomy_fetch, "TARGET_FILE", target)
+
+    taxonomy_fetch.download_if_missing()
+
+    assert target.is_file()
+    assert target.read_bytes() == payload
+    captured = capsys.readouterr()
+    assert "Downloaded and verified taxonomy snapshot" in captured.out
+
+
+def test_download_if_missing_rejects_download_checksum_mismatch(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    payload = b'{"en:beverages": {"name": {"en": "Beverages"}, "parents": []}}'
+    target = tmp_path / "taxonomy.json"
+
+    def _fake_urlopen(*args: object, **kwargs: object) -> "_FakeUrlResponse":
+        return _FakeUrlResponse(payload)
+
+    monkeypatch.setattr(taxonomy_fetch.urllib.request, "urlopen", _fake_urlopen)
+    monkeypatch.setattr(taxonomy_fetch, "TARGET_FILE", target)
+
+    with pytest.raises(ValueError, match="does not match the pinned snapshot"):
+        taxonomy_fetch.download_if_missing()
+
+    assert not target.exists()
+
+
+def test_download_if_missing_handles_network_timeout(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    target = tmp_path / "taxonomy.json"
+
+    def _raise_timeout(*args: object, **kwargs: object) -> "_FakeUrlResponse":
+        raise TimeoutError("timed out")
+
+    monkeypatch.setattr(taxonomy_fetch.urllib.request, "urlopen", _raise_timeout)
+    monkeypatch.setattr(taxonomy_fetch, "TARGET_FILE", target)
+
+    with pytest.raises(ValueError, match="timed out"):
+        taxonomy_fetch.download_if_missing()
+
+    assert not target.exists()
+
+
+def test_download_if_missing_handles_http_error(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    target = tmp_path / "taxonomy.json"
+
+    def _raise_http_error(*args: object, **kwargs: object) -> "_FakeUrlResponse":
+        raise urllib.error.HTTPError(
+            url="https://example.com/categories.json",
+            code=404,
+            msg="Not Found",
+            hdrs=None,
+            fp=None,
+        )
+
+    monkeypatch.setattr(taxonomy_fetch.urllib.request, "urlopen", _raise_http_error)
+    monkeypatch.setattr(taxonomy_fetch, "TARGET_FILE", target)
+
+    with pytest.raises(ValueError, match="Could not download"):
+        taxonomy_fetch.download_if_missing()
+
+    assert not target.exists()
+
+
+def test_download_if_missing_rejects_invalid_json(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    payload = b"not valid json {{{"
+    target = tmp_path / "taxonomy.json"
+    _match_expected_metadata(monkeypatch, payload)
+
+    def _fake_urlopen(*args: object, **kwargs: object) -> "_FakeUrlResponse":
+        return _FakeUrlResponse(payload)
+
+    monkeypatch.setattr(taxonomy_fetch.urllib.request, "urlopen", _fake_urlopen)
+    monkeypatch.setattr(taxonomy_fetch, "TARGET_FILE", target)
+
+    with pytest.raises(ValueError, match="not valid JSON"):
+        taxonomy_fetch.download_if_missing()
+
+    assert not target.exists()
+
+
+def test_download_if_missing_rejects_unexpected_structure(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    payload = b'["not", "a", "dict"]'
+    target = tmp_path / "taxonomy.json"
+    _match_expected_metadata(monkeypatch, payload)
+
+    def _fake_urlopen(*args: object, **kwargs: object) -> "_FakeUrlResponse":
+        return _FakeUrlResponse(payload)
+
+    monkeypatch.setattr(taxonomy_fetch.urllib.request, "urlopen", _fake_urlopen)
+    monkeypatch.setattr(taxonomy_fetch, "TARGET_FILE", target)
+
+    with pytest.raises(ValueError, match="must be a JSON object"):
+        taxonomy_fetch.download_if_missing()
+
+    assert not target.exists()
+
+
+def test_verify_file_rejects_corrupted_local(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    target = tmp_path / "taxonomy.json"
+    target.write_bytes(b"corrupted bytes")
+    monkeypatch.setattr(taxonomy_fetch, "TARGET_FILE", target)
+
+    with pytest.raises(ValueError, match="does not match the pinned snapshot"):
+        taxonomy_fetch.verify_file(target)
+
+    assert target.read_bytes() == b"corrupted bytes"
+
+
+def test_download_if_missing_reports_write_errors_as_local_io(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    payload = b'{"en:beverages": {"name": {"en": "Beverages"}, "parents": []}}'
+    target = tmp_path / "taxonomy.json"
+    _match_expected_metadata(monkeypatch, payload)
+
+    class _FailingTempFile:
+        name = str(tmp_path / ".categories.json.fake.download")
+
+        def __init__(self, *args: object, **kwargs: object) -> None:
+            pass
+
+        def __enter__(self) -> "_FailingTempFile":
+            return self
+
+        def __exit__(self, *args: object) -> None:
+            return None
+
+        def write(self, chunk: bytes) -> None:
+            raise OSError("disk full")
+
+        def flush(self) -> None:
+            pass
+
+        def fileno(self) -> int:
+            return 0
+
+    def _fake_urlopen(*args: object, **kwargs: object) -> "_FakeUrlResponse":
+        return _FakeUrlResponse(payload)
+
+    monkeypatch.setattr(taxonomy_fetch.urllib.request, "urlopen", _fake_urlopen)
+    monkeypatch.setattr(taxonomy_fetch.tempfile, "NamedTemporaryFile", _FailingTempFile)
+    monkeypatch.setattr(taxonomy_fetch, "TARGET_FILE", target)
+
+    with pytest.raises(ValueError, match="Could not write"):
+        taxonomy_fetch.download_if_missing()
+
+    assert not target.exists()
 
 
 def _read_csv(path: Path) -> list[dict[str, str]]:

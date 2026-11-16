@@ -1,8 +1,10 @@
 """Fetch the locally excluded category taxonomy snapshot when it is missing."""
 
 import hashlib
+import json
 import os
 import tempfile
+import urllib.error
 import urllib.request
 from pathlib import Path
 
@@ -41,9 +43,62 @@ def hash_file(path: Path) -> tuple[int, str]:
     return size, digest.hexdigest().upper()
 
 
-def verify_file(path: Path) -> None:
+def validate_json_syntax(raw_bytes: bytes) -> dict:
+    try:
+        taxonomy = json.loads(raw_bytes)
+    except json.JSONDecodeError as exc:
+        raise ValueError(f"Category taxonomy is not valid JSON: {exc}") from exc
+    return taxonomy
+
+
+def validate_taxonomy_structure(taxonomy: dict) -> None:
+    if not isinstance(taxonomy, dict):
+        raise ValueError(
+            "Category taxonomy must be a JSON object mapping tags to entries; "
+            f"found {type(taxonomy).__name__}."
+        )
+    for tag, entry in taxonomy.items():
+        if not isinstance(tag, str):
+            raise ValueError(
+                f"Category taxonomy keys must be strings; found "
+                f"{type(tag).__name__} for key {tag!r}."
+            )
+        if not isinstance(entry, dict):
+            raise ValueError(
+                f"Category taxonomy entry for {tag!r} must be an object; "
+                f"found {type(entry).__name__}."
+            )
+        parents = entry.get("parents", [])
+        if not isinstance(parents, list):
+            raise ValueError(
+                f"Category taxonomy entry for {tag!r} has invalid 'parents': "
+                f"expected a list, found {type(parents).__name__}."
+            )
+        for parent in parents:
+            if not isinstance(parent, str):
+                raise ValueError(
+                    f"Category taxonomy entry for {tag!r} has a non-string "
+                    f"parent; found {type(parent).__name__}."
+                )
+        name = entry.get("name", {})
+        if not isinstance(name, dict):
+            raise ValueError(
+                f"Category taxonomy entry for {tag!r} has invalid 'name': "
+                f"expected an object, found {type(name).__name__}."
+            )
+
+
+def load_validated_taxonomy(path: Path) -> dict:
+    raw_bytes = path.read_bytes()
     size, sha256 = hash_file(path)
     validate_snapshot_metadata(size, sha256)
+    taxonomy = validate_json_syntax(raw_bytes)
+    validate_taxonomy_structure(taxonomy)
+    return taxonomy
+
+
+def verify_file(path: Path) -> None:
+    load_validated_taxonomy(path)
 
 
 def download_if_missing() -> None:
@@ -68,15 +123,48 @@ def download_if_missing() -> None:
                 SOURCE_URL,
                 headers={"User-Agent": "indonesia-food-product-landscape/1.0"},
             )
-            with urllib.request.urlopen(request, timeout=60) as response:
-                while chunk := response.read(CHUNK_SIZE_BYTES):
-                    temporary_file.write(chunk)
-                    digest.update(chunk)
-                    size += len(chunk)
-            temporary_file.flush()
-            os.fsync(temporary_file.fileno())
+            try:
+                with urllib.request.urlopen(request, timeout=60) as response:
+                    while chunk := response.read(CHUNK_SIZE_BYTES):
+                        try:
+                            temporary_file.write(chunk)
+                        except OSError as exc:
+                            raise ValueError(
+                                f"Could not write the taxonomy download to "
+                                f"{temporary_path}: {exc}."
+                            ) from exc
+                        digest.update(chunk)
+                        size += len(chunk)
+            except urllib.error.URLError as exc:
+                raise ValueError(
+                    f"Could not download the category taxonomy from "
+                    f"{SOURCE_URL}: {exc.reason}. "
+                    "The upstream taxonomy URL is mutable; obtain the exact "
+                    "archived snapshot before rerunning the analysis."
+                ) from exc
+            except TimeoutError as exc:
+                raise ValueError(
+                    f"Download of the category taxonomy from {SOURCE_URL} "
+                    "timed out. Obtain the exact archived snapshot before "
+                    "rerunning the analysis."
+                ) from exc
+            except OSError as exc:
+                raise ValueError(
+                    f"Could not download the category taxonomy from "
+                    f"{SOURCE_URL}: {exc}. "
+                    "Obtain the exact archived snapshot before rerunning "
+                    "the analysis."
+                ) from exc
+            try:
+                temporary_file.flush()
+                os.fsync(temporary_file.fileno())
+            except OSError as exc:
+                raise ValueError(
+                    f"Could not write the taxonomy download to {temporary_path}: {exc}."
+                ) from exc
 
         validate_snapshot_metadata(size, digest.hexdigest())
+        load_validated_taxonomy(temporary_path)
         temporary_path.replace(TARGET_FILE)
         print(f"Downloaded and verified taxonomy snapshot: {TARGET_FILE}")
     finally:
