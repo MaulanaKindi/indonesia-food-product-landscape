@@ -6,6 +6,11 @@ import sys
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
+SNAPSHOT_FILE = PROJECT_ROOT / "data" / "raw" / "food.parquet"
+PINNED_INPUT_SCRIPTS = {
+    "support_fetch_pinned_taxonomy.py",
+    "00_download_snapshot.py",
+}
 PIPELINE = (
     "support_fetch_pinned_taxonomy.py",
     "00_download_snapshot.py",
@@ -23,6 +28,15 @@ PIPELINE = (
 )
 
 
+def preflight_snapshot() -> None:
+    if not SNAPSHOT_FILE.exists():
+        print(
+            f"{SNAPSHOT_FILE} not found; step 00 will download the pinned "
+            "7.98 GB snapshot.",
+            flush=True,
+        )
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -31,6 +45,8 @@ def main() -> None:
         help="Replace the canonical database only after a new build passes validation.",
     )
     args = parser.parse_args()
+
+    preflight_snapshot()
 
     for script_name in PIPELINE:
         command = [
@@ -45,7 +61,18 @@ def main() -> None:
         if script_name == "16_refresh_harmonized_analysis.py":
             command.extend(("--skip-mapping-refresh", "--skip-brand-profile-refresh"))
         print(f"\nRunning {script_name}...", flush=True)
-        subprocess.run(command, cwd=PROJECT_ROOT, check=True)
+        try:
+            subprocess.run(command, cwd=PROJECT_ROOT, check=True)
+        except subprocess.CalledProcessError as error:
+            if script_name in PINNED_INPUT_SCRIPTS:
+                print(
+                    f"\n{script_name} failed while preparing pinned inputs. "
+                    "If you are offline, connect to the network and re-run. "
+                    "To inspect the published results without any download, see "
+                    "docs/09_reproduction.md (Quick look without the 8 GB download).",
+                    file=sys.stderr,
+                )
+            raise SystemExit(error.returncode) from error
     print("\nFive-country analysis completed successfully.")
 
 
