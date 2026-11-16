@@ -2,9 +2,13 @@
 
 An evidence-based comparison of product records and data coverage in a pinned Open Food Facts snapshot—not a measure of food-market size or sales.
 
+**What this is:** a data-coverage study of [Open Food Facts](https://openfoodfacts.org) for Indonesia and four comparison countries, built from one pinned snapshot.
+**Who it is for:** market-intelligence and FMCG analysts evaluating Open Food Facts as a data source.
+**How to read it (60 seconds):** the headline numbers below are the whole story in one screen; the country table adds context; the five findings explain what the numbers do and do not mean.
+
 ## TL;DR
 
-**Question:** Within the fixed snapshot, how do record counts, category-tag coverage, category assignments, and field readiness differ across Indonesia, contextual peers, and a separate higher-coverage contrast?
+**Question:** In one fixed Open Food Facts snapshot, how much product data exists for Indonesia versus four comparison countries, and how completely is it described? This is a data-coverage study, not a market-size estimate.
 
 <!-- AUTO-GENERATED: headline-metrics:START -->
 - **Category coverage:** 12.2% of Indonesian records are tagged, versus 11.3%–17.3% in the contextual peers and 62.6% in Thailand, the separate coverage contrast.
@@ -26,6 +30,16 @@ An evidence-based comparison of product records and data coverage in a pinned Op
 | SG | Contextual peer | 11,986 | 2,074 | 17.30% | 1,806 (87.1%) | 263 (12.7%) | 341 (2.85%) |
 | TH | Coverage contrast | 11,343 | 7,104 | 62.63% | 4,516 (63.6%) | 673 (9.5%) | 46 (0.41%) |
 <!-- AUTO-GENERATED: country-comparison:END -->
+
+**Reading the terms:**
+
+| Term | Plain meaning |
+|---|---|
+| Category-tagged / tag coverage | A record has at least one category tag; coverage is the tagged share of a country's records. |
+| Candidate-derived assigned | A record linked to a reporting group by a candidate (automated or manual) mapping. Exploratory—not all of these mappings are reviewed. |
+| Approved-only assigned | A record linked only through mappings with an approved decision. Stricter and narrower than candidate-derived. |
+| Exact-approved brand mapping | Raw brand text matched to a brand whose mapping is marked approved. Much narrower than having brand text. |
+| Coverage contrast | Thailand is included because its category-tag coverage is far higher (62.6%), to show what well-tagged data looks like. It is not an equivalent market peer. |
 
 ![Category-tag coverage by country](docs/img/category_coverage.png)
 
