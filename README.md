@@ -2,9 +2,18 @@
 
 An evidence-based comparison of product records and data coverage in a pinned Open Food Facts snapshot—not a measure of food-market size or sales.
 
-**What this is:** a data-coverage study of [Open Food Facts](https://openfoodfacts.org) for Indonesia and four comparison countries, built from one pinned snapshot.
-**Who it is for:** market-intelligence and FMCG analysts evaluating Open Food Facts as a data source.
-**How to read it (60 seconds):** the headline numbers below are the whole story in one screen; the country table adds context; the five findings explain what the numbers do and do not mean.
+## Bottom line
+
+**Answer:** In one fixed Open Food Facts snapshot, Indonesia (ID) records 9,118 product rows and tags 12.2% of them with at least one category. Recorded category coverage in Indonesia is similar to Malaysia (MY) and somewhat below the Philippines (PH) and Singapore (SG), and far below Thailand (TH), a high-coverage contrast. This is a data-coverage study, not a market-size estimate.
+
+**Why these countries:** Indonesia is the study country; Malaysia (MY), the Philippines (PH), and Singapore (SG) are comparison countries, and Thailand (TH) is a high-coverage contrast ([business brief](docs/01_business_brief.md), section 1). The brief selects peers on documented coverage and quality, relevant category availability, source-snapshot alignment, and analytical relevance—not on record count (section 6.6).
+
+**Decisions this supports:**
+- **Use** Open Food Facts as a supplementary signal for catalog coverage and field completeness—see [Fit for purpose](#fit-for-purpose).
+- **Do not use it alone** for competitor share, market size, sales, demand, or availability; pair it with representative retail, sales-panel, or official data.
+- **Treat category assignments as provisional:** candidate-derived assignments are broader than approved-only, and neither covers all tagged records.
+
+**What this is / who it is for / how to read (60 seconds):** a data-coverage study of Open Food Facts for market-intelligence and FMCG (fast-moving consumer goods) analysts; read the headline numbers, then the country table, then the limitations.
 
 ## TL;DR
 
@@ -17,13 +26,15 @@ An evidence-based comparison of product records and data coverage in a pinned Op
 - **AI + online mapping audit:** 97/130 candidate assignments were judged correct on a targeted, non-random sample; this is a diagnostic, not human ground truth (details in Method quality and the Stage 7 findings).
 <!-- AUTO-GENERATED: headline-metrics:END -->
 
+**Terms used here:** Open Food Facts = collaborative product database; record = one row in the snapshot (not necessarily a unique product); tag = a source country or category label; snapshot = one pinned download; country codes = ISO 3166-1 alpha-2.
+
 ![Category-tag coverage by country](docs/img/category_coverage.png)
 
 *Figure 1 — Category-tag coverage by country. Bars show the share of records with at least one category tag; higher means more completely tagged, not a bigger market.*
 
 ### Country comparison
 
-“Assigned” means a record has at least one substantive reporting-group assignment. Groups can overlap. Candidate-derived mappings are not all approved.
+"Assigned" means a record has at least one substantive reporting-group assignment; groups can overlap. "Share of all records" uses **all country records** as the denominator; tag coverage uses **tagged records** as the denominator.
 
 <!-- AUTO-GENERATED: country-comparison:START -->
 | Country | Role | Records | Category-tagged | Tag coverage | Candidate-derived assigned | Approved-only assigned | Candidate-derived, share of all records | Approved-only, share of all records |
@@ -39,11 +50,13 @@ An evidence-based comparison of product records and data coverage in a pinned Op
 
 | Term | Plain meaning |
 |---|---|
+| Reporting group | One fixed food group used to group category tags for comparison, such as Beverages, Sweet foods & desserts, or Cereals, potatoes & bakery. |
 | Category-tagged / tag coverage | A record has at least one category tag; coverage is the tagged share of a country's records. |
 | Candidate-derived assigned | A record linked to a reporting group by a candidate (automated or manual) mapping. Exploratory—not all of these mappings are reviewed. |
 | Approved-only assigned | A record linked only through mappings with an approved decision. Stricter and narrower than candidate-derived. |
 | Exact-approved brand mapping | Raw brand text matched to a brand whose mapping is marked approved. Much narrower than having brand text. |
-| Coverage contrast | Thailand is included because its category-tag coverage is far higher (62.6%), to show what well-tagged data looks like. It is not an equivalent market peer. |
+| Share of all records | A count divided by all of a country's records, not only its tagged records. |
+| High-coverage contrast | Thailand is included because its category-tag coverage is far higher (62.6%), to show what well-tagged data looks like. It is not an equivalent market peer. |
 
 ![Candidate-derived and approved-only assignment coverage](docs/img/category_assignment_coverage.png)
 
@@ -67,21 +80,35 @@ Percentages are records with a non-empty field or valid value, using the definit
 
 *Figure 3 — Field readiness: the share of records with a usable value for each field. Exact-approved brand mapping is far narrower than brand-text presence.*
 
+## Business lens
+
+A thinking framework for reading this study, not a result of it:
+
+1. **Fitness for use:** data is good or bad only relative to a decision: the question is whether the fields that decision needs are populated and reliable.
+2. **Counts are not weights:** the number of registered products is not a sales-weighted distribution; weighting needs sales or demand data this source does not have.
+3. **Selection bias and triangulation:** collaborative data skews toward particular contributors and products, so findings need triangulation against independent sources.
+
+## Fit for purpose
+
+| Use case | Suitable? | Reason (from tracked outputs) |
+|---|---|---|
+| Audit which product fields are populated, per field | Yes | Field-readiness scorecard per country (for example, Indonesia (ID) category tags 12.2%, brand text 38.8%). |
+| Compare recorded category coverage across the five countries | Yes, descriptively | Country comparison table above, baseline scenario. |
+| Classify Indonesian records into reporting groups | Limited | Candidate-derived assignments cover 788/9,118 records (8.64% of all records; 70.9% of tagged records); approved-only covers 113 (1.24%; 10.2%). |
+| Estimate market size, sales, demand, or market share | No | The source has no sales or demand fields and is not a census. |
+| Broad brand landscape, concentration (HHI), or dominance | No | Exact-approved mapping covers only 0.34% of Indonesian records—too sparse. |
+
 ## Five findings
 
-1. **Coverage is uneven.** Indonesia's category-tag coverage is close to the contextual peers and well below Thailand. Thailand is a coverage contrast, not an equivalent market peer.
+1. **Coverage is uneven.** Indonesia's category-tag coverage is similar to the comparison countries and well below Thailand. Thailand is a high-coverage contrast, not an equivalent market peer.
 2. **Mapping choice changes the answer.** Candidate-derived assignments cover more tagged records than exact-approved assignments. Unassigned records remain visible; ambiguous tags are not forced into groups.
 3. **Readiness depends on the field.** A record with brand text or a category tag is not necessarily complete or correct. Exact-approved brand mapping is much narrower than raw brand-text availability.
 4. **Contributor and source metadata are diagnostics.** Concentration, creation-year patterns, and source-tag coverage describe the database's recorded contributions; they do not prove imports, bulk loading, or the cause of coverage differences.
 5. **Identifier overlap is not market overlap.** Shared product codes may be the same source records assigned to multiple countries. They do not establish that products are sold or traded between those countries.
 
-## Decision memo
+## Method quality
 
-**For an FMCG analyst considering Open Food Facts for Indonesia:**
-
-- **Use it** as a supplementary signal for observed catalog coverage and for identifying which product fields are actually populated.
-- **Do not use it alone** to estimate competitor share, market size, sales, demand, or product availability. The database is collaborative and is not a census.
-- **Pair it with** representative retail or sales-panel data, e-commerce evidence, or suitable official statistics; validate products and mappings for the decision at hand.
+The AI-assisted mapping audit is a diagnostic, not human ground truth. The primary sample is 150 Indonesian category-tagged records selected deterministically by MD5 rank; of 130 candidate group pairs, 97 of 130 were judged correct, 16 disagreed, 8 were ambiguous, and 9 had insufficient evidence, with exact group-set agreement of 61/150 (40.7%). A separate eight-record Meat & poultry census is reported descriptively and is not pooled with the primary estimate. A targeted online follow-up covered the 48 cases with incorrect, ambiguous, or insufficient-evidence assessments (45 primary-sample and 3 census): 30 had supporting product evidence and 18 remained partial or unresolved, with 36 records carrying a source URL and 29 an exact product-code match. Because that follow-up is targeted and non-random, these counts are not a sample-wide precision estimate. Full intervals and per-group results are in the [Stage 7 findings](docs/07_stage7_findings_and_recommendations.md).
 
 ## Method at a glance
 
@@ -95,36 +122,7 @@ flowchart LR
     F --> G[Generated README and findings]
 ```
 
-Two example questions the database can answer:
-
-```sql
--- How many country records have category tags?
-SELECT country.iso_alpha2,
-       COUNT(DISTINCT country.source_record_id) AS records,
-       COUNT(DISTINCT category.source_record_id) AS category_tagged
-FROM record_country AS country
-LEFT JOIN record_category_tag AS category USING (source_record_id)
-GROUP BY country.iso_alpha2
-ORDER BY country.iso_alpha2;
-```
-
-```sql
--- How does exact-approved brand mapping compare with raw brand text?
-SELECT country.iso_alpha2,
-       COUNT(DISTINCT record.source_record_id)
-           FILTER (WHERE NULLIF(trim(record.brands), '') IS NOT NULL)
-           AS records_with_brand_text,
-       COUNT(DISTINCT brand.source_record_id)
-           FILTER (WHERE mapping.review_status = 'approved')
-           AS records_with_exact_approved_mapping
-FROM record_country AS country
-JOIN source_product_record AS record USING (source_record_id)
-LEFT JOIN record_brand_source_value AS brand USING (source_record_id)
-LEFT JOIN brand_name_mapping AS mapping
-    ON brand.source_brand_name = mapping.source_brand_name
-GROUP BY country.iso_alpha2
-ORDER BY country.iso_alpha2;
-```
+Three example SQL queries the database can answer, including the candidate-versus-approved-only comparison, are in the [reproduction guide](docs/09_reproduction.md#example-sql-queries).
 
 ## Scope and limitations
 
@@ -132,7 +130,7 @@ ORDER BY country.iso_alpha2;
 - The AI-assisted semantic audit is not human ground truth; `food_groups_tags` is a diagnostic cross-check, not an inference source.
 - Contributor concentration and creation-time patterns are descriptive only. The snapshot does not include the Open Food Facts `sources.import_t` field, so this analysis cannot establish whether records arrived through a bulk import.
 - Brand-text availability and exact-approved brand mapping are distinct. The mapped subset is too sparse for broad brand-concentration claims.
-- The snapshot is pinned to Hugging Face commit `31f31c441274c095718cc88ae582030a5a615415`, with expected SHA-256 `DA39B2C5AAF1F85B2E637B904B5FC3A29780DD7E184254F4B660CFE0CD84999A`.
+- The snapshot is pinned to a Hugging Face commit with a verified SHA-256; both values are recorded in [the source record](docs/02_data_source.md).
 
 ## Reproduce and inspect
 
