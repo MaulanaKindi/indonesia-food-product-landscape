@@ -263,17 +263,16 @@ def test_pinned_source_manifest_matches_reader_facing_documentation() -> None:
     )
 
     assert all(
-        pinned_inputs.SNAPSHOT_COMMIT in text
-        for text in (source_note, readme, reproduction)
+        pinned_inputs.SNAPSHOT_COMMIT in text for text in (source_note, reproduction)
     )
     assert all(
-        pinned_inputs.SNAPSHOT_SHA256 in text
-        for text in (source_note, readme, reproduction)
+        pinned_inputs.SNAPSHOT_SHA256 in text for text in (source_note, reproduction)
     )
     assert all(
         f"{pinned_inputs.SNAPSHOT_SIZE_BYTES:,}" in text
         for text in (source_note, reproduction)
     )
+    assert "docs/02_data_source.md" in readme
     assert pinned_inputs.TAXONOMY_URL in source_note
     assert pinned_inputs.TAXONOMY_RETRIEVED_ON in source_note
     assert pinned_inputs.TAXONOMY_SHA256 in source_note
