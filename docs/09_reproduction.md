@@ -30,7 +30,7 @@ macOS or Linux:
 .venv/bin/python scripts/run_all.py
 ```
 
-The pipeline downloads Hugging Face commit `31f31c441274c095718cc88ae582030a5a615415` to `data/raw/food.parquet`. It verifies the expected 7,975,461,945-byte size and SHA-256 `DA39B2C5AAF1F85B2E637B904B5FC3A29780DD7E184254F4B660CFE0CD84999A`. Before profiling, `scripts/support_fetch_pinned_taxonomy.py` retrieves the locally excluded taxonomy JSON if it is missing and verifies the pinned 4,703,948-byte size and SHA-256. Both downloads use a temporary file and reject mismatched content before publishing it. The source, taxonomy, and DuckDB databases are excluded from Git.
+The pipeline downloads Hugging Face commit `31f31c441274c095718cc88ae582030a5a615415` to `data/raw/food.parquet`. It verifies the expected 7,975,461,945-byte size and SHA-256 `DA39B2C5AAF1F85B2E637B904B5FC3A29780DD7E184254F4B660CFE0CD84999A`. Before profiling, `scripts/support_fetch_pinned_taxonomy.py` retrieves the locally excluded taxonomy JSON if it is missing and verifies its file size, SHA-256, JSON syntax, and expected taxonomy structure; newly downloaded and existing local files are checked the same way. Both downloads use a temporary file and reject mismatched content before publishing it. The source, taxonomy, and DuckDB databases are excluded from Git.
 
 The taxonomy URL is a mutable upstream endpoint, not an immutable historical URL. The checksum prevents silently using a newer taxonomy, but if the upstream no longer serves the pinned bytes, a clean clone needs an exact archived copy from an authorized source before the pipeline can run. The project does not redistribute the taxonomy JSON.
 
