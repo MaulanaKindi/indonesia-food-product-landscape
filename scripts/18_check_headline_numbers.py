@@ -1,0 +1,236 @@
+"""Assert published headline numbers match the tracked analysis CSVs.
+
+Read-only guard against README/docs drift: no DuckDB, no pipeline re-run, no
+network access. Reads only tracked outputs under ``outputs/`` and fails loudly
+when a headline number quoted in the README or docs no longer matches the data.
+"""
+
+import sys
+from pathlib import Path
+
+import pandas as pd
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+STAGE5_FILE = (
+    PROJECT_ROOT / "outputs" / "profiling" / "stage5_country_peer_evidence.csv"
+)
+STAGE6_SCOPE_FILE = PROJECT_ROOT / "outputs" / "analysis" / "stage6_country_scope.csv"
+READINESS_FILE = PROJECT_ROOT / "outputs" / "profiling" / "data_readiness_scorecard.csv"
+
+EXPECTED_HEADLINES = {
+    "ID": {
+        "rows": 9118,
+        "category_tagged": 1111,
+        "coverage_pct": 12.1847,
+        "candidate_groups": 788,
+        "approved_groups": 113,
+        "brand_mapped": 31,
+        "brand_coverage_pct": 0.34,
+    },
+    "MY": {
+        "rows": 7426,
+        "category_tagged": 840,
+        "coverage_pct": 11.3116,
+        "candidate_groups": 620,
+        "approved_groups": 84,
+        "brand_mapped": 64,
+        "brand_coverage_pct": 0.8618,
+    },
+    "PH": {
+        "rows": 9176,
+        "category_tagged": 1535,
+        "coverage_pct": 16.7284,
+        "candidate_groups": 1273,
+        "approved_groups": 158,
+        "brand_mapped": 88,
+        "brand_coverage_pct": 0.959,
+    },
+    "SG": {
+        "rows": 11986,
+        "category_tagged": 2074,
+        "coverage_pct": 17.3035,
+        "candidate_groups": 1806,
+        "approved_groups": 263,
+        "brand_mapped": 341,
+        "brand_coverage_pct": 2.845,
+    },
+    "TH": {
+        "rows": 11343,
+        "category_tagged": 7104,
+        "coverage_pct": 62.6289,
+        "candidate_groups": 4516,
+        "approved_groups": 673,
+        "brand_mapped": 46,
+        "brand_coverage_pct": 0.4055,
+    },
+}
+
+
+def read_csv(path: Path) -> pd.DataFrame:
+    return pd.read_csv(path, dtype=str, keep_default_na=False)
+
+
+class Checker:
+    def __init__(self) -> None:
+        self.failures: list[str] = []
+        self.count = 0
+
+    def equal(self, label: str, actual: object, expected: object) -> None:
+        self.count += 1
+        if actual != expected:
+            self.failures.append(f"{label}: {actual!r} != expected {expected!r}")
+
+    def int(self, label: str, actual: str, expected: int) -> None:
+        self.equal(label, int(actual), expected)
+
+    def pct(self, label: str, actual: str, expected: float) -> None:
+        self.equal(label, round(float(actual), 4), round(expected, 4))
+
+
+def country_row(frame: pd.DataFrame, iso_alpha2: str) -> pd.Series:
+    matches = frame[frame["iso_alpha2"] == iso_alpha2]
+    if len(matches) != 1:
+        raise ValueError(
+            f"Expected exactly one row for {iso_alpha2}, found {len(matches)}"
+        )
+    return matches.iloc[0]
+
+
+def metric_row(frame: pd.DataFrame, iso_alpha2: str, metric: str) -> pd.Series:
+    matches = frame[(frame["iso_alpha2"] == iso_alpha2) & (frame["metric"] == metric)]
+    if len(matches) != 1:
+        raise ValueError(
+            f"Expected exactly one row for {iso_alpha2}/{metric}, found {len(matches)}"
+        )
+    return matches.iloc[0]
+
+
+def check_country(
+    iso_alpha2: str,
+    expected: dict[str, float],
+    stage5: pd.DataFrame,
+    baseline: pd.DataFrame,
+    readiness: pd.DataFrame,
+    checker: Checker,
+) -> None:
+    rows = int(expected["rows"])
+    tagged = int(expected["category_tagged"])
+    candidate = int(expected["candidate_groups"])
+    approved = int(expected["approved_groups"])
+    brand = int(expected["brand_mapped"])
+
+    scope_row = country_row(baseline, iso_alpha2)
+    checker.int(f"{iso_alpha2} scope rows", scope_row["source_rows"], rows)
+    checker.int(f"{iso_alpha2} scope distinct codes", scope_row["distinct_codes"], rows)
+    checker.int(
+        f"{iso_alpha2} scope category-tagged rows",
+        scope_row["source_rows_with_category_tags"],
+        tagged,
+    )
+    checker.pct(
+        f"{iso_alpha2} scope category coverage pct",
+        scope_row["category_tags_coverage_pct"],
+        float(expected["coverage_pct"]),
+    )
+
+    stage5_row = country_row(stage5, iso_alpha2)
+    checker.int(f"{iso_alpha2} stage5 rows", stage5_row["country_source_rows"], rows)
+    checker.int(
+        f"{iso_alpha2} stage5 category-tagged rows",
+        stage5_row["source_rows_with_category_tags"],
+        tagged,
+    )
+    checker.pct(
+        f"{iso_alpha2} stage5 category coverage pct",
+        stage5_row["category_tags_coverage_pct"],
+        float(expected["coverage_pct"]),
+    )
+    checker.int(
+        f"{iso_alpha2} stage5 candidate-derived groups",
+        stage5_row["source_rows_with_primary_candidate_group"],
+        candidate,
+    )
+    checker.int(
+        f"{iso_alpha2} stage5 approved-only groups",
+        stage5_row["source_rows_with_approved_group_decision"],
+        approved,
+    )
+    checker.int(
+        f"{iso_alpha2} stage5 exact-approved brand mappings",
+        stage5_row["source_rows_with_approved_brand_mapping"],
+        brand,
+    )
+    checker.pct(
+        f"{iso_alpha2} stage5 brand coverage pct",
+        stage5_row["approved_brand_mapping_coverage_pct_of_country_rows"],
+        float(expected["brand_coverage_pct"]),
+    )
+
+    category_metric = metric_row(readiness, iso_alpha2, "Category tags")
+    checker.int(
+        f"{iso_alpha2} readiness category records",
+        category_metric["records_with_field"],
+        tagged,
+    )
+    checker.int(
+        f"{iso_alpha2} readiness country records",
+        category_metric["country_records"],
+        rows,
+    )
+    checker.pct(
+        f"{iso_alpha2} readiness category coverage pct",
+        category_metric["coverage_pct"],
+        float(expected["coverage_pct"]),
+    )
+
+    brand_metric = metric_row(readiness, iso_alpha2, "Exact-approved brand mapping")
+    checker.int(
+        f"{iso_alpha2} readiness brand records",
+        brand_metric["records_with_field"],
+        brand,
+    )
+    checker.pct(
+        f"{iso_alpha2} readiness brand coverage pct",
+        brand_metric["coverage_pct"],
+        float(expected["brand_coverage_pct"]),
+    )
+
+
+def main() -> None:
+    stage5 = read_csv(STAGE5_FILE)
+    scope = read_csv(STAGE6_SCOPE_FILE)
+    readiness = read_csv(READINESS_FILE)
+    baseline = scope[scope["scenario"] == "baseline"]
+    if baseline.empty:
+        raise ValueError("No baseline rows found in stage6_country_scope.csv")
+
+    checker = Checker()
+
+    snapshot_hashes = set(stage5["snapshot_sha256"]) | set(baseline["snapshot_sha256"])
+    checker.equal(
+        "snapshot_sha256 consistent across stage5 and stage6 scope",
+        len(snapshot_hashes),
+        1,
+    )
+
+    for iso_alpha2, expected in EXPECTED_HEADLINES.items():
+        check_country(iso_alpha2, expected, stage5, baseline, readiness, checker)
+
+    if checker.failures:
+        print(
+            f"Headline-number check FAILED ({len(checker.failures)} of "
+            f"{checker.count} assertions failed):",
+            file=sys.stderr,
+        )
+        for failure in checker.failures:
+            print(f"  - {failure}", file=sys.stderr)
+        raise SystemExit(1)
+
+    print(
+        f"Headline-number check OK: {checker.count} assertions passed for "
+        f"{len(EXPECTED_HEADLINES)} countries."
+    )
+
+
+if __name__ == "__main__":
+    main()
