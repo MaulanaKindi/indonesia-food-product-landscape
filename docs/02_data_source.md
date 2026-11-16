@@ -44,7 +44,7 @@ The Parquet dataset retains `categories_tags` but its dataset card states that h
 - SHA-256: `EB03AEFABAE4C6269B5FBC3E89160F8DA84CA3300A53787E27EAB5FE2D1020D5`
 - Taxonomy nodes in the saved file: 14,774
 
-The recorded endpoint is mutable. `scripts/support_fetch_pinned_taxonomy.py` downloads it only when the local snapshot is absent and accepts it only when both the expected byte size and SHA-256 match. If Open Food Facts has replaced the endpoint content, the script stops; the exact historical taxonomy must be obtained from an authorized archive. The repository does not redistribute this file.
+The recorded endpoint is mutable. `scripts/support_fetch_pinned_taxonomy.py` downloads it only when the local snapshot is absent. Both newly downloaded and existing local files are accepted only when they pass the same checks: the expected file size, the SHA-256 checksum, valid JSON syntax, and the expected taxonomy structure (a JSON object mapping string category tags to entries containing a parents list of strings and a name object). If Open Food Facts has replaced the endpoint content, or the local file fails any check, the script stops; the exact historical taxonomy must be obtained from an authorized archive. The repository does not redistribute this file.
 
 The source Parquet upstream release date is unknown, so this current taxonomy snapshot cannot be assumed to be contemporaneous with the product data. The category audit records exact tag matches and unmatched tags; it does not silently infer aliases. Recheck the taxonomy license, version, and attribution conditions before redistributing it or derivative taxonomy data.
 
