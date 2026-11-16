@@ -11,7 +11,7 @@ You do not need the source snapshot, DuckDB, or network access to inspect the pu
 .\.venv\Scripts\python.exe .\scripts\18_check_headline_numbers.py
 ```
 
-The first command rebuilds the three static charts under `docs/img/` from tracked CSVs (`outputs/analysis/stage6_country_scope.csv`, `stage6_country_category.csv`, and `outputs/profiling/data_readiness_scorecard.csv`). The second is a read-only guard that asserts every headline number in this guide and the README against those same tracked CSVs; it fails loudly if a number drifts. On macOS or Linux, replace the Windows virtual-environment Python path with `.venv/bin/python`.
+The first command rebuilds the five static charts under `docs/img/` from tracked CSVs (`outputs/analysis/stage6_country_scope.csv`, `stage6_country_category.csv`, and `outputs/profiling/data_readiness_scorecard.csv`). The second is a read-only guard that asserts every headline number in this guide and the README against those same tracked CSVs; it fails loudly if a number drifts. On macOS or Linux, replace the Windows virtual-environment Python path with `.venv/bin/python`.
 
 ## Requirements
 

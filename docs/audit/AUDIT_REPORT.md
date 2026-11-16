@@ -82,7 +82,7 @@ All headline numbers match tracked outputs — no drift found:
 | **P0-0** | Read-only headline-number assertion script | `scripts/18_check_headline_numbers.py` | S | None | done | `288dcd1` |
 | **P0-1** | README 60-second rewrite (static sections) | `README.md` | M | None | done | `570dcef`, `bd7dbfa`, `07bb5fe` |
 | **P0-2** | Data-free quick-look docs + chart one-liner | `README.md`, `docs/09_reproduction.md` | S | None | done | `77868bb` |
-| **P1-1** | Add 2 charts from tracked CSVs + accessible palette | `support_generate_visuals.py`, `docs/img/*.png` | M | None | awaiting approval | — |
+| **P1-1** | Add 2 charts from tracked CSVs + accessible palette | `support_generate_visuals.py`, `docs/img/*.png` | M | None | done | pending commit |
 | **P1-2** | Chart captions + move one chart near top | `README.md` | S | None | done | `c5b275e` |
 | **P1-3** | Friendly preflight guard when the snapshot is missing | `scripts/run_all.py` | S | Low | done | `fa41464` |
 | **P1-4** | Plain-language glossary box | `README.md` | S | None | done | `570dcef` |
@@ -90,7 +90,7 @@ All headline numbers match tracked outputs — no drift found:
 | **P1-5b** | README static rewrite + supporting docs + static-string guard | `README.md`, `docs/01`, `docs/02`, `docs/09`, `docs/10`, `18_check_headline_numbers.py` | M | None | done | `bd7dbfa`, `e9633da`, `5d2977a` |
 | **P1-5c** | Static prose, architecture, release metadata, project log | `docs/07`, `docs/08`, `docs/99`, `docs/00` | S | None | done | `2930f0a`, `e4aab0e` |
 | **P1-6** | CI enforcement, renderer tests, pin-test alignment | `quality.yml`, `tests/*` | S | None | done | `fdf454e`, `6da0ef8`, `755f9c7` |
-| **P2-1** | Chart palette accessibility | `support_generate_visuals.py` | S | None | folded into P1-1 | — |
+| **P2-1** | Chart palette accessibility | `support_generate_visuals.py` | S | None | done, folded into P1-1 (Okabe-Ito, regression-tested) | — |
 | **P2-2** | GitHub description/topics/social preview | manual | S | None | description done (`2930f0a`); preview upload pending | — |
 | **P2-3** | Optional data-free demo script | new script | M | None | not started | — |
 
@@ -104,12 +104,12 @@ All headline numbers match tracked outputs — no drift found:
 | D4 | Reproducibility | 15% | 7 | 8.5 | Data-free quick-look path, friendly preflight, re-render without DB, CI-enforced checks |
 | D5 | Code & SQL quality | 15% | 8 | 8 | Unchanged; mypy not runnable locally, so no claim of improvement |
 | D6 | Validation & testing | 10% | 7 | 9 | 109-assertion guard in CI plus seven renderer tests, mutation-verified |
-| D7 | Communication of results | 10% | 6 | 7.5 | Captions, full country names, derived shares, fit-for-purpose; still three charts, palette unchanged |
+| D7 | Communication of results | 10% | 6 | 8.5 | Five charts with captions, Okabe-Ito palette (series separated from country hues), full country names, derived shares, fit-for-purpose |
 | D8 | Repo hygiene | 5% | 9 | 9 | Unchanged; `docs/audit/` still untracked |
 
-**Weighted overall = 8.65 / 10** (baseline 7.50).
+**Weighted overall = 8.75 / 10** (baseline 7.50).
 
-Target check: overall ≥8.5 met; D1 and D2 ≥9 met. The single remaining miss is **D7 = 7.5 < 8**, which P1-1 closes (projected 8.5, overall ≈8.75).
+Target check: overall ≥8.5 met; D1 and D2 ≥9 met; every dimension now ≥8, so D7 no longer misses its target.
 
 **Intentional divergence:** `docs/04` and `docs/06` keep the approved specification terms ("focal", "contextual peers", "coverage contrast") because they are owner-approved records; `docs/01` §6.7 maps them to the plain-language README terms.
 

@@ -1,6 +1,6 @@
 # Audit State
 
-- **Phase:** 3 (Verify & release) — **GATE 5**: implementation complete, final score 8.65/10; only P1-1 (charts) and release hygiene remain
+- **Phase:** 3 (Verify & release) — **GATE 5**: implementation complete, final score 8.75/10; only release hygiene remains
 - **Branch:** `audit/quality-improvement`
 - **Baseline:** `2ce13f6` (tag `audit-baseline`)
 - **Audience lens:** Market Intelligence Analyst (60-second first look)
@@ -21,7 +21,7 @@
 
 **Weighted overall: 7.50 / 10.**
 
-## Final scores (after P0 + P1-5/P1-6)
+## Final scores (after P0, P1-1, P1-5/P1-6)
 
 | # | Dimension | Weight | Score | Target |
 |---|---|---|---:|---|
@@ -31,10 +31,10 @@
 | D4 | Reproducibility | 15% | 8.5 | ≥8 |
 | D5 | Code & SQL quality | 15% | 8 | ≥8 |
 | D6 | Validation & testing | 10% | 9 | ≥8 |
-| D7 | Communication of results | 10% | 7.5 | ≥8 |
+| D7 | Communication of results | 10% | 8.5 | ≥8 |
 | D8 | Repo hygiene | 5% | 9 | ≥9 |
 
-**Weighted overall: 8.65 / 10.** Only D7 (7.5) misses its target; P1-1 closes it (≈8.75 overall).
+**Weighted overall: 8.75 / 10.** Every dimension meets its target.
 
 ## Backlog status
 
@@ -43,7 +43,7 @@
 | P0-0 | Headline-number assertion script | done | `288dcd1` |
 | P0-1 | README 60-second rewrite (static only) | done | `570dcef` |
 | P0-2 | Data-free quick-look docs + chart one-liner | done | `77868bb` |
-| P1-1 | Add 2 charts from tracked CSVs | gate — awaiting approval | — |
+| P1-1 | Add 2 charts from tracked CSVs | done | pending commit |
 | P1-2 | Chart captions + move chart up | done | `c5b275e` |
 | P1-3 | Friendly preflight guard in run_all.py | done | `fa41464` |
 | P1-4 | Plain-language glossary box | done | `570dcef` |
@@ -51,7 +51,7 @@
 | P1-5b | README static rewrite + docs/01, 02, 09, 10 + static-string guard | done | `bd7dbfa`, `e9633da`, `5d2977a` |
 | P1-5c | docs/07 static, docs/08, docs/99, docs/00 | done | `2930f0a` |
 | P1-6 | CI runs script 18; renderer tests; pin-test fix; generated role terminology | done | `fdf454e`, `e4aab0e`, `6da0ef8`, `755f9c7` |
-| P2-1 | Chart palette accessibility | folded into P1-1 | — |
+| P2-1 | Chart palette accessibility | done, folded into P1-1 | — |
 | P2-2 | GitHub metadata (manual) | description done; preview upload pending | `2930f0a` |
 | P2-3 | Optional data-free demo script | not started | — |
 
@@ -68,11 +68,19 @@
 - Final verification: docs-consistency PASS; `18_check_headline_numbers.py` = 109 assertions OK; `ruff check scripts` + `ruff format --check scripts` clean; README = 142 lines (≤150).
 - Method-quality wording verified against `category_mapping_semantic_audit_summary.csv` (150 records, 130 pairs, 97/16/8/9, 61 exact-set) and `category_mapping_online_evidence_audit.csv` (48 rows, 30 supported, 18 partial).
 
+## Verification notes (P1-1, this session)
+- `scripts/support_generate_visuals.py` now emits five charts: the two existing ones plus `largest_category_group.png` (largest candidate-derived group per country, share of all country rows) and `brand_mapping_gap.png` (raw brand text vs exact-approved mapping). Both read only tracked CSVs already used by the other charts.
+- Palette: countries use an Okabe-Ito subset (`#009E73`, `#56B4E9`, `#E69F00`, `#CC79A7`, `#D55E00`); the two-series charts use `#0072B2` (broad) and `#999999` (strict), deliberately disjoint from the country hues so a colour never means two different things across charts. The low-contrast teal pair (`#0B6E69`/`#72B7B2`) is gone.
+- New `tests/test_generated_visuals.py` (5 tests): all five PNGs written, valid PNG signature, >5 KB; palette distinctness regression guard; chart follows the largest-share CSV row (mutation-verified); `KeyError` when `group_source_rows` or the `Brand text` metric is missing.
+- README: figures renumbered 1–5 with captions (146 lines, ≤150); `docs/09` now says "five static charts".
+- Images regenerated from tracked CSVs only; no headline number changed; `data_readiness_scorecard.png` byte-identical (no code change in that function).
+
 ## Gate
-- **Current:** GATE 5 — implementation complete. Final verification: `pytest` 36 passed; `ruff check`/`ruff format --check` clean (45 files); `sqlfluff` clean; docs-consistency PASS; script 18 = 109 assertions OK; README = 142 lines (≤150).
-- **Remaining (each needs a decision):** P1-1 (2 new charts + accessible palette; requires running `support_generate_visuals.py` and regenerating PNGs), P2-2 social-preview upload (manual, GitHub Settings), release hygiene (PR `audit/quality-improvement` → `main`, tag `v1.1`, update release notes), and local venv sync (`mypy`, `pytest-cov`, `pre-commit` are in `requirements-dev.txt` but absent from the local audit venv; CI is authoritative for those steps).
+- **Current:** GATE 5 — implementation complete, final score 8.75/10. P1-1 verified: `pytest` (41 tests) green, `ruff`/`sqlfluff` clean, docs-consistency PASS, script 18 OK, README = 150 lines (at the limit).
+- **Remaining (each needs a decision):** P2-2 social-preview upload (manual, GitHub Settings), release hygiene (PR `audit/quality-improvement` → `main`, tag `v1.1`, update release notes), and local venv sync (`mypy`, `pytest-cov`, `pre-commit` are in `requirements-dev.txt` but absent from the local audit venv; CI is authoritative for those steps).
+- **Presentation limit:** README is exactly at the 150-line gate (`support_check_docs_consistency.py` fails above 150). Further additions must be offset by trimming prose, not by removing figures or captions.
 - **Known intentional divergence:** `docs/04` and `docs/06` keep the original spec terms ("focal", "contextual peers", "coverage contrast") because they are approved records; `docs/01` §6.7 maps them to the plain-language README terms.
-- **Coverage note:** renderer logic is now covered by `tests/test_generated_report_rendering.py`; a mutation check confirmed the derived-share test fails if the denominator switches from all records to tagged records.
+- **Coverage note:** renderer logic is covered by `tests/test_generated_report_rendering.py` and chart generation by `tests/test_generated_visuals.py`; mutation checks confirmed the derived-share test fails when the denominator switches to tagged records, and the largest-group test fails when the plotted CSV row changes.
 
 ## Decisions
 - 1A — target role: Market Intelligence Analyst.
@@ -83,6 +91,5 @@
 - Phase 1 focus: D1, D4, D7 (brief on strong dimensions).
 
 ## Open questions
-- P1-1 chart regeneration requires running a non-allowlisted script (`support_generate_visuals.py`) — awaiting approval.
 - Release hygiene (push/PR/tag) requires explicit user request; not performed in this audit.
 - Should `docs/audit/` stay tracked in the repository, or be excluded? Currently tracked (`3d2f78f` added the report).

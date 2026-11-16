@@ -62,6 +62,10 @@ An evidence-based comparison of product records and data coverage in a pinned Op
 
 *Figure 2 — Candidate-derived vs approved-only assignment coverage among category-tagged records.*
 
+![Largest candidate-derived reporting group by country](docs/img/largest_category_group.png)
+
+*Figure 3 — Largest candidate-derived reporting group per country, as a share of all country records. Labels use the fixed reporting-group framework; groups can overlap, so these shares are not additive.*
+
 ### Field readiness
 
 Percentages are records with a non-empty field or valid value, using the definitions in [the reproduction guide](docs/09_reproduction.md). Numeric nutrition and valid A–E Nutri-Score are separate measures.
@@ -78,7 +82,11 @@ Percentages are records with a non-empty field or valid value, using the definit
 
 ![Data-readiness scorecard](docs/img/data_readiness_scorecard.png)
 
-*Figure 3 — Field readiness: the share of records with a usable value for each field. Exact-approved brand mapping is far narrower than brand-text presence.*
+*Figure 4 — Field readiness: the share of records with a usable value for each field. Exact-approved brand mapping is far narrower than brand-text presence.*
+
+![Brand text versus exact-approved brand mapping](docs/img/brand_mapping_gap.png)
+
+*Figure 5 — Raw brand text is common while exact-approved brand mapping stays rare. The two are different measures and must not be read as one.*
 
 ## Business lens
 
