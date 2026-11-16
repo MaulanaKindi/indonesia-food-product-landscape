@@ -1,3 +1,6 @@
+mypy==2.4.1
+pre-commit==4.7.0
 pytest==8.4.2
+pytest-cov==7.1.0
 ruff==0.14.3
 sqlfluff==3.4.2

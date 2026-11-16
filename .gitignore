@@ -5,6 +5,10 @@ __pycache__/
 /.pytest_cache/
 /.pytest-audit-*/
 /.ruff_cache/
+/.mypy_cache/
+/.coverage
+/.coverage.*
+/htmlcov/
 data/raw/food.parquet
 data/raw/*
 !data/raw/.gitkeep

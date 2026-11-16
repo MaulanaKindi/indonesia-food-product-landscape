@@ -3,7 +3,6 @@
 import json
 from pathlib import Path
 
-
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 MANIFEST_FILE = PROJECT_ROOT / "data" / "reference" / "pinned_sources.json"
 MANIFEST = json.loads(MANIFEST_FILE.read_text(encoding="utf-8"))

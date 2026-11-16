@@ -13,7 +13,7 @@ def build_crosswalk_artifacts(
     category_profile: pd.DataFrame,
     framework: pd.DataFrame,
     group_labels: dict[str, str],
-    manual_group_evidence_counts: dict[str, int],
+    manual_group_evidence_counts: dict[tuple[str, str], int],
 ) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, int]:
     parents_by_tag = {
         tag: taxonomy_entry.get("parents", [])
@@ -110,7 +110,7 @@ def build_crosswalk_artifacts(
         elif taxonomy_entry is None:
             taxonomy_match_status = "not_found_in_pinned_taxonomy"
             name_en = ""
-            parent_tags: list[str] = []
+            parent_tags = []
             multiple_parent_paths = False
             minimum_depth = None
             maximum_depth = None

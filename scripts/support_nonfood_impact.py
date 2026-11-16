@@ -2,7 +2,6 @@
 
 import duckdb
 import pandas as pd
-
 from support_nonfood_config import (
     COUNTRY_PROFILE_FILE,
     ISO_REFERENCE_FILE,
@@ -172,6 +171,7 @@ def signal_validation(connection: duckdb.DuckDBPyConnection) -> pd.DataFrame:
                 """
                 params = [group]
             metrics = connection.execute(query, params).fetchone()
+            assert metrics is not None
             denominator = int(metrics[0])
             output.append(
                 {
@@ -377,10 +377,9 @@ def sensitivity_impact(connection: duckdb.DuckDBPyConnection) -> pd.DataFrame:
 
 
 def country_exists(connection: duckdb.DuckDBPyConnection, iso: str) -> bool:
-    return (
-        connection.execute(
-            "SELECT COUNT(*) FROM country_record_assignments WHERE iso_alpha2 = ?",
-            [iso],
-        ).fetchone()[0]
-        > 0
-    )
+    row = connection.execute(
+        "SELECT COUNT(*) FROM country_record_assignments WHERE iso_alpha2 = ?",
+        [iso],
+    ).fetchone()
+    assert row is not None
+    return row[0] > 0

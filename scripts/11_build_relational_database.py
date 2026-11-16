@@ -9,18 +9,19 @@ from pathlib import Path
 from typing import Any
 
 import pandas as pd
-
+from support_duckdb_runtime import connect_duckdb
 from support_pinned_inputs import (
     SNAPSHOT_COLUMN_COUNT,
     SNAPSHOT_FILE,
     SNAPSHOT_ROW_COUNT,
     SNAPSHOT_SHA256,
     SNAPSHOT_SIZE_BYTES,
-    TAXONOMY_FILE as PINNED_TAXONOMY_FILE,
     TAXONOMY_RETRIEVED_ON,
     TAXONOMY_SHA256,
 )
-from support_duckdb_runtime import connect_duckdb
+from support_pinned_inputs import (
+    TAXONOMY_FILE as PINNED_TAXONOMY_FILE,
+)
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 PARQUET_FILE = SNAPSHOT_FILE

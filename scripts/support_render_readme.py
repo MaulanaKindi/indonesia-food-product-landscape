@@ -1,7 +1,6 @@
 """Render generated README metrics and comparison tables."""
 
 import pandas as pd
-
 from support_report_common import (
     COUNTRIES,
     COUNTRY_ROLES,

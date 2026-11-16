@@ -3,7 +3,7 @@ import json
 
 import duckdb
 import pandas as pd
-
+from support_duckdb_runtime import connect_duckdb
 from support_nonfood_config import (
     COUNTRY_MAPPING_FILE,
     COUNTRY_PROFILE_FILE,
@@ -20,8 +20,8 @@ from support_nonfood_config import (
 )
 from support_nonfood_impact import (
     country_impact,
-    signal_validation,
     sensitivity_impact,
+    signal_validation,
 )
 from support_nonfood_review import (
     contradictions,
@@ -35,8 +35,6 @@ from support_nonfood_scope import (
     tag_inventory,
     taxonomy_check,
 )
-from support_duckdb_runtime import connect_duckdb
-
 
 CLASS_A_TAGS = [
     "en:non-food-products",
@@ -87,9 +85,11 @@ def validate_inputs() -> tuple[list[dict[str, str]], dict]:
             "DESCRIBE SELECT * FROM read_parquet(?)", [str(DATA_FILE)]
         ).fetchall()
         actual_columns = len(parquet_profile)
-        actual_rows = connection.execute(
+        actual_row = connection.execute(
             "SELECT COUNT(*) FROM read_parquet(?)", [str(DATA_FILE)]
-        ).fetchone()[0]
+        ).fetchone()
+        assert actual_row is not None
+        actual_rows = actual_row[0]
         source_columns = {row[0] for row in parquet_profile}
     finally:
         connection.close()
@@ -277,13 +277,15 @@ def create_tables(
         """,
         [CLASS_C_PATTERN, CLASS_C_PATTERN],
     )
-    cigarette_russe_match = connection.execute(
+    cigarette_russe_row = connection.execute(
         """
         SELECT COUNT(*)
         FROM tag_evidence
         WHERE tag = 'en:cigarette-russes' AND class_c_match
         """
-    ).fetchone()[0]
+    ).fetchone()
+    assert cigarette_russe_row is not None
+    cigarette_russe_match = cigarette_russe_row[0]
     if cigarette_russe_match:
         raise ValueError("C-pattern discovery must not match en:cigarette-russes.")
     connection.execute(

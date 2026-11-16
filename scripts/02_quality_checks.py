@@ -3,10 +3,7 @@ from collections import defaultdict
 from pathlib import Path
 
 import pandas as pd
-
-
 from support_duckdb_runtime import connect_duckdb
-
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DATA_FILE = PROJECT_ROOT / "data" / "raw" / "food.parquet"
@@ -145,9 +142,9 @@ def main() -> None:
             field for field in DUPLICATE_IDENTITY_FIELDS if field in differing_fields
         ]
         modified_values = [
-            record.get("last_modified_t")
+            value
             for record in records
-            if record.get("last_modified_t") is not None
+            if (value := record.get("last_modified_t")) is not None
         ]
         unique_latest_modified = (
             bool(modified_values) and modified_values.count(max(modified_values)) == 1

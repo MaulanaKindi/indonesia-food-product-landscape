@@ -1,7 +1,6 @@
 """Render generated findings and audit sections in the Stage 7 report."""
 
 import pandas as pd
-
 from support_report_common import (
     COUNTRIES,
     COUNTRY_ROLES,
@@ -499,7 +498,7 @@ def _render_semantic_audit_section(
         incorrect,
         ambiguous,
         insufficient,
-        determinate,
+        _determinate,
         ci_low,
         ci_high,
     ) in provenance_rows:

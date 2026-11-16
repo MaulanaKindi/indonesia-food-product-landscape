@@ -63,7 +63,9 @@ def linearized_ratio_ci(
     denominator_mean = denominator_total / sample_size
     residuals = [
         numerator - estimate * denominator
-        for numerator, denominator in zip(numerator_counts, denominator_counts)
+        for numerator, denominator in zip(
+            numerator_counts, denominator_counts, strict=True
+        )
     ]
     residual_mean = sum(residuals) / sample_size
     residual_variance = sum(
@@ -118,8 +120,8 @@ def metric_rates(
     manual_overlap_counts = []
     manual_overlap_correct_counts = []
     manual_overlap_determinate_counts = []
-    taxonomy_only_statuses = []
-    manual_overlap_statuses = []
+    taxonomy_only_statuses: list[str] = []
+    manual_overlap_statuses: list[str] = []
     target_meat_pair_count = 0
     missing_supported_group_pairs = 0
     records_with_missing_supported_groups = 0
@@ -246,7 +248,9 @@ def metric_rates(
     exact_determinate_rate = (
         sum(
             is_exact and is_determinate
-            for is_exact, is_determinate in zip(exact_matches, determinate_exact)
+            for is_exact, is_determinate in zip(
+                exact_matches, determinate_exact, strict=True
+            )
         )
         / determinate_record_count
         if determinate_record_count

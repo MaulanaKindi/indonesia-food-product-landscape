@@ -16,7 +16,7 @@ def connect_duckdb(
     read_only: bool = False,
 ) -> duckdb.DuckDBPyConnection:
     """Open DuckDB with bounded memory and spill files on the project data drive."""
-    config = {
+    config: dict[str, str | bool | int | float | list[str]] = {
         "temp_directory": str(DUCKDB_TEMP_DIRECTORY.resolve()),
         "memory_limit": DUCKDB_MEMORY_LIMIT,
         "max_temp_directory_size": DUCKDB_MAX_TEMP_DIRECTORY_SIZE,

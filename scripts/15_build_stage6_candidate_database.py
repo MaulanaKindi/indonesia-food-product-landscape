@@ -6,9 +6,8 @@ import tempfile
 from pathlib import Path
 
 import pandas as pd
-
-from support_pinned_inputs import SNAPSHOT_SHA256, SNAPSHOT_SIZE_BYTES
 from support_duckdb_runtime import connect_duckdb
+from support_pinned_inputs import SNAPSHOT_SHA256, SNAPSHOT_SIZE_BYTES
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 SOURCE_FILE = PROJECT_ROOT / "data" / "raw" / "food.parquet"
@@ -102,16 +101,22 @@ def build_candidate(
         connection.execute(f"ATTACH '{escaped_baseline}' AS baseline (READ_ONLY)")
         connection.register("current_crosswalk", crosswalk)
         connection.register("current_brand_mapping", brand_mapping)
-        expected_source_rows = connection.execute(
+        source_count_row = connection.execute(
             "SELECT COUNT(*) FROM baseline.source_product_record"
-        ).fetchone()[0]
-        expected_country_rows = connection.execute(
+        ).fetchone()
+        assert source_count_row is not None
+        expected_source_rows = source_count_row[0]
+        country_count_row = connection.execute(
             "SELECT COUNT(*) FROM baseline.record_country"
-        ).fetchone()[0]
-        expected_category_links = connection.execute(
+        ).fetchone()
+        assert country_count_row is not None
+        expected_country_rows = country_count_row[0]
+        category_count_row = connection.execute(
             "SELECT COUNT(*) FROM baseline.record_category_tag"
-        ).fetchone()[0]
-        expected_present_brand_mapping_values = connection.execute(
+        ).fetchone()
+        assert category_count_row is not None
+        expected_category_links = category_count_row[0]
+        brand_mapping_row = connection.execute(
             """
             SELECT COUNT(*)
             FROM current_brand_mapping AS mapping
@@ -121,7 +126,9 @@ def build_candidate(
                 WHERE source.source_brand_name = mapping.source_brand_name
             )
             """
-        ).fetchone()[0]
+        ).fetchone()
+        assert brand_mapping_row is not None
+        expected_present_brand_mapping_values = brand_mapping_row[0]
 
         connection.execute(
             """
@@ -497,12 +504,16 @@ def main() -> None:
     validate_build_report(args.baseline_validation)
 
     with connect_duckdb(str(baseline_database), read_only=True) as baseline:
-        snapshot_id = baseline.execute(
+        snapshot_row = baseline.execute(
             "SELECT snapshot_id FROM data_snapshot"
-        ).fetchone()[0]
-        source_rows = baseline.execute(
+        ).fetchone()
+        assert snapshot_row is not None
+        snapshot_id = snapshot_row[0]
+        source_count_row = baseline.execute(
             "SELECT COUNT(*) FROM source_product_record"
-        ).fetchone()[0]
+        ).fetchone()
+        assert source_count_row is not None
+        source_rows = source_count_row[0]
         country_codes = tuple(
             row[0]
             for row in baseline.execute(
@@ -535,9 +546,11 @@ def main() -> None:
                 "Selected-scope build report does not reconcile to the baseline "
                 f"database row count ({source_rows})."
             )
-        country_link_count = baseline.execute(
+        country_link_row = baseline.execute(
             "SELECT COUNT(*) FROM record_country_source_tag"
-        ).fetchone()[0]
+        ).fetchone()
+        assert country_link_row is not None
+        country_link_count = country_link_row[0]
 
     crosswalk = pd.read_csv(
         CROSSWALK_FILE,
@@ -582,7 +595,7 @@ def main() -> None:
         )
     manual_crosswalk_groups = manual_tags["manual_reporting_group_id"].to_dict()
     manual_input_groups = dict(
-        zip(manual["source_category_tag"], manual["reporting_group_id"])
+        zip(manual["source_category_tag"], manual["reporting_group_id"], strict=True)
     )
     if manual_crosswalk_groups != manual_input_groups:
         raise ValueError("Manual decisions and crosswalk selected groups disagree.")

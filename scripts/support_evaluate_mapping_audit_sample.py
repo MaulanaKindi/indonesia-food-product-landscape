@@ -6,7 +6,6 @@ from pathlib import Path
 from typing import Any
 
 import duckdb
-
 from support_audit_group_metrics import build_group_metrics, round_metrics
 from support_audit_statistics import (
     CI_DESCRIPTION,
@@ -15,12 +14,13 @@ from support_audit_statistics import (
     PRIMARY_SAMPLE,
     assignment_status,
     exact_set_status,
-    linearized_ratio_ci as linearized_ratio_ci,
     metric_rates,
 )
-
-from support_pinned_inputs import SNAPSHOT_SHA256
+from support_audit_statistics import (
+    linearized_ratio_ci as linearized_ratio_ci,
+)
 from support_duckdb_runtime import connect_duckdb
+from support_pinned_inputs import SNAPSHOT_SHA256
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DATABASE_FILE = (
@@ -166,7 +166,7 @@ def validate_sampling_frames(
     sample_ids: set[int],
     labels: dict[int, dict[str, Any]],
 ) -> int:
-    population_size = connection.execute(
+    population_row = connection.execute(
         """
         SELECT COUNT(DISTINCT record.source_record_id)
         FROM source_product_record AS record
@@ -178,7 +178,9 @@ def validate_sampling_frames(
               WHERE category.source_record_id = record.source_record_id
           )
         """
-    ).fetchone()[0]
+    ).fetchone()
+    assert population_row is not None
+    population_size = population_row[0]
     if population_size != EXPECTED_POPULATION_SIZE:
         raise ValueError(
             "The primary sample frame changed: "
@@ -272,7 +274,7 @@ def get_database_records(
         "labels_tags",
         "food_groups_tags",
     ]
-    result = {int(row[0]): dict(zip(column_names, row)) for row in rows}
+    result = {int(row[0]): dict(zip(column_names, row, strict=True)) for row in rows}
     missing = set(record_ids) - set(result)
     if missing:
         raise ValueError(f"Source product records are missing: {sorted(missing)}")
@@ -504,9 +506,11 @@ def main() -> None:
     labels = validate_labels(label_rows, valid_groups)
 
     with connect_duckdb(str(args.database), read_only=True) as connection:
-        snapshot_id = connection.execute(
+        snapshot_row = connection.execute(
             "SELECT snapshot_id FROM data_snapshot"
-        ).fetchone()[0]
+        ).fetchone()
+        assert snapshot_row is not None
+        snapshot_id = snapshot_row[0]
         if snapshot_id != EXPECTED_SNAPSHOT_SHA256:
             raise ValueError(f"Unexpected source snapshot SHA-256: {snapshot_id}")
         population_size = validate_sampling_frames(connection, sample_ids, labels)

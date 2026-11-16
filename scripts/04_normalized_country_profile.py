@@ -2,9 +2,7 @@ import csv
 import re
 from pathlib import Path
 
-
 from support_duckdb_runtime import connect_duckdb
-
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DATA_FILE = PROJECT_ROOT / "data" / "raw" / "food.parquet"
