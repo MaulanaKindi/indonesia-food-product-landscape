@@ -17,6 +17,10 @@ An evidence-based comparison of product records and data coverage in a pinned Op
 - **AI + online mapping audit:** 97/130 candidate assignments were judged correct (26 also align with exact-reviewed mappings); 16 disagreed and 17 were unresolved. Exact group-set agreement was 61/150 (40.7%). Online follow-up found supporting product evidence for 30/48 cases; 36 have a source URL and 29 match the exact product code. Targeted, non-random, and not human ground truth; [AI audit](outputs/quality/category_mapping_semantic_audit_records.csv) · [online evidence](outputs/quality/category_mapping_online_evidence_audit.csv).
 <!-- AUTO-GENERATED: headline-metrics:END -->
 
+![Category-tag coverage by country](docs/img/category_coverage.png)
+
+*Figure 1 — Category-tag coverage by country. Bars show the share of records with at least one category tag; higher means more completely tagged, not a bigger market.*
+
 ### Country comparison
 
 “Assigned” means a record has at least one substantive reporting-group assignment. Groups can overlap. Candidate-derived mappings are not all approved.
@@ -41,9 +45,9 @@ An evidence-based comparison of product records and data coverage in a pinned Op
 | Exact-approved brand mapping | Raw brand text matched to a brand whose mapping is marked approved. Much narrower than having brand text. |
 | Coverage contrast | Thailand is included because its category-tag coverage is far higher (62.6%), to show what well-tagged data looks like. It is not an equivalent market peer. |
 
-![Category-tag coverage by country](docs/img/category_coverage.png)
-
 ![Candidate-derived and approved-only assignment coverage](docs/img/category_assignment_coverage.png)
+
+*Figure 2 — Candidate-derived vs approved-only assignment coverage among category-tagged records.*
 
 ### Field readiness
 
@@ -60,6 +64,8 @@ Percentages are records with a non-empty field or valid value, using the definit
 <!-- AUTO-GENERATED: readiness-scorecard:END -->
 
 ![Data-readiness scorecard](docs/img/data_readiness_scorecard.png)
+
+*Figure 3 — Field readiness: the share of records with a usable value for each field. Exact-approved brand mapping is far narrower than brand-text presence.*
 
 ## Five findings
 
