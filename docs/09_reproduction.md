@@ -2,6 +2,17 @@
 
 This guide rebuilds the canonical five-country analysis from the pinned Open Food Facts snapshot. It does not require the optional full-country database.
 
+## Quick look without the 8 GB download
+
+You do not need the source snapshot, DuckDB, or network access to inspect the published results. Every number and chart in the README is committed to the repository and can be verified or regenerated from a clean clone with only the Python dependencies:
+
+```powershell
+.\.venv\Scripts\python.exe .\scripts\support_generate_visuals.py
+.\.venv\Scripts\python.exe .\scripts\18_check_headline_numbers.py
+```
+
+The first command rebuilds the three static charts under `docs/img/` from tracked CSVs (`outputs/analysis/stage6_country_scope.csv`, `stage6_country_category.csv`, and `outputs/profiling/data_readiness_scorecard.csv`). The second is a read-only guard that asserts every headline number in this guide and the README against those same tracked CSVs; it fails loudly if a number drifts. On macOS or Linux, replace the Windows virtual-environment Python path with `.venv/bin/python`.
+
 ## Requirements
 
 - Python 3.13
@@ -117,9 +128,10 @@ ruff check scripts tests
 ruff format --check scripts tests
 sqlfluff lint sql/02_validate_relational_database.sql sql/05_validate_five_country_database.sql --dialect duckdb --rules CP01
 python scripts/support_check_docs_consistency.py
+python scripts/18_check_headline_numbers.py
 ```
 
-The documentation checker verifies local Markdown links, recomputes generated README and Stage 7 sections from tracked CSV outputs, and fails if a link or generated value drifts. The GitHub Actions workflow runs tests, Ruff lint and formatting checks across all Python scripts and tests, SQLFluff on standalone DuckDB validation SQL, and this consistency check on pushes and pull requests.
+The documentation checker verifies local Markdown links, recomputes generated README and Stage 7 sections from tracked CSV outputs, and fails if a link or generated value drifts. The headline-number checker re-asserts every published headline number against the tracked CSVs without running the pipeline. The GitHub Actions workflow runs tests, Ruff lint and formatting checks across all Python scripts and tests, SQLFluff on standalone DuckDB validation SQL, and this consistency check on pushes and pull requests.
 
 ## Outputs and attribution
 

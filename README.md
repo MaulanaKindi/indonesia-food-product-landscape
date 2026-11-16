@@ -95,7 +95,7 @@ flowchart LR
     F --> G[Generated README and findings]
 ```
 
-Three example questions the database can answer:
+Two example questions the database can answer:
 
 ```sql
 -- How many country records have category tags?
@@ -126,32 +126,6 @@ GROUP BY country.iso_alpha2
 ORDER BY country.iso_alpha2;
 ```
 
-```sql
--- Compare candidate-derived and approved-only tagged-record assignment.
-SELECT country.iso_alpha2,
-       COUNT(DISTINCT category.source_record_id)
-           FILTER (
-               WHERE candidate.candidate_role IN (
-                   'single_group_candidate',
-                   'manual_group_assignment'
-               )
-               AND candidate.comparison_role = 'primary_candidate'
-               AND candidate.reporting_group_id <> 'other_unclassified'
-           )
-           AS candidate_assigned_records,
-       COUNT(DISTINCT category.source_record_id)
-           FILTER (WHERE decision.selected_group_id IS NOT NULL)
-           AS approved_only_assigned_records
-FROM record_country AS country
-JOIN record_category_tag AS category USING (source_record_id)
-LEFT JOIN category_tag_group_candidate AS candidate
-    USING (source_category_tag)
-LEFT JOIN category_tag_group_decision AS decision
-    USING (source_category_tag)
-GROUP BY country.iso_alpha2
-ORDER BY country.iso_alpha2;
-```
-
 ## Scope and limitations
 
 - Open Food Facts is collaborative, not a census or proof of country availability; it has no sales, revenue, market-share, or demand measures. Candidate assignments are exploratory, and approved-only assignments are narrower.
@@ -162,6 +136,7 @@ ORDER BY country.iso_alpha2;
 
 ## Reproduce and inspect
 
+- **Just looking?** Every chart and headline number on this page is committed to the repo and can be regenerated and verified without the 8 GB download — see the [quick-look section](docs/09_reproduction.md#quick-look-without-the-8-gb-download).
 - [Repository architecture](docs/00_repository_architecture.md): directory roles, source-of-truth rules, and pipeline ownership.
 - [Reproduction guide](docs/09_reproduction.md): workflow, requirements, definitions, and SQL; [claim lineage](docs/10_claim_lineage.md): trace from key claims to inputs, transformations, outputs, and checks; [Stage 7 findings](docs/07_stage7_findings_and_recommendations.md): generated results and caveats.
 - [Business brief](docs/01_business_brief.md), [data source and licensing](docs/02_data_source.md), [GitHub metadata and v1.0 publication record](docs/08_github_release_metadata.md), and the prepared [social preview](docs/img/social_preview.png).
