@@ -53,9 +53,9 @@ def render_readme(
             (
                 f"- **Category coverage:** {float(indonesia['category_tags_coverage_pct']):.1f}% "
                 f"of Indonesian records are tagged, versus {min(peers):.1f}%–"
-                f"{max(peers):.1f}% in the contextual peers and "
+                f"{max(peers):.1f}% in the comparison countries and "
                 f"{float(scope_baseline.loc['TH', 'category_tags_coverage_pct']):.1f}% "
-                "in Thailand, the separate coverage contrast."
+                "in Thailand, the high-coverage contrast."
             ),
             (
                 f"- **Category assignments in Indonesia:** "

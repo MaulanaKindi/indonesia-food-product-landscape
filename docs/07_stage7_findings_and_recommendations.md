@@ -2,7 +2,7 @@
 
 ## Status and scope
 
-This is the bounded descriptive interpretation of the validated Stage 6 outputs for source snapshot SHA-256 `DA39B2C5AAF1F85B2E637B904B5FC3A29780DD7E184254F4B660CFE0CD84999A`. Scope: Indonesia (ID, focal), Malaysia (MY), Philippines (PH), and Singapore (SG) as contextual peers, plus Thailand (TH) as a category-coverage contrast.
+This is the bounded descriptive interpretation of the validated Stage 6 outputs for source snapshot SHA-256 `DA39B2C5AAF1F85B2E637B904B5FC3A29780DD7E184254F4B660CFE0CD84999A`. Scope: Indonesia (ID) as the study country; Malaysia (MY), the Philippines (PH), and Singapore (SG) as comparison countries; and Thailand (TH) as a high-coverage contrast. Country codes are ISO 3166-1 alpha-2; the widest diagnostic tables keep ISO codes so they stay readable.
 
 <!-- AUTO-GENERATED: analysis-status:START -->
 Stage 6 was rerun against the separately validated five-country candidate database after the approved category mappings were applied. It generated 15 country-scenario rows, 300 country-category rows, and 159 mapped-brand assignment rows. The candidate build passed 15 checks and all 11 Stage 6 checks passed; the four published CSVs are byte-identical to the validated candidate run. These checks establish the tested reconciliations and arithmetic for the pinned inputs; they do not prove all mappings semantically correct or the data representative.
@@ -13,7 +13,7 @@ Stage 6 was rerun against the separately validated five-country candidate databa
 **Bottom line:** The snapshot supports a descriptive comparison of Open Food Facts records and category-tag coverage—not a comparison of the actual food markets.
 
 <!-- AUTO-GENERATED: executive-summary:START -->
-- **Recorded category coverage:** Indonesia has 12.2% tagged records; the contextual peers range from 11.3% to 17.3%, while Thailand is 62.6%.
+- **Recorded category coverage:** Indonesia has 12.2% tagged records; the comparison countries range from 11.3% to 17.3%, while Thailand is 62.6% (the high-coverage contrast).
 - **Category assignments in Indonesia:** 788 of 1,111 tagged records (70.9%) are assigned in the candidate-derived view; the approved-only view assigns 113 (10.2%).
 - **Brand and field readiness:** raw brand text is present for 38.8% of Indonesian records, but exact-approved brand mappings cover 0.34%; numeric nutrition data is present for 31.0%.
 - **Contributor concentration:** the top five creators account for 87.5% of Indonesian records; across the selected countries the range is 81.7%–87.5%. This is a record-concentration diagnostic, not proof of data fragility.
@@ -270,7 +270,7 @@ Record-level annotations, product evidence, source URLs, and generated metrics: 
 
 ## Recommendations
 
-1. Use the record-based country totals and clearly labeled category assignment tables as descriptive evidence only. Keep ID focal, MY/PH/SG contextual, and TH as the coverage contrast.
+1. Use the record-based country totals and clearly labeled category assignment tables as descriptive evidence only. Keep Indonesia (ID) as the study country, Malaysia (MY)/Philippines (PH)/Singapore (SG) as comparison countries, and Thailand (TH) as the high-coverage contrast.
 2. Show category-tag coverage and both assignment bases alongside every category interpretation. Use the online evidence log to prioritize specific disputed records; do not change broad mapping rules from targeted AI or web checks alone.
 3. Keep the exact-approved brand results as a coverage diagnostic only. Do not calculate HHI or broad brand concentration from this mapping subset.
 4. Preserve all three non-food scenarios. Do not replace the baseline with an exclusion scenario.
@@ -282,7 +282,7 @@ Record-level annotations, product evidence, source URLs, and generated metrics: 
 
 - The source is a collaboratively maintained database, not a census of products sold.
 - The source is not representative of products sold and contains no sales or demand measures.
-- Category coverage is low in the focal unit and varies substantially across countries.
+- Category coverage is low in the study country and varies substantially across countries.
 - Candidate-derived assignments are not all covered by explicit approved decisions; approved-only assignments cover far fewer rows.
 - Semantic audit labels are AI-assisted sample judgments, not human ground truth; ambiguous and insufficient-evidence cases remain visible.
 - Group assignments overlap, and unassigned category-tagged rows are not disposition-level explanations.

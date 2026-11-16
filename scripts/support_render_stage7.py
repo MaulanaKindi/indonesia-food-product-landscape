@@ -65,10 +65,11 @@ def _render_core_sections(
             (
                 f"- **Recorded category coverage:** Indonesia has "
                 f"{float(id_row['category_tags_coverage_pct']):.1f}% tagged "
-                f"records; the contextual peers range from "
+                f"records; the comparison countries range from "
                 f"{min(float(scope_baseline.loc[iso, 'category_tags_coverage_pct']) for iso in ('MY', 'PH', 'SG')):.1f}% "
                 f"to {max(float(scope_baseline.loc[iso, 'category_tags_coverage_pct']) for iso in ('MY', 'PH', 'SG')):.1f}%, "
-                f"while Thailand is {float(scope_baseline.loc['TH', 'category_tags_coverage_pct']):.1f}%."
+                f"while Thailand is {float(scope_baseline.loc['TH', 'category_tags_coverage_pct']):.1f}% "
+                "(the high-coverage contrast)."
             ),
             (
                 f"- **Category assignments in Indonesia:** "

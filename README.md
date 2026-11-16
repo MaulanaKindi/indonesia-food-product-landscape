@@ -20,7 +20,7 @@ An evidence-based comparison of product records and data coverage in a pinned Op
 **Question:** In one fixed Open Food Facts snapshot, how much product data exists for Indonesia versus four comparison countries, and how completely is it described? This is a data-coverage study, not a market-size estimate.
 
 <!-- AUTO-GENERATED: headline-metrics:START -->
-- **Category coverage:** 12.2% of Indonesian records are tagged, versus 11.3%–17.3% in the contextual peers and 62.6% in Thailand, the separate coverage contrast.
+- **Category coverage:** 12.2% of Indonesian records are tagged, versus 11.3%–17.3% in the comparison countries and 62.6% in Thailand, the high-coverage contrast.
 - **Category assignments in Indonesia:** 788 of 1,111 tagged records (70.9%) receive at least one candidate-derived group; 113 (10.2%) do under the stricter approved-only view.
 - **Brand evidence:** raw brand text is present for 38.8% of Indonesian records, while exact-approved mapping covers only 0.34%.
 - **AI + online mapping audit:** 97/130 candidate assignments were judged correct on a targeted, non-random sample; this is a diagnostic, not human ground truth (details in Method quality and the Stage 7 findings).
