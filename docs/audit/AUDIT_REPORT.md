@@ -82,7 +82,7 @@ All headline numbers match tracked outputs — no drift found:
 | **P0-0** | Read-only headline-number assertion script | `scripts/18_check_headline_numbers.py` | S | None | done | `288dcd1` |
 | **P0-1** | README 60-second rewrite (static sections) | `README.md` | M | None | done | `570dcef`, `bd7dbfa`, `07bb5fe` |
 | **P0-2** | Data-free quick-look docs + chart one-liner | `README.md`, `docs/09_reproduction.md` | S | None | done | `77868bb` |
-| **P1-1** | Add 2 charts from tracked CSVs + accessible palette | `support_generate_visuals.py`, `docs/img/*.png` | M | None | done | pending commit |
+| **P1-1** | Add 2 charts from tracked CSVs + accessible palette | `support_generate_visuals.py`, `docs/img/*.png`, `tests/test_generated_visuals.py` | M | None | done | `8ad05ff` |
 | **P1-2** | Chart captions + move one chart near top | `README.md` | S | None | done | `c5b275e` |
 | **P1-3** | Friendly preflight guard when the snapshot is missing | `scripts/run_all.py` | S | Low | done | `fa41464` |
 | **P1-4** | Plain-language glossary box | `README.md` | S | None | done | `570dcef` |

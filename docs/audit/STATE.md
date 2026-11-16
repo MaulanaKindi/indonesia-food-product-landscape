@@ -43,7 +43,7 @@
 | P0-0 | Headline-number assertion script | done | `288dcd1` |
 | P0-1 | README 60-second rewrite (static only) | done | `570dcef` |
 | P0-2 | Data-free quick-look docs + chart one-liner | done | `77868bb` |
-| P1-1 | Add 2 charts from tracked CSVs | done | pending commit |
+| P1-1 | Add 2 charts from tracked CSVs | done | `8ad05ff` |
 | P1-2 | Chart captions + move chart up | done | `c5b275e` |
 | P1-3 | Friendly preflight guard in run_all.py | done | `fa41464` |
 | P1-4 | Plain-language glossary box | done | `570dcef` |
