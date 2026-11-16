@@ -17,7 +17,7 @@ An evidence-based comparison of product records and data coverage in a pinned Op
 
 ## TL;DR
 
-**Question:** In one fixed Open Food Facts snapshot, how much product data exists for Indonesia versus four comparison countries, and how completely is it described? This is a data-coverage study, not a market-size estimate.
+**Question:** In one fixed Open Food Facts snapshot, how much product data exists for Indonesia versus four comparison countries, and how completely is it described?
 
 <!-- AUTO-GENERATED: headline-metrics:START -->
 - **Category coverage:** 12.2% of Indonesian records are tagged, versus 11.3%–17.3% in the comparison countries and 62.6% in Thailand, the high-coverage contrast.
@@ -92,7 +92,7 @@ A thinking framework for reading this study, not a result of it:
 
 | Use case | Suitable? | Reason (from tracked outputs) |
 |---|---|---|
-| Audit which product fields are populated, per field | Yes | Field-readiness scorecard per country (for example, Indonesia (ID) category tags 12.2%, brand text 38.8%). |
+| Audit which product fields are populated | Yes | Field-readiness scorecard per country (for example, Indonesia (ID) category tags 12.2%, brand text 38.8%). |
 | Compare recorded category coverage across the five countries | Yes, descriptively | Country comparison table above, baseline scenario. |
 | Classify Indonesian records into reporting groups | Limited | Candidate-derived assignments cover 788/9,118 records (8.64% of all records; 70.9% of tagged records); approved-only covers 113 (1.24%; 10.2%). |
 | Estimate market size, sales, demand, or market share | No | The source has no sales or demand fields and is not a census. |
@@ -100,7 +100,7 @@ A thinking framework for reading this study, not a result of it:
 
 ## Five findings
 
-1. **Coverage is uneven.** Indonesia's category-tag coverage is similar to the comparison countries and well below Thailand. Thailand is a high-coverage contrast, not an equivalent market peer.
+1. **Coverage is uneven.** Indonesia's category-tag coverage is close to Malaysia (MY) and below the Philippines (PH) and Singapore (SG), and well below Thailand (TH). Thailand is a high-coverage contrast, not an equivalent market peer.
 2. **Mapping choice changes the answer.** Candidate-derived assignments cover more tagged records than exact-approved assignments. Unassigned records remain visible; ambiguous tags are not forced into groups.
 3. **Readiness depends on the field.** A record with brand text or a category tag is not necessarily complete or correct. Exact-approved brand mapping is much narrower than raw brand-text availability.
 4. **Contributor and source metadata are diagnostics.** Concentration, creation-year patterns, and source-tag coverage describe the database's recorded contributions; they do not prove imports, bulk loading, or the cause of coverage differences.
