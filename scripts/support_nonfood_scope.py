@@ -2,7 +2,6 @@
 
 import duckdb
 import pandas as pd
-
 from support_nonfood_config import (
     TAXONOMY_CHECK_TAGS,
 )
@@ -137,6 +136,7 @@ def case_variant_audit(
             """,
             [reviewed_tag, reviewed_tag, reviewed_tag],
         ).fetchone()
+        assert totals is not None
         rows.append(
             {
                 "reviewed_exclusion_tag": reviewed_tag,
@@ -210,9 +210,11 @@ def class_summary(connection: duckdb.DuckDBPyConnection) -> pd.DataFrame:
         GROUP BY group_label
         """
     ).fetchdf()
-    total_rows, total_codes = connection.execute(
+    totals = connection.execute(
         "SELECT COUNT(*), COUNT(DISTINCT code) FROM record_flags"
     ).fetchone()
+    assert totals is not None
+    total_rows, total_codes = totals
     strongest_groups = (
         "A_contributor_flag",
         "B_reviewed_exclusion",

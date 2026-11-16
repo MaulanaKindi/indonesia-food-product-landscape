@@ -1,10 +1,9 @@
-import json
 import hashlib
+import json
 from functools import lru_cache
 from pathlib import Path
 
 import pandas as pd
-
 from support_pinned_inputs import TAXONOMY_FILE, TAXONOMY_SHA256
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]

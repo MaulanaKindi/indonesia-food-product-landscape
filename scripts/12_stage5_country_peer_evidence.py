@@ -4,7 +4,8 @@ import argparse
 import csv
 from pathlib import Path
 
-
+from support_duckdb_runtime import connect_duckdb
+from support_pinned_inputs import SNAPSHOT_SHA256
 from support_stage5_coverage import (
     build_country_code_overlap,
     build_food_groups_crosscheck,
@@ -14,9 +15,6 @@ from support_stage5_readiness import (
     build_contributor_diagnostics,
     build_readiness_scorecard,
 )
-
-from support_pinned_inputs import SNAPSHOT_SHA256
-from support_duckdb_runtime import connect_duckdb
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DATABASE_FILE = (
@@ -122,9 +120,11 @@ def main() -> None:
 
     connection = connect_duckdb(str(args.database), read_only=True)
     try:
-        snapshot_id = connection.execute(
+        snapshot_row = connection.execute(
             "SELECT snapshot_id FROM data_snapshot"
-        ).fetchone()[0]
+        ).fetchone()
+        assert snapshot_row is not None
+        snapshot_id = snapshot_row[0]
         if snapshot_id != EXPECTED_SNAPSHOT_SHA256:
             raise ValueError(f"Unexpected database snapshot ID: {snapshot_id}")
 

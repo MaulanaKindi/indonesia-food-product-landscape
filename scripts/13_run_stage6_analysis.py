@@ -7,9 +7,8 @@ import tempfile
 from pathlib import Path
 
 import pandas as pd
-
-from support_pinned_inputs import SNAPSHOT_SHA256
 from support_duckdb_runtime import connect_duckdb
+from support_pinned_inputs import SNAPSHOT_SHA256
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DATABASE_FILE = (
@@ -77,9 +76,11 @@ def validate_inputs(
 
     connection = connect_duckdb(str(database_file), read_only=True)
     try:
-        snapshot_id = connection.execute(
+        snapshot_row = connection.execute(
             "SELECT snapshot_id FROM data_snapshot"
-        ).fetchone()[0]
+        ).fetchone()
+        assert snapshot_row is not None
+        snapshot_id = snapshot_row[0]
     finally:
         connection.close()
     if snapshot_id != SNAPSHOT_SHA256:

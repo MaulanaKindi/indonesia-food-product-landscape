@@ -1,9 +1,9 @@
 """support nonfood review helpers."""
 
-import duckdb
-import pandas as pd
 import re
 
+import duckdb
+import pandas as pd
 from support_nonfood_config import (
     RECALL_KEYWORDS,
 )
@@ -16,13 +16,15 @@ def contradictions(connection: duckdb.DuckDBPyConnection) -> pd.DataFrame:
         AND lower(nutriscore_grade) IN ('a', 'b', 'c', 'd', 'e')
         AND ingredients_n >= 2
     """
-    total_rows, distinct_codes = connection.execute(
+    totals = connection.execute(
         f"""
         SELECT COUNT(*), COUNT(DISTINCT code)
         FROM record_flags
         WHERE {criteria}
         """
     ).fetchone()
+    assert totals is not None
+    total_rows, distinct_codes = totals
     sample = connection.execute(
         f"""
         SELECT
@@ -72,7 +74,7 @@ def recall_probe(connection: duckdb.DuckDBPyConnection) -> pd.DataFrame:
     """
     keyword_rows = []
     for keyword, pattern in RECALL_KEYWORDS.items():
-        count, distinct_codes = connection.execute(
+        totals = connection.execute(
             f"""
             SELECT COUNT(*), COUNT(DISTINCT code)
             FROM record_flags
@@ -81,6 +83,8 @@ def recall_probe(connection: duckdb.DuckDBPyConnection) -> pd.DataFrame:
             """,
             [pattern],
         ).fetchone()
+        assert totals is not None
+        count, distinct_codes = totals
         keyword_rows.append(
             {
                 "row_type": "keyword_count",

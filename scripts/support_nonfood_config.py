@@ -6,8 +6,10 @@ from pathlib import Path
 from support_pinned_inputs import (
     SNAPSHOT_COLUMN_COUNT,
     SNAPSHOT_ROW_COUNT,
-    TAXONOMY_FILE as TAXONOMY_FILE,
     TAXONOMY_SHA256,
+)
+from support_pinned_inputs import (
+    TAXONOMY_FILE as TAXONOMY_FILE,
 )
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]

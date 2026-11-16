@@ -3,7 +3,6 @@ from functools import lru_cache
 from pathlib import Path
 
 import pandas as pd
-
 from support_fetch_pinned_taxonomy import (
     validate_json_syntax,
     validate_taxonomy_structure,

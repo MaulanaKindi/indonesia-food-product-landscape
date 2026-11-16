@@ -7,14 +7,12 @@ import tempfile
 from pathlib import Path
 
 import pandas as pd
-
+from support_render_readme import render_readme
+from support_render_stage7 import render_stage7
 from support_report_common import (
     COUNTRIES,
     read_csv,
 )
-from support_render_readme import render_readme
-from support_render_stage7 import render_stage7
-
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 PROCESSED_DIR = PROJECT_ROOT / "data" / "processed"

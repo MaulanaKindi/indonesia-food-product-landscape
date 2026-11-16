@@ -10,7 +10,6 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import pandas as pd
 
-
 COUNTRIES = ("ID", "MY", "PH", "SG", "TH")
 COUNTRY_NAMES = {
     "ID": "Indonesia",

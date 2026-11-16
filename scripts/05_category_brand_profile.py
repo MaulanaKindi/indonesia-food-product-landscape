@@ -3,10 +3,7 @@ from pathlib import Path
 
 import duckdb
 import pandas as pd
-
-
 from support_duckdb_runtime import connect_duckdb
-
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DATA_FILE = PROJECT_ROOT / "data" / "raw" / "food.parquet"
@@ -165,6 +162,7 @@ def build_coverage_summary(
             FROM {entity}_profile
             """
         ).fetchone()
+        assert values is not None
         records_with_value = int(source_coverage[coverage_key])
         distinct_values, total_assignments = values
         rows.append(

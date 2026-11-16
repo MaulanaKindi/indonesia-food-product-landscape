@@ -1,7 +1,7 @@
 import csv
 import hashlib
-import http.client
 import html
+import http.client
 import json
 import re
 import socket
@@ -14,12 +14,11 @@ from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
 import pandas as pd
-
 from support_pinned_inputs import (
     SNAPSHOT_FILE,
+    SNAPSHOT_REPOSITORY,
     SNAPSHOT_SHA256,
     SNAPSHOT_SIZE_BYTES,
-    SNAPSHOT_REPOSITORY,
 )
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -245,7 +244,7 @@ def upstream_commit_audit(local_sha256: str) -> tuple[pd.DataFrame, str]:
             {
                 "commit_id": commit_id,
                 "committed_date": committed_date,
-                "food_parquet_size_bytes": size,
+                "food_parquet_size_bytes": str(size),
                 "food_parquet_sha256": sha,
                 "matches_local": ("Y" if sha and sha == local_sha256 else "N"),
                 "retrieved_on": RETRIEVED_ON,

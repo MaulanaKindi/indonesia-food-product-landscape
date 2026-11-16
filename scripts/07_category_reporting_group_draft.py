@@ -3,14 +3,12 @@ import json
 from pathlib import Path
 
 import pandas as pd
-
 from support_category_coverage import (
     build_country_coverage,
     validate_manual_group_evidence,
 )
 from support_category_crosswalk import build_crosswalk_artifacts
 from support_pinned_inputs import TAXONOMY_FILE, TAXONOMY_SHA256
-
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 MANUAL_DISPOSITION_FILE = (
@@ -184,7 +182,9 @@ def main() -> None:
     if not anchors["review_status"].eq("candidate_only").all():
         raise ValueError("All anchor candidates must remain marked candidate_only.")
 
-    group_labels = dict(zip(framework["group_id"], framework["reporting_group"]))
+    group_labels = dict(
+        zip(framework["group_id"], framework["reporting_group"], strict=True)
+    )
     if "other_unclassified" not in group_labels:
         raise ValueError("Reporting-group framework must include other_unclassified.")
     unknown_groups = set(anchors["group_id"]) - set(group_labels)

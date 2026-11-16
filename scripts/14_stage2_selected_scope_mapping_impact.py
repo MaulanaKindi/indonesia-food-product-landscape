@@ -4,7 +4,6 @@ from pathlib import Path
 import pandas as pd
 from support_duckdb_runtime import connect_duckdb
 
-
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DATA_FILE = PROJECT_ROOT / "data" / "raw" / "food.parquet"
 COUNTRY_MAPPING_FILE = PROJECT_ROOT / "data" / "mappings" / "country_tag_mapping.csv"
@@ -102,7 +101,11 @@ def main() -> None:
         decisions["source_category_tag"].isin(decision_set)
     ].copy()
     observed_decisions = dict(
-        zip(decisions["source_category_tag"], decisions["reporting_group_id"])
+        zip(
+            decisions["source_category_tag"],
+            decisions["reporting_group_id"],
+            strict=True,
+        )
     )
     if (
         len(decisions) != len(decision_set)

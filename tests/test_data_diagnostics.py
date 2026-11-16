@@ -8,7 +8,6 @@ from pathlib import Path
 
 import pytest
 
-
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS_DIR = str(PROJECT_ROOT / "scripts")
 if SCRIPTS_DIR not in sys.path:
