@@ -2,8 +2,10 @@ import json
 from collections import defaultdict
 from pathlib import Path
 
-import duckdb
 import pandas as pd
+
+
+from support_duckdb_runtime import connect_duckdb
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -49,15 +51,13 @@ def main() -> None:
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
-    with duckdb.connect() as connection:
+    with connect_duckdb() as connection:
         columns = connection.execute(
             "DESCRIBE SELECT * FROM read_parquet(?)",
             [str(DATA_FILE)],
         ).fetchdf()
         if "code" not in columns["column_name"].values:
-            raise ValueError(
-                f"Required column 'code' is missing from {DATA_FILE}"
-            )
+            raise ValueError(f"Required column 'code' is missing from {DATA_FILE}")
 
         summary = connection.execute(
             """
@@ -150,8 +150,7 @@ def main() -> None:
             if record.get("last_modified_t") is not None
         ]
         unique_latest_modified = (
-            bool(modified_values)
-            and modified_values.count(max(modified_values)) == 1
+            bool(modified_values) and modified_values.count(max(modified_values)) == 1
         )
         investigation_rows.append(
             {
@@ -182,8 +181,7 @@ def main() -> None:
     print(f"Duplicate code groups: {values['duplicate_code_groups']:,}")
     print(f"Duplicate rows: {values['duplicate_rows']:,}")
     print(
-        "Duplicate groups with identity-field conflicts: "
-        f"{identity_conflict_groups:,}"
+        f"Duplicate groups with identity-field conflicts: {identity_conflict_groups:,}"
     )
     print(f"Outputs saved to: {OUTPUT_DIR}")
 

@@ -10,7 +10,7 @@ Prepared for `MaulanaKindi/indonesia-food-product-landscape`. The description an
 
 **Social preview:** [`docs/img/social_preview.png`](../docs/img/social_preview.png) - 1280 x 640 PNG, generated from the project's fixed-snapshot category-tag coverage values. Upload it from **Settings → Social preview → Edit**. GitHub recommends 1280 x 640 pixels for best display and accepts PNG/JPG/GIF under 1 MB ([instructions](https://docs.github.com/en/enterprise-cloud@latest/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/customizing-your-repositorys-social-media-preview)).
 
-## Release draft
+## Published release
 
 **Tag:** `v1.0` (published from commit `3164c9b`)
 
@@ -24,6 +24,6 @@ Prepared for `MaulanaKindi/indonesia-food-product-landscape`. The description an
 
 - Adds a reproducible, descriptive comparison of product-record counts, category coverage and assignments, brand evidence, field readiness, contributor/source/year patterns, and country overlap for Indonesia, Malaysia, the Philippines, Singapore, and Thailand.
 - Documents the pinned Open Food Facts snapshot, database model, analytical limits, and reproduction workflow.
-- Includes a fixed 150-record AI-assisted category-mapping diagnostic and an eight-record census, with a separately logged web-evidence follow-up for all 48 disputed or uncertain sample cases. The web follow-up is targeted and non-random; it is not human ground truth or a population precision estimate.
+- Includes a fixed 150-record AI-assisted category-mapping diagnostic and an eight-record census, with a separately logged web-evidence follow-up for 48 cases with an incorrect, ambiguous, or insufficient-evidence assessment (45 primary-sample and 3 census cases). The web follow-up is targeted and non-random; it is not human ground truth or a population precision estimate.
 - Does not estimate sales, market size, market share, demand, or product availability.
-- Source data and third-party reference files have terms separate from the MIT-licensed project code. Review `docs/01_data_source.md` before reuse.
+- Source data and third-party reference files have terms separate from the MIT-licensed project code. Review `docs/02_data_source.md` before reuse.

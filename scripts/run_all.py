@@ -8,6 +8,7 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 PIPELINE = (
+    "support_fetch_pinned_taxonomy.py",
     "00_download_snapshot.py",
     "01_dataset_profile.py",
     "02_quality_checks.py",
@@ -37,8 +38,13 @@ def main() -> None:
             sys.executable,
             str(PROJECT_ROOT / "scripts" / script_name),
         ]
-        if script_name == "11_build_relational_database.py" and args.replace_scoped_database:
+        if (
+            script_name == "11_build_relational_database.py"
+            and args.replace_scoped_database
+        ):
             command.append("--replace-existing")
+        if script_name == "16_refresh_harmonized_analysis.py":
+            command.extend(("--skip-mapping-refresh", "--skip-brand-profile-refresh"))
         print(f"\nRunning {script_name}...", flush=True)
         subprocess.run(command, cwd=PROJECT_ROOT, check=True)
     print("\nFive-country analysis completed successfully.")

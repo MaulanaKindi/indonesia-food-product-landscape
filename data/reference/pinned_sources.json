@@ -1,0 +1,20 @@
+{
+  "open_food_facts_snapshot": {
+    "repository": "openfoodfacts/product-database",
+    "commit": "31f31c441274c095718cc88ae582030a5a615415",
+    "url": "https://huggingface.co/datasets/openfoodfacts/product-database/resolve/31f31c441274c095718cc88ae582030a5a615415/food.parquet?download=true",
+    "path": "data/raw/food.parquet",
+    "size_bytes": 7975461945,
+    "sha256": "DA39B2C5AAF1F85B2E637B904B5FC3A29780DD7E184254F4B660CFE0CD84999A",
+    "row_count": 4828207,
+    "column_count": 111
+  },
+  "open_food_facts_category_taxonomy": {
+    "retrieved_on": "2026-10-25",
+    "url": "https://static.openfoodfacts.org/data/taxonomies/categories.json",
+    "path": "data/reference/off_categories_taxonomy_2026-10-25.json",
+    "size_bytes": 4703948,
+    "sha256": "EB03AEFABAE4C6269B5FBC3E89160F8DA84CA3300A53787E27EAB5FE2D1020D5",
+    "node_count": 14774
+  }
+}

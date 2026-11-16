@@ -5,6 +5,9 @@ import duckdb
 import pandas as pd
 
 
+from support_duckdb_runtime import connect_duckdb
+
+
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DATA_FILE = PROJECT_ROOT / "data" / "raw" / "food.parquet"
 OUTPUT_DIR = PROJECT_ROOT / "outputs" / "profiling"
@@ -125,9 +128,9 @@ def create_source_tables(connection: duckdb.DuckDBPyConnection) -> None:
 def build_coverage_summary(
     connection: duckdb.DuckDBPyConnection,
 ) -> pd.DataFrame:
-    source_coverage = connection.execute(
-        "SELECT * FROM source_coverage"
-    ).fetchdf().iloc[0]
+    source_coverage = (
+        connection.execute("SELECT * FROM source_coverage").fetchdf().iloc[0]
+    )
     total_records = int(source_coverage["total_records"])
     rows = []
 
@@ -301,8 +304,7 @@ def build_manual_brand_mapping_validation(
     missing_columns = required_columns - set(mapping.columns)
     if missing_columns:
         raise ValueError(
-            "Manual brand mapping is missing columns: "
-            f"{sorted(missing_columns)}"
+            f"Manual brand mapping is missing columns: {sorted(missing_columns)}"
         )
     if mapping["source_brand_name"].duplicated().any():
         raise ValueError("Manual brand mapping contains duplicate source values.")
@@ -359,9 +361,9 @@ def build_manual_brand_mapping_validation(
             "reviewed_on",
         ]
     ].copy()
-    validation["records_with_source_name"] = validation[
-        "source_brand_name"
-    ].map(source_counts)
+    validation["records_with_source_name"] = validation["source_brand_name"].map(
+        source_counts
+    )
     return validation.sort_values(
         ["canonical_brand_name", "source_brand_name"],
         kind="stable",
@@ -377,7 +379,7 @@ def main() -> None:
         )
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    with duckdb.connect() as connection:
+    with connect_duckdb() as connection:
         create_source_tables(connection)
         print("Building coverage summary...", flush=True)
         coverage_summary = build_coverage_summary(connection)
@@ -402,9 +404,7 @@ def main() -> None:
             ("category_name", "category_name_normalization_candidates.csv"),
         ):
             print(f"Building {filename}...", flush=True)
-            profiles[filename] = build_name_normalization_candidates(
-                connection, entity
-            )
+            profiles[filename] = build_name_normalization_candidates(connection, entity)
 
     profiles["brand_name_manual_mapping_validation.csv"] = (
         build_manual_brand_mapping_validation(profiles["brand_name_profile.csv"])

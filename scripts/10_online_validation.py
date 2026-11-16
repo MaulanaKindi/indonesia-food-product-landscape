@@ -15,23 +15,24 @@ from urllib.request import Request, urlopen
 
 import pandas as pd
 
+from support_pinned_inputs import (
+    SNAPSHOT_FILE,
+    SNAPSHOT_SHA256,
+    SNAPSHOT_SIZE_BYTES,
+    SNAPSHOT_REPOSITORY,
+)
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-DATA_FILE = PROJECT_ROOT / "data" / "raw" / "food.parquet"
+DATA_FILE = SNAPSHOT_FILE
 DATASET_COLUMNS_FILE = PROJECT_ROOT / "outputs" / "profiling" / "dataset_columns.csv"
-TAXONOMY_FILE = (
-    PROJECT_ROOT / "data" / "reference" / "off_categories_taxonomy_2026-10-25.json"
-)
 TAXONOMY_CHECK_FILE = (
     PROJECT_ROOT / "outputs" / "profiling" / "nonfood_scope_taxonomy_check.csv"
 )
 OUTPUT_DIR = PROJECT_ROOT / "outputs" / "profiling"
 
-EXPECTED_LOCAL_SHA256 = (
-    "DA39B2C5AAF1F85B2E637B904B5FC3A29780DD7E184254F4B660CFE0CD84999A"
-)
-EXPECTED_LOCAL_SIZE = 7_975_461_945
-REPOSITORY = "openfoodfacts/product-database"
+EXPECTED_LOCAL_SHA256 = SNAPSHOT_SHA256
+EXPECTED_LOCAL_SIZE = SNAPSHOT_SIZE_BYTES
+REPOSITORY = SNAPSHOT_REPOSITORY
 HF_API_ROOT = "https://huggingface.co/api/datasets"
 USER_AGENT = "Global-Product-Brand-Landscape-Research/1.0"
 RETRIEVED_ON = date.today().isoformat()
@@ -57,10 +58,7 @@ SEEDS = {
     ),
     "V3": "https://github.com/openfoodfacts/openfoodfacts-server/issues/11330",
     "V4": "https://huggingface.co/datasets/openfoodfacts/product-database",
-    "V5": (
-        "https://world.openproductsfacts.org/facets/categories/"
-        "Open%20Food%20Facts"
-    ),
+    "V5": ("https://world.openproductsfacts.org/facets/categories/Open%20Food%20Facts"),
 }
 
 LOG_COLUMNS = [
@@ -193,10 +191,7 @@ def list_hf_commits() -> tuple[list[dict], str]:
 
 
 def food_metadata_for_commit(commit_id: str) -> tuple[int | str, str]:
-    url = (
-        f"{HF_API_ROOT}/{REPOSITORY}/tree/{commit_id}"
-        "?recursive=true&expand=true"
-    )
+    url = f"{HF_API_ROOT}/{REPOSITORY}/tree/{commit_id}?recursive=true&expand=true"
     response = api_json(url)
     if not isinstance(response, list):
         return "", ""
@@ -208,7 +203,9 @@ def food_metadata_for_commit(commit_id: str) -> tuple[int | str, str]:
     ]
     if not files:
         return "", ""
-    files.sort(key=lambda entry: (entry.get("path") != "food.parquet", entry.get("path", "")))
+    files.sort(
+        key=lambda entry: (entry.get("path") != "food.parquet", entry.get("path", ""))
+    )
     metadata = files[0]
     size = metadata.get("size", "")
     lfs = metadata.get("lfs") or {}
@@ -220,6 +217,7 @@ def food_metadata_for_commit(commit_id: str) -> tuple[int | str, str]:
 
 def upstream_commit_audit(local_sha256: str) -> tuple[pd.DataFrame, str]:
     commits, history_error = list_hf_commits()
+
     def inspect_commit(commit: dict) -> tuple[dict[str, str], str]:
         commit_id = str(commit.get("commitId") or commit.get("id") or "")
         committed_date = (
@@ -249,9 +247,7 @@ def upstream_commit_audit(local_sha256: str) -> tuple[pd.DataFrame, str]:
                 "committed_date": committed_date,
                 "food_parquet_size_bytes": size,
                 "food_parquet_sha256": sha,
-                "matches_local": (
-                    "Y" if sha and sha == local_sha256 else "N"
-                ),
+                "matches_local": ("Y" if sha and sha == local_sha256 else "N"),
                 "retrieved_on": RETRIEVED_ON,
             },
             "",
@@ -289,9 +285,7 @@ def validate_claims(
             "data/raw/food.parquet",
             "secondary",
             "supported" if identity_matches else "contradicted",
-            (
-                f"Local file is {local_size} bytes with SHA-256 {local_sha256}."
-            ),
+            (f"Local file is {local_size} bytes with SHA-256 {local_sha256}."),
             "Expected size/hash "
             f"{EXPECTED_LOCAL_SIZE}/{EXPECTED_LOCAL_SHA256}; "
             f"history status: {history_error or 'retrieved'}",
@@ -451,7 +445,9 @@ def validate_claims(
         elif beauty_signal and (exact_count or approximate_count):
             v3_result = "partially_supported"
             count_note = "12,566" if exact_count else "about 12k"
-            date_note = f"; date {issue_date[:10]}" if issue_date else "; date not verified"
+            date_note = (
+                f"; date {issue_date[:10]}" if issue_date else "; date not verified"
+            )
             v3_note = f"Issue mentions {count_note} beauty-type records{date_note}."
         else:
             v3_result = "not_verified"
@@ -498,7 +494,11 @@ def validate_claims(
             v4_result = "partially_supported"
             v4_note = "Card describes food/beauty splits and Parquet production; split criterion is not documented."
         else:
-            v4_result = "partially_supported" if split_mentions or production_mentions else "not_verified"
+            v4_result = (
+                "partially_supported"
+                if split_mentions or production_mentions
+                else "not_verified"
+            )
             v4_note = "Fetched card exposes only part, or none, of the stated split and production details."
         v4_notes = (
             f"Split mention={split_mentions}; production mention={production_mentions}; "
@@ -506,7 +506,9 @@ def validate_claims(
         )
     except NETWORK_ERRORS as error:
         v4_result = "not_verified"
-        v4_note = "Seed dataset card could not be retrieved, so the claim was not verified."
+        v4_note = (
+            "Seed dataset card could not be retrieved, so the claim was not verified."
+        )
         v4_notes = network_error(error)
     logs.append(
         make_log(
@@ -524,7 +526,9 @@ def validate_claims(
     try:
         if not TAXONOMY_CHECK_FILE.is_file():
             raise FileNotFoundError(str(TAXONOMY_CHECK_FILE))
-        taxonomy_check = pd.read_csv(TAXONOMY_CHECK_FILE, dtype=str, keep_default_na=False)
+        taxonomy_check = pd.read_csv(
+            TAXONOMY_CHECK_FILE, dtype=str, keep_default_na=False
+        )
         taxonomy_rows = taxonomy_check.set_index("tag").to_dict(orient="index")
         targets = (
             "en:incorrect-product-type",
@@ -549,12 +553,11 @@ def validate_claims(
         )
         if website_claim:
             disagreements = any(status != "Y" for status in local_status.values())
-            v5_result = (
-                "partially_supported" if disagreements else "supported"
-            )
-            v5_note = (
-                "Website shows the category relationships; local taxonomy "
-                + ("differs on exact-node presence." if disagreements else "contains both exact nodes.")
+            v5_result = "partially_supported" if disagreements else "supported"
+            v5_note = "Website shows the category relationships; local taxonomy " + (
+                "differs on exact-node presence."
+                if disagreements
+                else "contains both exact nodes."
             )
         else:
             v5_result = "not_verified"
@@ -562,7 +565,9 @@ def validate_claims(
         v5_notes = local_taxonomy_note
     except FileNotFoundError as error:
         v5_result = "not_verified"
-        v5_note = "Online category claim or local taxonomy comparison could not be verified."
+        v5_note = (
+            "Online category claim or local taxonomy comparison could not be verified."
+        )
         v5_notes = str(error)
     except NETWORK_ERRORS as error:
         v5_result = "not_verified"

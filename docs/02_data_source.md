@@ -1,4 +1,4 @@
-# 01 Data Source
+# Data Source
 
 ## Dataset
 
@@ -25,7 +25,7 @@ data/raw/food.parquet
 | Expected SHA-256 | `DA39B2C5AAF1F85B2E637B904B5FC3A29780DD7E184254F4B660CFE0CD84999A` |
 | Local artifact verification | Size and SHA-256 checked on 2026-11-04 |
 
-The project uses the immutable commit and file checksum as its reproducibility contract. `scripts/00_download_snapshot.py` downloads that exact revision and verifies both values before placing the file at `data/raw/food.parquet`; the database builder verifies them again. The verified file profile is 4,828,207 rows and 111 columns. The local retrieval event is not part of the reproducibility claim.
+The project uses the immutable commit and file checksum as its reproducibility contract. `data/reference/pinned_sources.json` is the shared input manifest; `scripts/support_pinned_inputs.py` exposes it to the downloader and database builder. `scripts/00_download_snapshot.py` downloads that exact revision and verifies both values before placing the file at `data/raw/food.parquet`; the database builder verifies them again. The verified file profile is 4,828,207 rows and 111 columns. The local retrieval event is not part of the reproducibility claim.
 
 ### Online Claim Validation
 
@@ -43,6 +43,8 @@ The Parquet dataset retains `categories_tags` but its dataset card states that h
 - File size: 4,703,948 bytes
 - SHA-256: `EB03AEFABAE4C6269B5FBC3E89160F8DA84CA3300A53787E27EAB5FE2D1020D5`
 - Taxonomy nodes in the saved file: 14,774
+
+The recorded endpoint is mutable. `scripts/support_fetch_pinned_taxonomy.py` downloads it only when the local snapshot is absent and accepts it only when both the expected byte size and SHA-256 match. If Open Food Facts has replaced the endpoint content, the script stops; the exact historical taxonomy must be obtained from an authorized archive. The repository does not redistribute this file.
 
 The source Parquet upstream release date is unknown, so this current taxonomy snapshot cannot be assumed to be contemporaneous with the product data. The category audit records exact tag matches and unmatched tags; it does not silently infer aliases. Recheck the taxonomy license, version, and attribution conditions before redistributing it or derivative taxonomy data.
 
@@ -64,7 +66,7 @@ Terms initially checked: 2026-10-25. Rechecked: 2026-11-04.
 
 The 2026-11-04 check of the current Open Food Facts reuse terms states ODbL for the database, DbCL for individual contents, and CC BY-SA for product images, and requires attribution/linking to Open Food Facts and compliance with applicable derivative-work conditions. This project does not use product images. The current Hugging Face dataset card/API also labels the repository with `agpl-3.0` and `odbl`, but does not clarify whether AGPL applies to the dataset artifact, conversion code, or both.
 
-For the scoped portfolio publication, the project authorizes reviewed aggregate Stage 5/6 results and a narrowly scoped, AI-assisted semantic audit of a fixed 150-record Indonesian sample plus an eight-record Meat & poultry census. A source-based online follow-up of the 48 disputed or uncertain sample records is published as an evidence log, with Open Food Facts attribution and links to applicable terms. These are diagnostics, not independent human validation or ground truth; online checks are targeted and non-random. The repository does not redistribute the source Parquet, DuckDB databases, the unlabeled local human-review sample, general record-level extracts, or the pinned taxonomy. These audit files are a specific record-level exception to the aggregate-only publication scope; they remain subject to applicable source-license conditions. The project does not claim that MIT applies to data-derived outputs, nor does it make a legal determination about whether an output is a Produced Work or Derivative Database, or what the Hugging Face AGPL label covers. This is a documented publication policy, not legal advice; seek qualified advice for a definitive legal classification or materially different reuse.
+For the scoped portfolio publication, the project authorizes reviewed aggregate Stage 5/6 results and a narrowly scoped, AI-assisted semantic audit of a fixed 150-record Indonesian sample plus an eight-record Meat & poultry census. A source-based online follow-up of 48 cases with incorrect, ambiguous, or insufficient-evidence AI assessments (45 primary-sample cases and 3 census cases) is published as an evidence log, with Open Food Facts attribution and links to applicable terms. These are diagnostics, not independent human validation or ground truth; online checks are targeted and non-random. The repository does not redistribute the source Parquet, DuckDB databases, the unlabeled local human-review sample, general record-level extracts, or the pinned taxonomy. These audit files are a specific record-level exception to the aggregate-only publication scope; they remain subject to applicable source-license conditions. The project does not claim that MIT applies to data-derived outputs, nor does it make a legal determination about whether an output is a Produced Work or Derivative Database, or what the Hugging Face AGPL label covers. This is a documented publication policy, not legal advice; seek qualified advice for a definitive legal classification or materially different reuse.
 
 ## ISO 3166-1 Reference
 

@@ -5,24 +5,20 @@ from pathlib import Path
 
 import pandas as pd
 
+from support_pinned_inputs import (
+    TAXONOMY_FILE,
+    TAXONOMY_RETRIEVED_ON,
+    TAXONOMY_SHA256,
+    TAXONOMY_URL,
+)
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-TAXONOMY_FILE = (
-    PROJECT_ROOT
-    / "data"
-    / "reference"
-    / "off_categories_taxonomy_2026-10-25.json"
-)
 CATEGORY_PROFILE_FILE = (
     PROJECT_ROOT / "outputs" / "profiling" / "category_tag_profile.csv"
 )
 OUTPUT_DIR = PROJECT_ROOT / "outputs" / "profiling"
-TAXONOMY_SOURCE_URL = (
-    "https://static.openfoodfacts.org/data/taxonomies/categories.json"
-)
-EXPECTED_TAXONOMY_SHA256 = (
-    "EB03AEFABAE4C6269B5FBC3E89160F8DA84CA3300A53787E27EAB5FE2D1020D5"
-)
+TAXONOMY_SOURCE_URL = TAXONOMY_URL
+EXPECTED_TAXONOMY_SHA256 = TAXONOMY_SHA256
 
 
 def main() -> None:
@@ -70,11 +66,7 @@ def main() -> None:
 
     @lru_cache(maxsize=None)
     def taxonomy_depth(tag: str) -> tuple[int, int]:
-        known_parents = [
-            parent
-            for parent in parents_by_tag[tag]
-            if parent in taxonomy
-        ]
+        known_parents = [parent for parent in parents_by_tag[tag] if parent in taxonomy]
         if not known_parents:
             return 0, 0
 
@@ -144,11 +136,9 @@ def main() -> None:
         [
             {
                 "taxonomy_source_url": TAXONOMY_SOURCE_URL,
-                "taxonomy_snapshot_date": "2026-10-25",
+                "taxonomy_snapshot_date": TAXONOMY_RETRIEVED_ON,
                 "taxonomy_nodes": len(taxonomy),
-                "missing_parent_tag_references": len(
-                    missing_parent_tags
-                ),
+                "missing_parent_tag_references": len(missing_parent_tags),
                 "observed_source_tags": len(tag_audit),
                 "matched_source_tags": matched_tags,
                 "unmatched_source_tags": unmatched_tags,

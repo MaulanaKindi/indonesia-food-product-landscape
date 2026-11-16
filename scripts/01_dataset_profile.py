@@ -1,6 +1,7 @@
 from pathlib import Path
 
-import duckdb
+
+from support_duckdb_runtime import connect_duckdb
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -14,7 +15,7 @@ def main() -> None:
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
-    with duckdb.connect() as connection:
+    with connect_duckdb() as connection:
         row_count = connection.execute(
             "SELECT COUNT(*) AS total_rows FROM read_parquet(?)",
             [str(DATA_FILE)],

@@ -6,18 +6,18 @@ import tempfile
 import urllib.request
 from pathlib import Path
 
+from support_pinned_inputs import (
+    SNAPSHOT_COMMIT,
+    SNAPSHOT_FILE,
+    SNAPSHOT_SHA256,
+    SNAPSHOT_SIZE_BYTES,
+    SNAPSHOT_URL,
+)
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-TARGET_FILE = PROJECT_ROOT / "data" / "raw" / "food.parquet"
-SNAPSHOT_COMMIT = "31f31c441274c095718cc88ae582030a5a615415"
-SNAPSHOT_URL = (
-    "https://huggingface.co/datasets/openfoodfacts/product-database/resolve/"
-    f"{SNAPSHOT_COMMIT}/food.parquet?download=true"
-)
-EXPECTED_SIZE_BYTES = 7_975_461_945
-EXPECTED_SHA256 = (
-    "DA39B2C5AAF1F85B2E637B904B5FC3A29780DD7E184254F4B660CFE0CD84999A"
-)
+TARGET_FILE = SNAPSHOT_FILE
+EXPECTED_SIZE_BYTES = SNAPSHOT_SIZE_BYTES
+EXPECTED_SHA256 = SNAPSHOT_SHA256
 CHUNK_SIZE_BYTES = 8 * 1024 * 1024
 
 

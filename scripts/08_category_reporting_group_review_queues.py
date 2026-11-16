@@ -5,19 +5,11 @@ from pathlib import Path
 
 import pandas as pd
 
+from support_pinned_inputs import TAXONOMY_FILE, TAXONOMY_SHA256
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-TAXONOMY_FILE = (
-    PROJECT_ROOT
-    / "data"
-    / "reference"
-    / "off_categories_taxonomy_2026-10-25.json"
-)
 FRAMEWORK_FILE = (
-    PROJECT_ROOT
-    / "data"
-    / "reference"
-    / "category_reporting_group_framework.csv"
+    PROJECT_ROOT / "data" / "reference" / "category_reporting_group_framework.csv"
 )
 ANCHOR_FILE = (
     PROJECT_ROOT
@@ -33,9 +25,7 @@ CROSSWALK_FILE = (
 )
 OUTPUT_DIR = PROJECT_ROOT / "outputs" / "profiling"
 UNMATCHED_PRIORITY_LIMIT = 1_000
-EXPECTED_TAXONOMY_SHA256 = (
-    "EB03AEFABAE4C6269B5FBC3E89160F8DA84CA3300A53787E27EAB5FE2D1020D5"
-)
+EXPECTED_TAXONOMY_SHA256 = TAXONOMY_SHA256
 
 
 def main() -> None:
@@ -72,14 +62,19 @@ def main() -> None:
         "matched_anchor_tags",
         "candidate_group_ids",
         "candidate_group_labels",
+        "proposed_group_id",
+        "proposed_group_label",
         "assignment_status",
         "comparison_role",
+        "manual_disposition",
+        "manual_reporting_group_id",
     }
     missing = required_crosswalk_columns - set(crosswalk.columns)
     if missing:
         raise ValueError(
             f"Candidate crosswalk is missing required columns: {sorted(missing)}"
         )
+    validate_reporting_group_references(framework, anchors, crosswalk)
     if crosswalk["source_category_tag"].duplicated().any():
         raise ValueError("Candidate crosswalk contains duplicate source tags.")
     if anchors["anchor_tag"].duplicated().any():
@@ -172,6 +167,86 @@ def main() -> None:
     print(f"Outputs saved to: {OUTPUT_DIR}")
 
 
+def validate_reporting_group_references(
+    framework: pd.DataFrame,
+    anchors: pd.DataFrame,
+    crosswalk: pd.DataFrame,
+) -> None:
+    """Fail early when candidate IDs or labels drift from the reference framework."""
+    required_framework_columns = {"group_id", "reporting_group"}
+    missing = required_framework_columns - set(framework.columns)
+    if missing:
+        raise ValueError(
+            f"Reporting-group framework is missing columns: {sorted(missing)}"
+        )
+    if framework["group_id"].isna().any() or framework["reporting_group"].isna().any():
+        raise ValueError("Reporting-group framework contains blank IDs or labels.")
+    if framework["group_id"].duplicated().any():
+        raise ValueError("Reporting-group framework contains duplicate group IDs.")
+    if framework["reporting_group"].duplicated().any():
+        raise ValueError("Reporting-group framework contains duplicate labels.")
+
+    labels_by_id = framework.set_index("group_id")["reporting_group"].to_dict()
+    valid_ids = set(labels_by_id)
+    unknown_anchor_ids = sorted(set(anchors["group_id"]) - valid_ids)
+    if unknown_anchor_ids:
+        raise ValueError(
+            "Anchor candidates reference reporting groups absent from the "
+            f"framework: {unknown_anchor_ids}"
+        )
+
+    for row in crosswalk.itertuples(index=False):
+        for id_column, label_column, label_name in (
+            ("candidate_group_ids", "candidate_group_labels", "candidate"),
+            ("proposed_group_id", "proposed_group_label", "proposed"),
+        ):
+            _validate_group_id_label_pairs(
+                _split_group_values(getattr(row, id_column)),
+                _split_group_values(getattr(row, label_column)),
+                labels_by_id,
+                tag=row.source_category_tag,
+                label_name=label_name,
+            )
+
+        manual_group_ids = _split_group_values(row.manual_reporting_group_id)
+        unknown_manual_ids = sorted(set(manual_group_ids) - valid_ids)
+        if unknown_manual_ids:
+            raise ValueError(
+                f"Tag {row.source_category_tag!r} references manual reporting "
+                f"groups absent from the framework: {unknown_manual_ids}."
+            )
+
+
+def _validate_group_id_label_pairs(
+    group_ids: list[str],
+    labels: list[str],
+    labels_by_id: dict[str, str],
+    *,
+    tag: str,
+    label_name: str,
+) -> None:
+    if len(group_ids) != len(labels):
+        raise ValueError(
+            f"{label_name.title()} group IDs and labels do not align for tag {tag!r}."
+        )
+    for group_id, label in zip(group_ids, labels, strict=True):
+        if group_id not in labels_by_id:
+            raise ValueError(
+                f"Unknown {label_name} reporting group {group_id!r} for tag {tag!r}."
+            )
+        if labels_by_id[group_id] != label:
+            raise ValueError(
+                f"{label_name.title()} label {label!r} does not match framework "
+                f"label {labels_by_id[group_id]!r} for {group_id!r}."
+            )
+
+
+def _split_group_values(value: object) -> list[str]:
+    if pd.isna(value) or not str(value).strip():
+        return []
+    return [part.strip() for part in str(value).split("|") if part.strip()]
+
+
 def build_anchor_audit(
     taxonomy: dict,
     anchors: pd.DataFrame,
@@ -195,9 +270,7 @@ def build_anchor_audit(
             tag for tag in observed_tags if anchor.anchor_tag in ancestors(tag)
         ]
         descendant_rows = crosswalk_by_tag.loc[descendant_tags]
-        descendant_assignments = int(
-            descendant_rows["records_with_tag"].sum()
-        )
+        descendant_assignments = int(descendant_rows["records_with_tag"].sum())
         ambiguous_rows = descendant_rows.loc[
             descendant_rows["assignment_status"].eq("multiple_group_candidate")
         ]
@@ -215,25 +288,17 @@ def build_anchor_audit(
                 "anchor_tag": anchor.anchor_tag,
                 "group_id": anchor.group_id,
                 "taxonomy_name_en": taxonomy_entry.get("name", {}).get("en", ""),
-                "known_parent_tags": " | ".join(
-                    parents_by_tag[anchor.anchor_tag]
-                ),
+                "known_parent_tags": " | ".join(parents_by_tag[anchor.anchor_tag]),
                 "anchor_observed_assignments": (
-                    int(anchor_row["records_with_tag"])
-                    if anchor_row is not None
-                    else 0
+                    int(anchor_row["records_with_tag"]) if anchor_row is not None else 0
                 ),
                 "observed_descendant_tags_including_anchor": len(descendant_rows),
-                "observed_descendant_tag_record_assignments": (
-                    descendant_assignments
-                ),
+                "observed_descendant_tag_record_assignments": (descendant_assignments),
                 "descendant_tags_with_single_group_candidate": len(single_rows),
                 "descendant_assignments_with_single_group_candidate": int(
                     single_rows["records_with_tag"].sum()
                 ),
-                "descendant_tags_with_multiple_group_candidates": len(
-                    ambiguous_rows
-                ),
+                "descendant_tags_with_multiple_group_candidates": len(ambiguous_rows),
                 "descendant_assignments_with_multiple_group_candidates": int(
                     ambiguous_rows["records_with_tag"].sum()
                 ),
@@ -242,9 +307,11 @@ def build_anchor_audit(
                 "review_note": "",
             }
         )
-    return pd.DataFrame(rows).sort_values(
-        ["group_id", "anchor_tag"]
-    ).reset_index(drop=True)
+    return (
+        pd.DataFrame(rows)
+        .sort_values(["group_id", "anchor_tag"])
+        .reset_index(drop=True)
+    )
 
 
 def build_ambiguous_queue(crosswalk: pd.DataFrame) -> pd.DataFrame:
@@ -290,9 +357,7 @@ def build_residual_queue(
             int(observed.loc[descendants, "records_with_tag"].sum())
         )
     residual["observed_descendant_tag_count"] = descendant_counts
-    residual["observed_descendant_tag_record_assignments"] = (
-        descendant_assignments
-    )
+    residual["observed_descendant_tag_record_assignments"] = descendant_assignments
     residual["review_priority"] = residual["records_with_tag"].map(
         lambda count: "P1" if count >= 10_000 else ("P2" if count >= 1_000 else "P3")
     )
@@ -323,9 +388,7 @@ def build_unmatched_queue(
         suffix_to_tags.setdefault(suffix, []).append(taxonomy_tag)
 
     unmatched["tag_suffix"] = unmatched["source_category_tag"].map(
-        lambda tag: tag.split(":", 1)[1].casefold()
-        if ":" in tag
-        else tag.casefold()
+        lambda tag: tag.split(":", 1)[1].casefold() if ":" in tag else tag.casefold()
     )
     unmatched["exact_suffix_taxonomy_candidates"] = [
         " | ".join(
@@ -342,9 +405,7 @@ def build_unmatched_queue(
     unmatched["review_priority"] = unmatched["records_with_tag"].map(
         lambda count: "P1" if count >= 10_000 else ("P2" if count >= 1_000 else "P3")
     )
-    unmatched["review_question"] = unmatched[
-        "exact_suffix_taxonomy_candidates"
-    ].map(
+    unmatched["review_question"] = unmatched["exact_suffix_taxonomy_candidates"].map(
         lambda candidates: (
             "Check whether the same suffix is a valid language/tag alias; "
             "exact suffix similarity is only a lead, not proof."

@@ -2,15 +2,14 @@ import csv
 import re
 from pathlib import Path
 
-import duckdb
+
+from support_duckdb_runtime import connect_duckdb
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DATA_FILE = PROJECT_ROOT / "data" / "raw" / "food.parquet"
 MAPPING_FILE = PROJECT_ROOT / "data" / "mappings" / "country_tag_mapping.csv"
-ISO_REFERENCE_FILE = (
-    PROJECT_ROOT / "data" / "reference" / "iso_3166_alpha2.csv"
-)
+ISO_REFERENCE_FILE = PROJECT_ROOT / "data" / "reference" / "iso_3166_alpha2.csv"
 OUTPUT_DIR = PROJECT_ROOT / "outputs" / "profiling"
 ISO_ALPHA2_PATTERN = re.compile(r"^[A-Z]{2}$")
 MIN_COUNTRY_RECORDS = 1_000
@@ -27,8 +26,7 @@ def validate_mapping_file() -> None:
     iso_codes = [row["iso_alpha2"] for row in reference_rows]
     if not iso_codes or len(iso_codes) != len(set(iso_codes)):
         raise ValueError(
-            f"ISO reference must contain unique alpha-2 codes: "
-            f"{ISO_REFERENCE_FILE}"
+            f"ISO reference must contain unique alpha-2 codes: {ISO_REFERENCE_FILE}"
         )
     valid_iso_codes = set(iso_codes)
 
@@ -77,9 +75,7 @@ def validate_mapping_file() -> None:
             )
 
     inconsistent_names = {
-        code: sorted(names)
-        for code, names in names_by_code.items()
-        if len(names) > 1
+        code: sorted(names) for code, names in names_by_code.items() if len(names) > 1
     }
     if inconsistent_names:
         raise ValueError(
@@ -97,7 +93,7 @@ def main() -> None:
     validate_mapping_file()
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
-    with duckdb.connect() as connection:
+    with connect_duckdb() as connection:
         columns = connection.execute(
             "DESCRIBE SELECT * FROM read_parquet(?)",
             [str(DATA_FILE)],
@@ -300,9 +296,7 @@ def main() -> None:
         country_profile["record_count"] >= MIN_COUNTRY_RECORDS
     ].copy()
     coverage_summary["minimum_records_for_shortlist"] = MIN_COUNTRY_RECORDS
-    coverage_summary["units_meeting_minimum_record_count"] = len(
-        country_shortlist
-    )
+    coverage_summary["units_meeting_minimum_record_count"] = len(country_shortlist)
 
     country_profile.to_csv(
         OUTPUT_DIR / "normalized_country_profile.csv",

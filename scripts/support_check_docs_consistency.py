@@ -1,14 +1,18 @@
 """Fail when generated README or Stage 7 values drift from validated CSVs."""
 
 import importlib.util
+import re
 import sys
 from pathlib import Path
+from urllib.parse import unquote, urlsplit
 
 import pandas as pd
 
 
 REFRESH_SCRIPT = Path(__file__).with_name("16_refresh_harmonized_analysis.py")
-SPEC = importlib.util.spec_from_file_location("refresh_harmonized_analysis", REFRESH_SCRIPT)
+SPEC = importlib.util.spec_from_file_location(
+    "refresh_harmonized_analysis", REFRESH_SCRIPT
+)
 if SPEC is None or SPEC.loader is None:
     raise ImportError(f"Unable to load renderer: {REFRESH_SCRIPT}")
 refresh = importlib.util.module_from_spec(SPEC)
@@ -20,7 +24,40 @@ def read_csv(path: Path) -> pd.DataFrame:
     return pd.read_csv(path, dtype=str, keep_default_na=False)
 
 
+def validate_local_markdown_links(project_root: Path) -> None:
+    """Reject broken relative file links in the reader-facing Markdown files."""
+    markdown_files = [
+        project_root / "README.md",
+        *sorted((project_root / "docs").rglob("*.md")),
+    ]
+    link_pattern = re.compile(r"!?\[[^\]]*\]\(([^)]+)\)")
+    broken_links = []
+
+    for markdown_file in markdown_files:
+        content = markdown_file.read_text(encoding="utf-8")
+        for raw_target in link_pattern.findall(content):
+            target = raw_target.strip().split()[0].strip("<>")
+            parsed_target = urlsplit(target)
+            if parsed_target.scheme or parsed_target.netloc or target.startswith("#"):
+                continue
+
+            relative_path = unquote(parsed_target.path)
+            if not relative_path:
+                continue
+            destination = (markdown_file.parent / relative_path).resolve()
+            if not destination.exists():
+                broken_links.append(
+                    f"{markdown_file.relative_to(project_root)} -> {target}"
+                )
+
+    if broken_links:
+        raise ValueError(
+            "Broken local Markdown links:\n - " + "\n - ".join(broken_links)
+        )
+
+
 def main() -> None:
+    validate_local_markdown_links(refresh.PROJECT_ROOT)
     stage5 = read_csv(refresh.STAGE5_FILE)
     scope = read_csv(refresh.ANALYSIS_DIR / "stage6_country_scope.csv")
     categories = read_csv(refresh.ANALYSIS_DIR / "stage6_country_category.csv")
@@ -79,7 +116,7 @@ def main() -> None:
         )
     if expected_stage7 != refresh.STAGE7_FILE.read_text(encoding="utf-8"):
         raise ValueError(
-            "Generated values in docs/06_stage7_findings_and_recommendations.md "
+            "Generated values in docs/07_stage7_findings_and_recommendations.md "
             "do not match the validated CSV outputs. Run scripts/16_refresh_harmonized_analysis.py."
         )
     if expected_readme != refresh.README_FILE.read_text(encoding="utf-8"):

@@ -52,9 +52,7 @@ def save_category_coverage(analysis_dir: Path, output_dir: Path) -> None:
 def save_assignment_coverage(analysis_dir: Path, output_dir: Path) -> None:
     categories = pd.read_csv(analysis_dir / "stage6_country_category.csv")
     baseline = categories.loc[categories["scenario"].eq("baseline")]
-    coverage = baseline.drop_duplicates(
-        ["iso_alpha2", "assignment_basis"]
-    ).pivot(
+    coverage = baseline.drop_duplicates(["iso_alpha2", "assignment_basis"]).pivot(
         index="iso_alpha2",
         columns="assignment_basis",
         values="substantive_group_assignment_coverage_of_category_tagged_rows_pct",
@@ -110,7 +108,9 @@ def save_readiness_heatmap(readiness_file: Path, output_dir: Path) -> None:
     ).loc[list(COUNTRIES), list(metrics)]
 
     fig, axis = plt.subplots(figsize=(12, 4.6), constrained_layout=True)
-    image = axis.imshow(matrix.to_numpy(), cmap="YlGnBu", vmin=0, vmax=100, aspect="auto")
+    image = axis.imshow(
+        matrix.to_numpy(), cmap="YlGnBu", vmin=0, vmax=100, aspect="auto"
+    )
     axis.set_xticks(
         range(len(metrics)),
         [metric.replace(" ", "\n", 1) for metric in metrics],

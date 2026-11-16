@@ -5,7 +5,7 @@ This guide rebuilds the canonical five-country analysis from the pinned Open Foo
 ## Requirements
 
 - Python 3.13
-- Disk space for the 7.98 GB source Parquet and temporary build files
+- Disk space for the 7.98 GB source Parquet and temporary DuckDB spill files (capped at 50 GB on the workspace volume)
 - A network connection for the first snapshot download
 
 Create an environment and install the project dependencies:
@@ -30,7 +30,9 @@ macOS or Linux:
 .venv/bin/python scripts/run_all.py
 ```
 
-The first command in the pipeline downloads Hugging Face commit `31f31c441274c095718cc88ae582030a5a615415` to `data/raw/food.parquet`. It verifies the expected 7,975,461,945-byte size and SHA-256 `DA39B2C5AAF1F85B2E637B904B5FC3A29780DD7E184254F4B660CFE0CD84999A`. Existing files are verified and never silently replaced. The source and DuckDB databases are excluded from Git.
+The pipeline downloads Hugging Face commit `31f31c441274c095718cc88ae582030a5a615415` to `data/raw/food.parquet`. It verifies the expected 7,975,461,945-byte size and SHA-256 `DA39B2C5AAF1F85B2E637B904B5FC3A29780DD7E184254F4B660CFE0CD84999A`. Before profiling, `scripts/support_fetch_pinned_taxonomy.py` retrieves the locally excluded taxonomy JSON if it is missing and verifies the pinned 4,703,948-byte size and SHA-256. Both downloads use a temporary file and reject mismatched content before publishing it. The source, taxonomy, and DuckDB databases are excluded from Git.
+
+The taxonomy URL is a mutable upstream endpoint, not an immutable historical URL. The checksum prevents silently using a newer taxonomy, but if the upstream no longer serves the pinned bytes, a clean clone needs an exact archived copy from an authorized source before the pipeline can run. The project does not redistribute the taxonomy JSON.
 
 ## Pipeline
 
@@ -53,6 +55,20 @@ To rerun the complete workflow after the canonical database already exists, opt 
 python scripts/run_all.py --replace-scoped-database
 ```
 
+## Reproducibility boundaries
+
+The core pipeline is snapshot-pinned: identical Parquet bytes, tracked mapping inputs, dependencies, and configuration should regenerate the same scoped database checks and analytical tables. The input manifest records exact source size and SHA-256. The taxonomy JSON is intentionally not distributed; a clean clone fetches the upstream endpoint and accepts it only if its pinned size and hash match. If the mutable endpoint no longer serves those exact bytes, the documented prerequisite is an authorized copy of the pinned taxonomy. Without it, the taxonomy-dependent pipeline stops rather than silently changing category results.
+
+The generated report also includes reviewed AI-assisted audit labels and a targeted online-evidence log. The evaluator can regenerate the corresponding metrics from the pinned sample and tracked labels, but it does not recreate the original AI judgments or re-perform the historical product-page review. Those are versioned review inputs with stated limitations.
+
+The claim-validation script [`scripts/10_online_validation.py`](../scripts/10_online_validation.py) is deliberately outside `run_all.py`: it reads current online metadata and overwrites retrieval-date-specific evidence files. Run it separately when refreshing that evidence:
+
+```powershell
+.\.venv\Scripts\python.exe .\scripts\10_online_validation.py
+```
+
+The new retrieval date and any changed web content mean these evidence files are not expected to be byte-identical across runs. The checked-in log documents the evidence used for the published claims. See the [claim-to-evidence lineage](10_claim_lineage.md) for the exact input, transformation, output, and validation path of headline results.
+
 ## Measurement definitions
 
 - **Country record count:** records linked to each ISO country by approved source-country tags. A source record can be linked to more than one country; country totals are not necessarily unique-product counts.
@@ -74,13 +90,13 @@ All reported rates use records in the stated country or comparison subset as the
 
 ## AI-assisted semantic mapping audit
 
-The completed AI-assisted audit evaluates the fixed sample of 150 Indonesian category-tagged records and separately reports a census of eight Meat & poultry candidates. Its label file contains AI-assisted judgments and evidence references; it is not human annotation or ground truth. A web follow-up was then performed for all 48 sample records whose AI assessment was disputed or uncertain. The separate online evidence log documents the URL, source type, exact-code match, access date, evidence summary, and unresolved cases. This targeted follow-up is published as a diagnostic under the project publication policy.
+The completed AI-assisted audit evaluates the fixed sample of 150 Indonesian category-tagged records and separately reports a census of eight Meat & poultry candidates. Its label file contains AI-assisted judgments and evidence references; it is not human annotation or ground truth. A web follow-up was performed for 48 cases with incorrect, ambiguous, or insufficient-evidence AI assessments (45 from the primary sample and 3 from the separate census). The separate online evidence log documents the URL, source type, exact-code match, access date, evidence summary, and unresolved cases. This targeted follow-up is published as a diagnostic under the project publication policy.
 
 After building the canonical database, create the deterministic sample only if `data/private/category_mapping_audit_sample.csv` is absent; the preparation script refuses to overwrite an existing file. Then rebuild the record-level and aggregate audit outputs:
 
 ```powershell
-.\.venv\Scripts\python.exe .\scripts\prepare_mapping_audit_sample.py
-.\.venv\Scripts\python.exe .\scripts\evaluate_mapping_audit_sample.py
+.\.venv\Scripts\python.exe .\scripts\support_prepare_mapping_audit_sample.py
+.\.venv\Scripts\python.exe .\scripts\support_evaluate_mapping_audit_sample.py
 ```
 
 The evaluator verifies the pinned snapshot, the deterministic sample membership, and the exact census membership before writing the audit CSVs under `outputs/quality/`. The sample intentionally omits candidate mappings; the AI-assisted reviewer labels are stored separately in `category_mapping_semantic_audit_labels.csv`.
@@ -89,7 +105,7 @@ Assignment-level determinate precision is correct / (correct + incorrect); a sep
 
 Approximate 95% intervals use first-order Taylor linearization with a finite-population correction, conditional on the fixed MD5-ranked sample approximating simple random sampling without replacement. Sparse per-group intervals are suppressed, and zero-residual-variance intervals are not reported. The intervals quantify sampling uncertainty only—not AI-judgment reliability, calibration, or independence. This is AI-assisted semantic assessment, not independent human annotation; reviewer confidence is self-assessed.
 
-The follow-up online evidence log covers every sample record with a disputed or uncertain AI assessment. It records the URL, source type, exact-code match, access date, and a concise evidence summary. Prefer manufacturer, regulator, or official product-specification evidence; retailer listings and secondary barcode/product databases are fallback evidence and are labeled as such. A product-family or related-variant page does not count as an exact-code match. A no-result search remains unresolved, not a contradiction. Open Food Facts-derived pages are not independent corroboration of Open Food Facts data. Because the follow-up is targeted by observed disagreement/uncertainty, its 30 supporting and 18 partial findings cannot be used as sample-wide accuracy or precision estimates. See `outputs/quality/category_mapping_online_evidence_audit.csv`.
+The follow-up online evidence log covers every selected case with an incorrect, ambiguous, or insufficient-evidence AI assessment in the primary sample and separate census. It records the URL, source type, exact-code match, access date, and a concise evidence summary. Prefer manufacturer, regulator, or official product-specification evidence; retailer listings and secondary barcode/product databases are fallback evidence and are labeled as such. A product-family or related-variant page does not count as an exact-code match. A no-result search remains unresolved, not a contradiction. Open Food Facts-derived pages are not independent corroboration of Open Food Facts data. Because the follow-up is targeted by observed disagreement/uncertainty, its 30 supporting and 18 partial findings cannot be used as sample-wide accuracy or precision estimates. See `outputs/quality/category_mapping_online_evidence_audit.csv`.
 
 ## Quality checks
 
@@ -98,14 +114,15 @@ The synthetic tests use a small in-memory fixture and do not require the source 
 ```text
 python -m pytest -q
 ruff check scripts tests
-sqlfluff lint sql/05_validate_five_country_database.sql --dialect duckdb --rules CP01
-python scripts/check_docs_consistency.py
+ruff format --check scripts tests
+sqlfluff lint sql/02_validate_relational_database.sql sql/05_validate_five_country_database.sql --dialect duckdb --rules CP01
+python scripts/support_check_docs_consistency.py
 ```
 
-The documentation checker recomputes generated README and Stage 7 sections from the tracked CSV outputs and fails if values drift. The GitHub Actions workflow runs tests, focused linters, and this consistency check on pushes and pull requests.
+The documentation checker verifies local Markdown links, recomputes generated README and Stage 7 sections from tracked CSV outputs, and fails if a link or generated value drifts. The GitHub Actions workflow runs tests, Ruff lint and formatting checks across all Python scripts and tests, SQLFluff on standalone DuckDB validation SQL, and this consistency check on pushes and pull requests.
 
 ## Outputs and attribution
 
 Published outputs include aggregate country/category/brand results, the field-readiness scorecard, contributor/source/year diagnostics, identifier-overlap and food-groups diagnostics, the fixed-sample AI-assisted semantic-audit labels and record-level results, the targeted online evidence log, validation reports, and static PNG charts. These audit files are the scoped record-level exception to the publication policy; the unlabeled human-review sample and full source database are not published.
 
-Open Food Facts data and third-party reference files have terms separate from this project's MIT-licensed code and documentation. Review [the source, attribution, and license note](./01_data_source.md) before redistribution or commercial use.
+Open Food Facts data and third-party reference files have terms separate from this project's MIT-licensed code and documentation. Review [the source, attribution, and license note](./02_data_source.md) before redistribution or commercial use.
