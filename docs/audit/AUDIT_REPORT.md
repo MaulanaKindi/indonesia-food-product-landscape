@@ -92,7 +92,7 @@ All headline numbers match tracked outputs — no drift found:
 | **P1-6** | CI enforcement, renderer tests, pin-test alignment | `quality.yml`, `tests/*` | S | None | done | `fdf454e`, `6da0ef8`, `755f9c7` |
 | **P2-1** | Chart palette accessibility | `support_generate_visuals.py` | S | None | done, folded into P1-1 (Okabe-Ito, regression-tested) | — |
 | **P2-2** | GitHub description/topics/social preview | manual | S | None | done: topics verified, description re-applied and social preview confirmed via `og:image` (2026-11-17) | — |
-| **P2-3** | Optional data-free demo script | new script | M | None | not started | — |
+| **P2-3** | Optional data-free demo script | new script | M | None | won't do - `docs/09` quick look plus `support_rerender_generated_sections.py` already cover the goal | — |
 
 ## Final score after implementation
 
