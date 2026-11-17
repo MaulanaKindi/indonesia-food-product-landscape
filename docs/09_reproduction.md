@@ -9,9 +9,10 @@ You do not need the source snapshot, DuckDB, or network access to inspect the pu
 ```powershell
 .\.venv\Scripts\python.exe .\scripts\support_generate_visuals.py
 .\.venv\Scripts\python.exe .\scripts\18_check_headline_numbers.py
+.\.venv\Scripts\python.exe .\scripts\support_coverage_comparison.py
 ```
 
-The first command rebuilds the five static charts under `docs/img/` from tracked CSVs (`outputs/analysis/stage6_country_scope.csv`, `stage6_country_category.csv`, and `outputs/profiling/data_readiness_scorecard.csv`). The second is a read-only guard that asserts every headline number in this guide and the README against those same tracked CSVs; it fails loudly if a number drifts. On macOS or Linux, replace the Windows virtual-environment Python path with `.venv/bin/python`.
+The first command rebuilds the five static charts under `docs/img/` from tracked CSVs (`outputs/analysis/stage6_country_scope.csv`, `stage6_country_category.csv`, and `outputs/profiling/data_readiness_scorecard.csv`). The second is a read-only guard that asserts every headline number in this guide and the README against those same tracked CSVs; it fails loudly if a number drifts. The third reports each study-country comparison as a difference in percentage points with a 95% interval and a two-proportion test, so a claim such as "similar to Malaysia" can be checked rather than asserted; its values are asserted by `tests/test_coverage_comparison.py`. On macOS or Linux, replace the Windows virtual-environment Python path with `.venv/bin/python`.
 
 ## Requirements
 
