@@ -125,3 +125,11 @@ Short records of decisions that affect scope, measurement, or reproducibility.
 **Reason:** The reproducibility contract is a pinned commit plus a SHA-256, but nothing verified that the commit still exists upstream, and the memo's warning that a newer snapshot could move the headline was a hypothetical. Measured on 2026-11-17 the pin resolves and the public head is 24 days newer, which turns the hypothetical into a reproducible measurement. The number is printed rather than recorded, because drift is a property of the day it is checked and a figure written into the docs would rot on the next upload.
 
 **Verification:** `pytest` 56 passed including the 8 new pin-liveness tests; `ruff check` and `ruff format --check` clean; `mypy scripts` clean; the script exits 0 against the live API and reports `Pin resolvable : yes` with a 24-day drift; `scripts/support_check_docs_consistency.py` and `scripts/18_check_headline_numbers.py` still pass.
+
+## 2026-11-17 - Approve the decision memo
+
+**Decision:** Approve `docs/11_decision_memo.md` as the repository's standing guidance: decisions 1-3 are adopted, decision 4 is recorded but not scoped. Rename the table column from "Suggested owner" to "Owner" now that the decisions are approved, and relabel decision 4's owner from "Commercial data owner" to "Budget holder (future)".
+
+**Reason:** The memo had been carrying `proposed` while its content was already settled, which made a finished document read as an unfinished one. The repository owner is the only party accountable for these decisions, so recording that approval is accurate rather than ceremonial; the wording says so plainly instead of implying an independent review. Decision 4 named a role this project does not have, so it is labelled as a future budget holder, and it stays unscoped because commissioning sales or panel data needs budget this repository does not control.
+
+**Verification:** `docs/11` now states the approval date and approver and no longer asks for approval; the README pointer reads "an owner"; `scripts/support_check_docs_consistency.py` and `scripts/18_check_headline_numbers.py` pass; no figure changed, so `pytest` stays at 56 passed.

@@ -16,7 +16,7 @@ An evidence-based comparison of product records and data coverage in a pinned Op
 - **Use** Open Food Facts as a supplementary signal for catalog coverage and field completeness—see [Fit for purpose](#fit-for-purpose).
 - **Do not use it alone** for competitor share, market size, sales, demand, or availability; pair it with representative retail, sales-panel, or official data.
 - **Treat category assignments as provisional:** candidate-derived assignments are broader than approved-only, and neither covers all tagged records.
-- **Costed and owned:** the [decision memo](docs/11_decision_memo.md) turns these into actions with evidence, confidence, effort, and a suggested owner, and checks whether the country coverage gaps are larger than sampling noise.
+- **Costed and owned:** the [decision memo](docs/11_decision_memo.md) turns these into actions with evidence, confidence, effort, and an owner, and checks whether the country coverage gaps are larger than sampling noise.
 
 **What this is / who it is for / how to read (60 seconds):** a data-coverage study of Open Food Facts for market-intelligence and FMCG (fast-moving consumer goods) analysts; read the headline numbers, then the country table, then the limitations.
 
