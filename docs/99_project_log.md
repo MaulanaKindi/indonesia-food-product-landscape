@@ -93,3 +93,11 @@ Short records of decisions that affect scope, measurement, or reproducibility.
 **Reason:** The repository is published and versioned by tag, so the branch that carries releases should not accept unverified history. Requiring the quality job keeps a red build off `main`, while leaving reviews optional lets a solo maintainer merge a green pull request without deadlocking on a self-approval that cannot exist.
 
 **Verification:** `GET /repos/MaulanaKindi/indonesia-food-product-landscape/branches/main/protection` returns `strict=true`, `contexts=["python-and-sql"]`, `enforce_admins=true`, `allow_force_pushes=false`, and `allow_deletions=false`; the policy and the full local check list are documented in `CONTRIBUTING.md`.
+
+## 2026-11-17 - Add a decision memo and a verification path
+
+**Decision:** Publish `docs/11_decision_memo.md` as a one-page record of decisions with evidence, confidence, effort, and a suggested owner; add a CI badge and a 60-second verification line to the README; add a "What would change these conclusions" subsection; and move the README's method diagram out because `docs/00` already carries a fuller execution-flow diagram.
+
+**Reason:** The audit scored communication and documentation highly, but the README answered what the data shows without saying who should do what, at what cost. A memo gives executives a costed ask, gives analysts a traceable confidence statement, and gives a hiring reader evidence that conclusions are falsifiable rather than asserted. Removing the duplicate diagram keeps one home for the pipeline map and pays for the added lines inside the 150-line presentation limit.
+
+**Verification:** `scripts/18_check_headline_numbers.py` passes 109 assertions with the new static text; `scripts/support_check_docs_consistency.py` passes, including the new `docs/11` links; `pytest` 41 passed; the README is 148 lines, within the 150-line limit; the memo introduces no number that is not already asserted against the tracked CSVs.

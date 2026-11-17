@@ -1,6 +1,10 @@
 # Indonesia Food Product Landscape
 
+[![Quality checks](https://github.com/MaulanaKindi/indonesia-food-product-landscape/actions/workflows/quality.yml/badge.svg)](https://github.com/MaulanaKindi/indonesia-food-product-landscape/actions/workflows/quality.yml)
+
 An evidence-based comparison of product records and data coverage in a pinned Open Food Facts snapshot—not a measure of food-market size or sales.
+
+**Verify in 60 seconds:** every headline number and all five charts are committed and asserted in CI; [rebuild and check them without the 8 GB download](docs/09_reproduction.md#quick-look-without-the-8-gb-download).
 
 ## Bottom line
 
@@ -12,6 +16,7 @@ An evidence-based comparison of product records and data coverage in a pinned Op
 - **Use** Open Food Facts as a supplementary signal for catalog coverage and field completeness—see [Fit for purpose](#fit-for-purpose).
 - **Do not use it alone** for competitor share, market size, sales, demand, or availability; pair it with representative retail, sales-panel, or official data.
 - **Treat category assignments as provisional:** candidate-derived assignments are broader than approved-only, and neither covers all tagged records.
+- **Costed and owned:** the [decision memo](docs/11_decision_memo.md) turns these into actions with evidence, confidence, effort, and a suggested owner.
 
 **What this is / who it is for / how to read (60 seconds):** a data-coverage study of Open Food Facts for market-intelligence and FMCG (fast-moving consumer goods) analysts; read the headline numbers, then the country table, then the limitations.
 
@@ -118,20 +123,6 @@ A thinking framework for reading this study, not a result of it:
 
 The AI-assisted mapping audit is a diagnostic, not human ground truth. The primary sample is 150 Indonesian category-tagged records selected deterministically by MD5 rank; of 130 candidate group pairs, 97 of 130 were judged correct, 16 disagreed, 8 were ambiguous, and 9 had insufficient evidence, with exact group-set agreement of 61/150 (40.7%). A separate eight-record Meat & poultry census is reported descriptively and is not pooled with the primary estimate. A targeted online follow-up covered the 48 cases with incorrect, ambiguous, or insufficient-evidence assessments (45 primary-sample and 3 census): 30 had supporting product evidence and 18 remained partial or unresolved, with 36 records carrying a source URL and 29 an exact product-code match. Because that follow-up is targeted and non-random, these counts are not a sample-wide precision estimate. Full intervals and per-group results are in the [Stage 7 findings](docs/07_stage7_findings_and_recommendations.md).
 
-## Method at a glance
-
-```mermaid
-flowchart LR
-    A[Pinned Parquet snapshot] --> B[Profile and quality checks]
-    B --> C[Country and category mappings]
-    C --> D[Five-country DuckDB]
-    D --> E[Candidate and approved-only analysis]
-    E --> F[Validated CSVs and charts]
-    F --> G[Generated README and findings]
-```
-
-Three example SQL queries the database can answer, including the candidate-versus-approved-only comparison, are in the [reproduction guide](docs/09_reproduction.md#example-sql-queries).
-
 ## Scope and limitations
 
 - Open Food Facts is collaborative, not a census or proof of country availability; it has no sales, revenue, market-share, or demand measures. Candidate assignments are exploratory, and approved-only assignments are narrower.
@@ -140,11 +131,18 @@ Three example SQL queries the database can answer, including the candidate-versu
 - Brand-text availability and exact-approved brand mapping are distinct. The mapped subset is too sparse for broad brand-concentration claims.
 - The snapshot is pinned to a Hugging Face commit with a verified SHA-256; both values are recorded in [the source record](docs/02_data_source.md).
 
+### What would change these conclusions
+
+- **A newer pinned snapshot.** Coverage describes one commit; a later commit can move the 12.2% headline without any change in data quality.
+- **Sales, panel, or retail-scan data.** It is the only input that turns recorded products into products sold, and the only route to a share or demand claim.
+- **An approved taxonomy and reviewed mappings.** Closing the 106,211 unmatched tags and 838 multi-group tags would move candidate-derived assignments from provisional to approved.
+- **A random-sample audit with intervals.** A probability sample would replace the targeted diagnostic with an estimate that carries a confidence interval.
+
 ## Reproduce and inspect
 
 - **Just looking?** Every chart and headline number on this page is committed to the repo and can be regenerated and verified without the 8 GB download — see the [quick-look section](docs/09_reproduction.md#quick-look-without-the-8-gb-download).
 - [Repository architecture](docs/00_repository_architecture.md): directory roles, source-of-truth rules, and pipeline ownership.
-- [Reproduction guide](docs/09_reproduction.md): workflow, requirements, definitions, and SQL; [claim lineage](docs/10_claim_lineage.md): trace from key claims to inputs, transformations, outputs, and checks; [Stage 7 findings](docs/07_stage7_findings_and_recommendations.md): generated results and caveats.
-- [Business brief](docs/01_business_brief.md), [data source and licensing](docs/02_data_source.md), [GitHub metadata and v1.0 publication record](docs/08_github_release_metadata.md), and the prepared [social preview](docs/img/social_preview.png).
+- [Reproduction guide](docs/09_reproduction.md): workflow, requirements, definitions, and three example SQL queries; [claim lineage](docs/10_claim_lineage.md): trace from key claims to inputs, transformations, outputs, and checks; [Stage 7 findings](docs/07_stage7_findings_and_recommendations.md): generated results and caveats.
+- [Business brief](docs/01_business_brief.md), [data source and licensing](docs/02_data_source.md), [release metadata](docs/08_github_release_metadata.md), and the prepared [social preview](docs/img/social_preview.png).
 
 Original project code and documentation are MIT-licensed. Open Food Facts data and third-party references have separate terms; see the [source and licensing note](docs/02_data_source.md).
