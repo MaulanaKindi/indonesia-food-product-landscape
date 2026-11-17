@@ -25,6 +25,14 @@ python scripts/18_check_headline_numbers.py       # headline numbers vs tracked 
 
 `pre-commit run --all-files` runs the ruff lint and format hooks (installed via `pre-commit install`).
 
+One check needs the network and is therefore not part of CI:
+
+```bash
+python scripts/support_check_pin_liveness.py  # pinned revision still resolvable upstream
+```
+
+It prints whether the pinned commit still resolves and how many days the public dataset has advanced, then exits non-zero if the pin is gone.
+
 ## Tests and coverage
 
 The test suite is synthetic and does not require the pinned dataset. Coverage is reported by CI:

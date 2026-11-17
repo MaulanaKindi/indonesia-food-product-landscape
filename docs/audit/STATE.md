@@ -57,6 +57,7 @@
 | P2-4 | Protect `main` and document the policy | done (branch protection applied, `CONTRIBUTING.md` updated) | `5cb6a0a` |
 | P2-5 | Assignment-rate two-proportion test (candidate vs approved-only) | won't do - both groups are the same 9,118 records; +7.40 pp, 95% CI 6.78 to 8.02, McNemar exact p = 1.3e-203, so the result is trivial and carries no decision value | — |
 | P2-6 | Decision memo: cost basis and owner wording | done - no currency stated (vendor programmes are quote-only), owners confirmed as roles, approval line clarified | — |
+| P2-7 | Pin liveness and drift check | done - `support_check_pin_liveness.py` plus tests; pin resolved and head 24 days newer on 2026-11-17; network-bound, excluded from CI | — |
 
 ## Verification notes (this session)
 - `scripts/18_check_headline_numbers.py`: 101 assertions pass for 5 countries (ruff clean).
