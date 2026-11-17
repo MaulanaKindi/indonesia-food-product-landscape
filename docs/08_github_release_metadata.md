@@ -1,14 +1,14 @@
 # GitHub repository metadata and release records
 
-Prepared for `MaulanaKindi/indonesia-food-product-landscape`. The description and topics below are applied, and releases `v1.0` and `v1.1` are published. The social preview still needs to be uploaded in the repository's Settings page.
+Prepared for `MaulanaKindi/indonesia-food-product-landscape`. The description, topics, and social preview below are applied, and releases `v1.0` and `v1.1` are published.
 
 ## About
 
-**Description:** Data-coverage study of Open Food Facts product records for Indonesia (ID), with Malaysia (MY), the Philippines (PH), and Singapore (SG) as comparison countries and Thailand (TH) as a high-coverage contrast.
+**Description:** Data-coverage study of Open Food Facts product records for Indonesia (ID), with Malaysia (MY), the Philippines (PH), and Singapore (SG) as comparison countries and Thailand (TH) as a high-coverage contrast. Re-applied on 2026-11-17, after the repository still showed an earlier wording ("Exploratory comparison ... four Southeast Asian peers") that contradicted the study-country framing; the API value and the page's `og:description` now match this text.
 
 **Topics:** `open-food-facts`, `food-data`, `indonesia`, `southeast-asia`, `data-quality`, `market-intelligence`, `python`, `duckdb`, `sql`, `data-analysis`
 
-**Social preview:** [`docs/img/social_preview.png`](../docs/img/social_preview.png) - 1280 x 640 PNG, generated from the project's fixed-snapshot category-tag coverage values. Upload it from **Settings → Social preview → Edit**. GitHub recommends 1280 x 640 pixels for best display and accepts PNG/JPG/GIF under 1 MB ([instructions](https://docs.github.com/en/enterprise-cloud@latest/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/customizing-your-repositorys-social-media-preview)).
+**Social preview:** [`docs/img/social_preview.png`](../docs/img/social_preview.png) - 1280 x 640 PNG, generated from the project's fixed-snapshot category-tag coverage values. Applied on 2026-11-17 from **Settings → Social preview → Edit** and verified from the repository page: both `og:image` and `twitter:image` resolve to a `repository-images.githubusercontent.com` URL rather than the default preview. GitHub recommends 1280 x 640 pixels and accepts PNG/JPG/GIF under 1 MB ([instructions](https://docs.github.com/en/enterprise-cloud@latest/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/customizing-your-repositorys-social-media-preview)).
 
 ## Published releases
 
