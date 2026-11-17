@@ -47,7 +47,7 @@ The AI-assisted audit judged 97 of 130 candidate group pairs correct on a fixed 
 
 ## What would change these conclusions
 
-- **A newer pinned snapshot.** Coverage describes one commit; a later commit can move the 12.2% headline without any change in data quality.
+- **A newer pinned snapshot.** Coverage describes one commit; a later commit can move the 12.2% headline without any change in data quality. How far the public dataset has already moved is measurable with `scripts/support_check_pin_liveness.py`, which reports drift without implying that the published figures are wrong.
 - **Sales, panel, or retail-scan data.** This is the only input that converts recorded products into products sold, and would make share or demand decisions answerable.
 - **An approved taxonomy and reviewed mappings.** Closing the 106,211 unmatched tags and the 838 multi-group tags would move decision 3 from provisional to approved, and would change which reporting groups are usable at all.
 - **A random-sample audit with intervals.** A probability sample would replace the targeted diagnostic with an estimate that carries a confidence interval, which is what a precision claim requires.

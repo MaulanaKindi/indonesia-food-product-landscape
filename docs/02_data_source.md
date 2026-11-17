@@ -29,6 +29,8 @@ The project uses the immutable commit and file checksum as its reproducibility c
 
 The README keeps only a one-line pointer to this record; the commit, expected size, and SHA-256 in the table above are the authoritative pin.
 
+A pin is only as good as its resolution upstream, so `scripts/support_check_pin_liveness.py` asks the Hugging Face API whether the pinned revision still exists and how far the public dataset has moved since. It reads metadata only, never the multi-gigabyte Parquet file, and it is not part of CI because the build must stay offline. As measured on 2026-11-17 the pin resolved and the public head was 24 days newer; that figure describes the moment of measurement and is recomputed rather than recorded here, because drift is a property of the day it is checked, not a fixed attribute of the study. A pin that stops resolving is a release blocker for any claim that depends on rebuilding the snapshot, not a correction to the published numbers.
+
 ### Online Claim Validation
 
 The evidence log is `outputs/profiling/online_validation_log.csv`; commit metadata is in `outputs/profiling/online_validation_hf_commits.csv`. On 2026-10-26, the supplied official tutorial documented `product_type` values `beauty`, `food`, `petfood`, and `product`. The local 111-column inventory contains no `product_type`-like field. GitHub issue #11330, dated 2025-02-06, reports about 12,000 beauty-type records and gives an exact count of 12,566; this is an issue statement, not a count verified against this local snapshot.

@@ -117,3 +117,11 @@ Short records of decisions that affect scope, measurement, or reproducibility.
 **Reason:** The two remaining open items were an owner/cost gap and a statistics gap, and neither survives contact with the data. Owners were already roles in the memo table, so nothing needed researching; a currency figure would have to be invented, which is worse than an honest effort band. The assignment-rate comparison puts 788 and 113 on the same 9,118 records, giving +7.40 pp (95% CI 6.78 to 8.02) with a McNemar exact p of 1.3e-203, so it is significant by construction: the two views differ on the same records. A test that cannot fail adds no evidence, so it is recorded as won't do rather than built. Approval of the memo is deliberately left to the end, after the content it approves is settled.
 
 **Verification:** the memo still introduces no unasserted number; `scripts/support_check_docs_consistency.py` and `scripts/18_check_headline_numbers.py` pass; the cancelled test adds no file, so the suite count is unchanged.
+
+## 2026-11-17 - Check the pin instead of assuming it
+
+**Decision:** Add `scripts/support_check_pin_liveness.py` and `tests/test_pin_liveness.py`. The script asks the Hugging Face API whether the pinned revision still resolves and how many days the public dataset has advanced, and it is documented as a network-bound check that stays out of CI.
+
+**Reason:** The reproducibility contract is a pinned commit plus a SHA-256, but nothing verified that the commit still exists upstream, and the memo's warning that a newer snapshot could move the headline was a hypothetical. Measured on 2026-11-17 the pin resolves and the public head is 24 days newer, which turns the hypothetical into a reproducible measurement. The number is printed rather than recorded, because drift is a property of the day it is checked and a figure written into the docs would rot on the next upload.
+
+**Verification:** `pytest` 56 passed including the 8 new pin-liveness tests; `ruff check` and `ruff format --check` clean; `mypy scripts` clean; the script exits 0 against the live API and reports `Pin resolvable : yes` with a 24-day drift; `scripts/support_check_docs_consistency.py` and `scripts/18_check_headline_numbers.py` still pass.

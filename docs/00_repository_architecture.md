@@ -62,7 +62,7 @@ The refresh script owns the downstream refresh sequence: when run alone it regen
 | `15` | Build a temporary compact candidate for the validated Stage 6 refresh. |
 | `16` | Orchestrate the candidate refresh, validation, charts, and generated documentation. |
 
-Support scripts (`support_*.py`) retrieve the pinned taxonomy, prepare/evaluate the AI-assisted audit sample, render charts, render generated report sections from tracked CSVs, compare two proportions when a coverage gap needs a noise check, verify documentation, assert headline numbers, and expose shared inputs. `run_all.py` is the top-level pipeline entry point.
+Support scripts (`support_*.py`) retrieve the pinned taxonomy, prepare/evaluate the AI-assisted audit sample, render charts, render generated report sections from tracked CSVs, compare two proportions when a coverage gap needs a noise check, check that the pinned upstream revision still resolves, verify documentation, assert headline numbers, and expose shared inputs. `run_all.py` is the top-level pipeline entry point.
 
 Support modules follow the same descriptive prefix and are grouped by responsibility: `support_nonfood_*` owns non-food scope queries and review evidence; `support_category_*` owns candidate crosswalk and country coverage calculations; `support_stage5_*` owns readiness and Stage 5 evidence metrics; `support_audit_*` owns semantic-audit classification and statistical calculations; and `support_render_*` plus `support_report_common.py` own generated report rendering. Stage 16 coordinates these modules instead of containing all report-generation logic itself.
 
