@@ -96,8 +96,16 @@ Short records of decisions that affect scope, measurement, or reproducibility.
 
 ## 2026-11-17 - Add a decision memo and a verification path
 
-**Decision:** Publish `docs/11_decision_memo.md` as a one-page record of decisions with evidence, confidence, effort, and a suggested owner; add a CI badge and a 60-second verification line to the README; add a "What would change these conclusions" subsection; and move the README's method diagram out because `docs/00` already carries a fuller execution-flow diagram.
+**Decision:** Publish `docs/11_decision_memo.md` as a short record of decisions with evidence, confidence, effort, and a suggested owner; add a CI badge and a 60-second verification line to the README; add a "What would change these conclusions" subsection; and move the README's method diagram out because `docs/00` already carries a fuller execution-flow diagram.
 
 **Reason:** The audit scored communication and documentation highly, but the README answered what the data shows without saying who should do what, at what cost. A memo gives executives a costed ask, gives analysts a traceable confidence statement, and gives a hiring reader evidence that conclusions are falsifiable rather than asserted. Removing the duplicate diagram keeps one home for the pipeline map and pays for the added lines inside the 150-line presentation limit.
 
 **Verification:** `scripts/18_check_headline_numbers.py` passes 109 assertions with the new static text; `scripts/support_check_docs_consistency.py` passes, including the new `docs/11` links; `pytest` 41 passed; the README is 148 lines, within the 150-line limit; the memo introduces no number that is not already asserted against the tracked CSVs.
+
+## 2026-11-17 - Check the coverage gaps instead of asserting them
+
+**Decision:** Add `scripts/support_coverage_comparison.py` and `tests/test_coverage_comparison.py`, so statements that Indonesia is similar to Malaysia and below the Philippines, Singapore, and Thailand rest on a two-proportion test with a 95% Wald interval and a Bonferroni-adjusted threshold, and report the addressable universe behind each decision in the decision memo.
+
+**Reason:** "Similar" and "below" were defensible from the counts but unfalsifiable as written. Testing them shows the Malaysia difference (+0.87 pp, 95% CI -0.11 to +1.86, p = 0.0833) is not distinguishable from noise while the other three gaps survive the adjusted threshold, which strengthens the existing wording instead of changing it. The memo's addressable-universe table also answers the executive question the previous version left open: how many records each decision can actually reach.
+
+**Verification:** `pytest` 48 passed including the 7 new comparison tests; `ruff check` and `ruff format --check` clean; `mypy scripts` clean across 41 files; `scripts/support_coverage_comparison.py` reproduces the memo table exactly; the test asserts the same values, so a drift in `stage6_country_scope.csv` fails the build.
