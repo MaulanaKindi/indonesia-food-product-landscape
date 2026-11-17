@@ -1,8 +1,8 @@
 # Audit State
 
-- **Phase:** 3 (Verify & release) — **GATE 5**: implementation complete, final score 8.75/10; only release hygiene remains
-- **Branch:** `audit/quality-improvement`
-- **Baseline:** `2ce13f6` (tag `audit-baseline`)
+- **Phase:** 4 (Closed) — **GATE 6**: released as v1.1 from `main` @ `86619d6`; final score 8.75/10; no work remaining
+- **Branch:** `audit/quality-improvement` (merged through PR #2, then deleted with the other merged branches)
+- **Baseline:** `2ce13f6` (tag `audit-baseline`, the last commit before this audit started)
 - **Audience lens:** Market Intelligence Analyst (60-second first look)
 - **Time budget:** half-day, several sessions
 
@@ -52,8 +52,9 @@
 | P1-5c | docs/07 static, docs/08, docs/99, docs/00 | done | `2930f0a` |
 | P1-6 | CI runs script 18; renderer tests; pin-test fix; generated role terminology | done | `fdf454e`, `e4aab0e`, `6da0ef8`, `755f9c7` |
 | P2-1 | Chart palette accessibility | done, folded into P1-1 | — |
-| P2-2 | GitHub metadata (manual) | description done; preview upload pending | `2930f0a` |
-| P2-3 | Optional data-free demo script | not started | — |
+| P2-2 | GitHub metadata (manual) | done - description re-applied, topics verified, preview confirmed via `og:image` (2026-11-17) | `1509c45` |
+| P2-3 | Optional data-free demo script | won't do - covered by the `docs/09` quick look and `support_rerender_generated_sections.py` | — |
+| P2-4 | Protect `main` and document the policy | done (branch protection applied, `CONTRIBUTING.md` updated) | `5cb6a0a` |
 
 ## Verification notes (this session)
 - `scripts/18_check_headline_numbers.py`: 101 assertions pass for 5 countries (ruff clean).
@@ -72,7 +73,7 @@
 - `scripts/support_generate_visuals.py` now emits five charts: the two existing ones plus `largest_category_group.png` (largest candidate-derived group per country, share of all country rows) and `brand_mapping_gap.png` (raw brand text vs exact-approved mapping). Both read only tracked CSVs already used by the other charts.
 - Palette: countries use an Okabe-Ito subset (`#009E73`, `#56B4E9`, `#E69F00`, `#CC79A7`, `#D55E00`); the two-series charts use `#0072B2` (broad) and `#999999` (strict), deliberately disjoint from the country hues so a colour never means two different things across charts. The low-contrast teal pair (`#0B6E69`/`#72B7B2`) is gone.
 - New `tests/test_generated_visuals.py` (5 tests): all five PNGs written, valid PNG signature, >5 KB; palette distinctness regression guard; chart follows the largest-share CSV row (mutation-verified); `KeyError` when `group_source_rows` or the `Brand text` metric is missing.
-- README: figures renumbered 1–5 with captions (146 lines, ≤150); `docs/09` now says "five static charts".
+- README: figures renumbered 1–5 with captions (150 lines, at the ≤150 limit); `docs/09` now says "five static charts".
 - Images regenerated from tracked CSVs only; no headline number changed; `data_readiness_scorecard.png` byte-identical (no code change in that function).
 - Local venv synced from `requirements-dev.txt`: `mypy scripts` clean across 40 files; `pytest -q --cov=scripts` → 41 passed, 16% overall coverage (pipeline scripts need the 8 GB snapshot), `support_generate_visuals.py` 89%.
 
@@ -93,6 +94,6 @@
 - Do not run `scripts/11_*` or `scripts/16_*`.
 - Phase 1 focus: D1, D4, D7 (brief on strong dimensions).
 
-## Open questions
-- Release hygiene (push/PR/tag) requires explicit user request; not performed in this audit.
-- Should `docs/audit/` stay tracked in the repository, or be excluded? Currently tracked (`3d2f78f` added the report).
+## Resolved questions
+- Release hygiene (push/PR/tag) required an explicit user request; it was performed on 2026-11-17 as PR #1, PR #2, and tag `v1.1`.
+- `docs/audit/` stays tracked. It is the record of how the published v1.1 state was scored and verified, which is what makes the 8.75/10 claim auditable rather than asserted.
