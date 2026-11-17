@@ -109,3 +109,11 @@ Short records of decisions that affect scope, measurement, or reproducibility.
 **Reason:** "Similar" and "below" were defensible from the counts but unfalsifiable as written. Testing them shows the Malaysia difference (+0.87 pp, 95% CI -0.11 to +1.86, p = 0.0833) is not distinguishable from noise while the other three gaps survive the adjusted threshold, which strengthens the existing wording instead of changing it. The memo's addressable-universe table also answers the executive question the previous version left open: how many records each decision can actually reach.
 
 **Verification:** `pytest` 48 passed including the 7 new comparison tests; `ruff check` and `ruff format --check` clean; `mypy scripts` clean across 41 files; `scripts/support_coverage_comparison.py` reproduces the memo table exactly; the test asserts the same values, so a drift in `stage6_country_scope.csv` fails the build.
+
+## 2026-11-17 - Close the cost question and cancel the assignment-rate test
+
+**Decision:** State the memo's cost basis explicitly (no currency, because the relevant vendor programmes are quote-only and publish no list price) and confirm that owners are roles; cancel the proposed assignment-rate two-proportion test.
+
+**Reason:** The two remaining open items were an owner/cost gap and a statistics gap, and neither survives contact with the data. Owners were already roles in the memo table, so nothing needed researching; a currency figure would have to be invented, which is worse than an honest effort band. The assignment-rate comparison puts 788 and 113 on the same 9,118 records, giving +7.40 pp (95% CI 6.78 to 8.02) with a McNemar exact p of 1.3e-203, so it is significant by construction: the two views differ on the same records. A test that cannot fail adds no evidence, so it is recorded as won't do rather than built. Approval of the memo is deliberately left to the end, after the content it approves is settled.
+
+**Verification:** the memo still introduces no unasserted number; `scripts/support_check_docs_consistency.py` and `scripts/18_check_headline_numbers.py` pass; the cancelled test adds no file, so the suite count is unchanged.
