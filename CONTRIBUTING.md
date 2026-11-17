@@ -54,4 +54,4 @@ The README and Stage 7 generated sections are produced by the pipeline (`scripts
 - Changes land through a pull request. Direct pushes, force pushes, and branch deletion on `main` are rejected, including for administrators.
 - Merging requires the `python-and-sql` check from the Quality checks workflow to pass, and the branch must be up to date with `main` first.
 - Pull request reviews are not required, so a maintainer can merge their own green pull request.
-- Release tags (`v1.0`, `v1.1`) are cut from `main` and published with notes recorded in [`docs/08_github_release_metadata.md`](docs/08_github_release_metadata.md).
+- Release tags (`v1.0`, `v1.1`, `v1.2`) are cut from `main` and published with notes recorded in [`docs/08_github_release_metadata.md`](docs/08_github_release_metadata.md).

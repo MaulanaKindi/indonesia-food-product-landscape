@@ -1,6 +1,6 @@
 # GitHub repository metadata and release records
 
-Prepared for `MaulanaKindi/indonesia-food-product-landscape`. The description, topics, and social preview below are applied, and releases `v1.0` and `v1.1` are published.
+Prepared for `MaulanaKindi/indonesia-food-product-landscape`. The description, topics, and social preview below are applied, and releases `v1.0`, `v1.1`, and `v1.2` are published.
 
 ## About
 
@@ -11,6 +11,25 @@ Prepared for `MaulanaKindi/indonesia-food-product-landscape`. The description, t
 **Social preview:** [`docs/img/social_preview.png`](../docs/img/social_preview.png) - 1280 x 640 PNG, generated from the project's fixed-snapshot category-tag coverage values. Applied on 2026-11-17 from **Settings → Social preview → Edit** and verified from the repository page: both `og:image` and `twitter:image` resolve to a `repository-images.githubusercontent.com` URL rather than the default preview. GitHub recommends 1280 x 640 pixels and accepts PNG/JPG/GIF under 1 MB ([instructions](https://docs.github.com/en/enterprise-cloud@latest/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/customizing-your-repositorys-social-media-preview)).
 
 ## Published releases
+
+### v1.2 (2026-11-17)
+
+**Tag:** `v1.2`
+
+**Title:** Indonesia Food Product Landscape v1.2
+
+**Release:** [Indonesia Food Product Landscape v1.2](https://github.com/MaulanaKindi/indonesia-food-product-landscape/releases/tag/v1.2) - published 2026-11-17 WIB.
+
+**Prerelease:** No.
+
+**Notes:**
+
+- Documentation and governance release: a decision memo, a reproducible test of the country coverage gaps, a pinned-snapshot liveness check, and repository metadata verification. No headline number, mapping decision, or Stage 5-7 logic changed.
+- `docs/11_decision_memo.md` records four decisions with evidence, confidence, effort bands, owners, and horizon, and states the addressable universe behind each one. Approved 2026-11-17 by the repository owner; decisions 1-3 are adopted and decision 4 is recorded but not scoped.
+- Coverage gaps are now tested rather than asserted. A two-proportion test with 95% Wald intervals finds Indonesia indistinguishable from Malaysia (+0.87 pp, 95% CI -0.11 to +1.86, p = 0.0833) and clearly below the Philippines, Singapore, and Thailand; all four comparisons survive the Bonferroni-adjusted threshold of 0.0125.
+- `scripts/support_check_pin_liveness.py` checks that the pinned upstream revision still resolves and reports drift from the public head, which was 24 days on 2026-11-17. It is network-bound and deliberately excluded from CI.
+- Repository metadata verified: description, ten topics, and a social preview that resolves through `og:image`; `main` is protected with a required `python-and-sql` check.
+- Verification: 56 tests, `ruff`, `mypy`, `sqlfluff`, documentation consistency, and the 109-assertion headline-number and static-string guard.
 
 ### v1.1 (2026-11-16)
 

@@ -1,6 +1,6 @@
 # Audit State
 
-- **Phase:** 4 (Closed) — **GATE 6**: released as v1.1 from `main` @ `86619d6`; final score 8.75/10; no work remaining
+- **Phase:** 4 (Closed) — **GATE 6**: released as v1.1 from `main` @ `86619d6`, then v1.2 (documentation and governance release) published 2026-11-17; final score 8.75/10; no work remaining
 - **Branch:** `audit/quality-improvement` (merged through PR #2, then deleted with the other merged branches)
 - **Baseline:** `2ce13f6` (tag `audit-baseline`, the last commit before this audit started)
 - **Audience lens:** Market Intelligence Analyst (60-second first look)
@@ -82,7 +82,7 @@
 - Local venv synced from `requirements-dev.txt`: `mypy scripts` clean across 40 files; `pytest -q --cov=scripts` → 41 passed, 16% overall coverage (pipeline scripts need the 8 GB snapshot), `support_generate_visuals.py` 89%.
 
 ## Gate
-- **Current:** GATE 6 — released. v1.1 published 2026-11-16 from `main` @ `86619d6`; both PRs merged with CI green; merged remote and local branches removed; tags `audit-baseline` and `v1.1` remain.
+- **Current:** GATE 6 — released. v1.1 published 2026-11-16 from `main` @ `86619d6`; both PRs merged with CI green; merged remote and local branches removed. After the audit closed, v1.2 was published on 2026-11-17 as a documentation and governance release (decision memo, coverage-gap tests, pin liveness check). Tags `audit-baseline`, `v1.0`, `v1.1`, and `v1.2` remain.
 - **Release path:** PR #1 (`release/v1.1-stabilization` → `main`, rebase-merged to `baa52d5`) landed the stabilization branch, then PR #2 (`audit/quality-improvement` → `main`, merge commit `86619d6`) landed this audit. The two branches had edited the same documentation, so the merge was resolved deliberately: every conflicted file was compared on both sides and the audit version kept, because it already contained the stabilization content plus the audit changes.
 - **History note:** because PR #1 was rebase-merged, `main` contains both the rewritten stabilization commits (`149cb7d`..`baa52d5`) and the original ones (`4ef43a3`..`2ce13f6`) reached through the audit merge. Their trees are identical, so no content is duplicated in the final state.
 - **Remaining:** none. `main` is protected (required `python-and-sql` check, no force pushes, no deletion, enforced for administrators), P2-2 is closed, and P2-3 (data-free demo script) is closed as won't do because the quick-look docs and `scripts/support_rerender_generated_sections.py` already cover it. Local venv sync is done, so `mypy`, `pytest-cov`, and `pre-commit` all run locally.

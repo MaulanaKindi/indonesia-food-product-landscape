@@ -133,3 +133,11 @@ Short records of decisions that affect scope, measurement, or reproducibility.
 **Reason:** The memo had been carrying `proposed` while its content was already settled, which made a finished document read as an unfinished one. The repository owner is the only party accountable for these decisions, so recording that approval is accurate rather than ceremonial; the wording says so plainly instead of implying an independent review. Decision 4 named a role this project does not have, so it is labelled as a future budget holder, and it stays unscoped because commissioning sales or panel data needs budget this repository does not control.
 
 **Verification:** `docs/11` now states the approval date and approver and no longer asks for approval; the README pointer reads "an owner"; `scripts/support_check_docs_consistency.py` and `scripts/18_check_headline_numbers.py` pass; no figure changed, so `pytest` stays at 56 passed.
+
+## 2026-11-17 - Publish v1.2
+
+**Decision:** Publish `v1.2` from `main` as a documentation and governance release, covering the work merged after `v1.1`: the decision memo and its approval, the coverage-gap tests, the pinned-snapshot liveness check, and the repository metadata and branch-protection records.
+
+**Reason:** The last tag pointed at `86619d6` while `main` had moved 17 commits ahead, so anyone reading the repository saw material that the published version did not claim. v1.2 makes the tag match what a reader actually sees, without touching data or logic: no headline number, mapping decision, or Stage 5-7 behaviour changes, so the 8.75/10 audit score still describes the release.
+
+**Verification:** `pytest` 56 passed; `ruff check` and `ruff format --check` clean; `mypy scripts` clean across 42 files; `sqlfluff` CP01 clean; `scripts/support_check_docs_consistency.py` passes; `scripts/18_check_headline_numbers.py` passes 109 assertions; the release notes and metadata record are in `docs/08_github_release_metadata.md`.
