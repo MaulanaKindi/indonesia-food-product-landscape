@@ -128,6 +128,7 @@ Target check: overall ≥8.5 met; D1 and D2 ≥9 met; every dimension now ≥8, 
 - PR #1 landed `release/v1.1-stabilization` (rebase-merged to `baa52d5`); PR #2 landed this audit (merge commit `86619d6`). Both were green in CI before merging.
 - The branches had edited the same documentation, so each conflicted file was compared on both sides before resolution; the audit version was kept because it already contained the stabilization content.
 - Merged remote and local branches were deleted; tags `audit-baseline` and `v1.1` remain.
+- v1.2 published 2026-11-17 after the audit closed: a documentation and governance release (decision memo approved, coverage gaps tested rather than asserted, pinned-snapshot liveness check, repository metadata verified). It changed no headline number, mapping decision, or Stage 5-7 logic, so the 8.75/10 score above still describes the published state.
 
 ## Verification notes
 - Numbers cross-checked against tracked CSVs — consistent; now enforced by `scripts/18_check_headline_numbers.py` (109 assertions) in CI.
