@@ -1,6 +1,7 @@
-# Audit Report — Baseline
+# Audit Report
 
-- **Baseline:** commit `2ce13f6` (tag `audit-baseline`), branch `audit/quality-improvement`
+- **Baseline:** commit `2ce13f6` (tag `audit-baseline`), audited on branch `audit/quality-improvement` (merged through PR #2 and then deleted with the other merged branches)
+- **Outcome:** implemented and released as v1.1 from `main` @ `86619d6`; final score 8.75/10
 - **Audience lens:** Market Intelligence Analyst (hiring manager, ~60-second first look, then code inspection)
 - **Method:** read-only inspection of README, `docs/`, `scripts/`, `sql/`, tracked `outputs/` CSVs, `requirements*.txt`, `.gitignore`, `.gitattributes`, `LICENSE`, git log/status. Pipeline scripts (incl. 11 and 16) were **not** run. `support_check_docs_consistency.py` was **not** run (needs approval); CI runs it on push/PR.
 
