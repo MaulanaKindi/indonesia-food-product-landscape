@@ -85,3 +85,11 @@ Short records of decisions that affect scope, measurement, or reproducibility.
 **Reason:** The 60-second reader needs two visuals that the text cannot carry as fast: which reporting group dominates recorded rows, and how far brand-text availability sits from exact-approved brand coverage. Sharing hues between the country palette and the two-series charts would make one colour mean two different things, so series colours are deliberately disjoint. Publishing the stabilization branch and the audit branch in one release keeps the README, charts, and CI gates consistent for anyone who reads only the tagged state.
 
 **Verification:** `pytest` 41 passed; `ruff check` and `ruff format --check` clean; `mypy scripts` clean across 40 files; `sqlfluff` clean; `scripts/support_check_docs_consistency.py` passes; `scripts/18_check_headline_numbers.py` passes 109 assertions; the README is 150 lines, exactly at the presentation limit; `tests/test_generated_visuals.py` covers all five charts, palette distinctness, and the source columns each chart reads.
+
+## 2026-11-17 - Protect main and require green checks
+
+**Decision:** Protect `main` with a required `python-and-sql` status check that requires the branch to be up to date, reject force pushes and branch deletion, enforce the rules for administrators, and do not require pull request reviews.
+
+**Reason:** The repository is published and versioned by tag, so the branch that carries releases should not accept unverified history. Requiring the quality job keeps a red build off `main`, while leaving reviews optional lets a solo maintainer merge a green pull request without deadlocking on a self-approval that cannot exist.
+
+**Verification:** `GET /repos/MaulanaKindi/indonesia-food-product-landscape/branches/main/protection` returns `strict=true`, `contexts=["python-and-sql"]`, `enforce_admins=true`, `allow_force_pushes=false`, and `allow_deletions=false`; the policy and the full local check list are documented in `CONTRIBUTING.md`.
