@@ -15,6 +15,8 @@ This memo turns the study's findings into decisions with evidence, confidence, e
 
 Effort is a planning estimate, not a commitment: **S** fits the existing backlog, **M** needs scheduled review capacity, **L** needs new procurement or budget.
 
+**Cost basis.** No currency amount appears here, deliberately: the relevant vendor programmes are quote-only and publish no list price, so any figure would be unverifiable rather than informative. The **L** band on decision 4 therefore means procurement effort, not a known spend. Owners are roles rather than individuals, so the table stays valid when people change.
+
 ## What each decision can reach
 
 | # | Addressable universe in this snapshot | Consequence |
@@ -60,4 +62,4 @@ The AI-assisted audit judged 97 of 130 candidate group pairs correct on a fixed 
 
 Source commit, size, and checksum: [data source and licensing](02_data_source.md). Metric definitions: [reproduction guide](09_reproduction.md). Claim-to-evidence trace: [claim lineage](10_claim_lineage.md). Generated results and caveats: [Stage 7 findings](07_stage7_findings_and_recommendations.md).
 
-**Approval requested:** adopt decisions 1–3 as standing guidance, name the role owners, and decide whether to scope decision 4 for the next budget cycle.
+**Approval requested:** adopt decisions 1–3 as standing guidance, confirm the role owners named above, and decide whether to scope decision 4 for the next budget cycle.
