@@ -16,7 +16,8 @@ This guide explains where project inputs, transformations, evidence, and publish
 | `outputs/profiling/` | Profile, mapping, coverage, and country-evidence CSVs | Generated. Only the explicitly allowlisted evidence tables are versioned. |
 | `outputs/analysis/` | Stage 6 country, category, brand, and validation CSVs | Generated from the compact candidate; only allowlisted outputs are versioned. |
 | `outputs/quality/` | Build checks, audit records, and refresh summaries | Generated. Published audit outputs are a documented record-level exception; other files remain ignored. |
-| `docs/` | Numbered project, methods, results, release, and reproduction documentation | Filenames use two-digit order prefixes and lowercase snake case; `99_project_log.md` holds dated decisions. |
+| `docs/` | Numbered project, methods, results, release, and reproduction documentation | Filenames use two-digit order prefixes and lowercase snake case. |
+| `docs/internal/` | Working notes kept for traceability, not written for readers | Holds the internal audit state, the internal audit report, and the dated project log. These record how decisions were made; they are not client-facing. |
 | `docs/img/` | Published static charts and repository preview artwork | Generated or prepared images referenced by the README and release notes. |
 | `.github/workflows/` | Automated quality gates | Runs tests, Ruff lint/format over all Python scripts/tests, focused SQL lint, and generated-documentation consistency. |
 | `tests/` | Small synthetic tests for mapping logic and analytical diagnostics | Does not require the source Parquet or large database. |

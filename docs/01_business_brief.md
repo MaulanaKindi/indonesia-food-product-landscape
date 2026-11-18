@@ -97,10 +97,12 @@ A **record** is one source row in the pinned snapshot, not necessarily a unique 
 ## 7. Data and Interpretation Principles
 
 - Product counts represent records in Open Food Facts, not all products sold in a market.
+- Fitness for use: data is good or bad only relative to a decision, so the question is whether the fields that decision needs are populated and reliable.
 - Recorded brand counts do not establish market share or commercial dominance.
 - Brand concentration calculated from product records is not equivalent to sales concentration.
 - Open Food Facts coverage, contributor activity, missing values, duplicate records, classification differences, and snapshot timing may affect cross-country comparisons.
 - A product may be assigned to several countries, categories, or brands; sums across such groups may overlap.
+- Triangulation: collaborative data skews toward particular contributors and products, so findings need checking against independent sources.
 - Distinguish observations from interpretations and recommendations. Do not imply causation from descriptive comparisons.
 - Document all cleaning, mapping, exclusion, and denominator decisions with reproducible evidence.
 
@@ -143,4 +145,4 @@ The project is complete when:
 
 ## 11. Current Project Status
 
-The pinned five-country database has been rebuilt and passed 15 scoped validation checks. The bounded Stage 5–7 analysis, generated executive README, static charts, and documentation-consistency checks use this canonical scope. Broader product-identifier, category, and brand harmonization remain incomplete by design; uncertain mappings remain unresolved. The source pin, expected file checksum, and verification date are documented; the optional full-country database is not a prerequisite. Sales, market-share, and demand conclusions remain out of scope.
+The pinned five-country database has been rebuilt and passed 15 scoped validation checks. The bounded analysis, generated executive README, static charts, and documentation-consistency checks use this canonical scope. Broader product-identifier, category, and brand harmonization remain incomplete by design; uncertain mappings remain unresolved. The source pin, expected file checksum, and verification date are documented; the optional full-country database is not a prerequisite. Sales, market-share, and demand conclusions remain out of scope.

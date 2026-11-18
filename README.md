@@ -2,42 +2,40 @@
 
 [![Quality checks](https://github.com/MaulanaKindi/indonesia-food-product-landscape/actions/workflows/quality.yml/badge.svg)](https://github.com/MaulanaKindi/indonesia-food-product-landscape/actions/workflows/quality.yml)
 
-An evidence-based comparison of product records and data coverage in a pinned Open Food Facts snapshot—not a measure of food-market size or sales.
+How much product data exists for Indonesia, and how completely is it described — answered from one pinned Open Food Facts snapshot, and not a measure of market size, sales, or share.
 
-**Verify in 60 seconds:** every headline number and all five charts are committed and asserted in CI; [rebuild and check them without the 8 GB download](docs/09_reproduction.md#quick-look-without-the-8-gb-download), and test whether a coverage gap is more than noise.
+**Verify in 60 seconds:** every headline number and all five charts are committed and asserted in CI — [rebuild and check them without the 8 GB download](docs/09_reproduction.md#quick-look-without-the-8-gb-download).
 
-## Bottom line
+## 30-second summary
 
-**Answer:** In one fixed Open Food Facts snapshot, Indonesia (ID) records 9,118 product rows and tags 12.2% of them with at least one category. Recorded category coverage in Indonesia is similar to Malaysia (MY) and somewhat below the Philippines (PH) and Singapore (SG), and far below Thailand (TH), a high-coverage contrast. This is a data-coverage study, not a market-size estimate.
+If you wanted to describe the Indonesian food market from open product data, how much of it would you actually have? In one fixed snapshot of Open Food Facts the answer is 9,118 Indonesian product records, of which 12.2% carry a category tag. That is close to Malaysia, below the Philippines and Singapore, and far below Thailand, which tags 62.6%.
 
-**Why these countries:** Indonesia is the study country; Malaysia (MY), the Philippines (PH), and Singapore (SG) are comparison countries, and Thailand (TH) is a high-coverage contrast ([business brief](docs/01_business_brief.md), section 1). The brief selects peers on documented coverage and quality, relevant category availability, source-snapshot alignment, and analytical relevance—not on record count (section 6.6).
+For a business decision, the data works as a supplementary signal about which products are recorded and how completely they are described — not as a measure of what sells. Category assignments are provisional, and brand mapping is far too sparse to describe a competitive landscape.
 
-**Decisions this supports:**
-- **Use** Open Food Facts as a supplementary signal for catalog coverage and field completeness—see [Fit for purpose](#fit-for-purpose).
-- **Do not use it alone** for competitor share, market size, sales, demand, or availability; pair it with representative retail, sales-panel, or official data.
-- **Treat category assignments as provisional:** candidate-derived assignments are broader than approved-only, and neither covers all tagged records.
-- **Costed and owned:** the [decision memo](docs/11_decision_memo.md) turns these into actions with evidence, confidence, effort, and an owner, and checks whether the country coverage gaps are larger than sampling noise.
-
-**What this is / who it is for / how to read (60 seconds):** a data-coverage study of Open Food Facts for market-intelligence and FMCG (fast-moving consumer goods) analysts; read the headline numbers, then the country table, then the limitations.
-
-## TL;DR
-
-**Question:** In one fixed Open Food Facts snapshot, how much product data exists for Indonesia versus four comparison countries, and how completely is it described?
+## Key results
 
 <!-- AUTO-GENERATED: headline-metrics:START -->
 - **Category coverage:** 12.2% of Indonesian records are tagged, versus 11.3%–17.3% in the comparison countries and 62.6% in Thailand, the high-coverage contrast.
 - **Category assignments in Indonesia:** 788 of 1,111 tagged records (70.9%) receive at least one candidate-derived group; 113 (10.2%) do under the stricter approved-only view.
 - **Brand evidence:** raw brand text is present for 38.8% of Indonesian records, while exact-approved mapping covers only 0.34%.
-- **AI + online mapping audit:** 97/130 candidate assignments were judged correct on a targeted, non-random sample; this is a diagnostic, not human ground truth (details in Method quality and the Stage 7 findings).
+- **AI + online mapping audit:** 97/130 candidate assignments were judged correct on a targeted, non-random sample; this is a diagnostic, not human ground truth (details in Method quality and the findings and recommendations).
 <!-- AUTO-GENERATED: headline-metrics:END -->
 
-**Terms used here:** Open Food Facts = collaborative product database; record = one row in the snapshot (not necessarily a unique product); tag = a source country or category label; snapshot = one pinned download; country codes = ISO 3166-1 alpha-2.
+![Bar chart of category-tag coverage: Indonesia 12%, Malaysia 11%, Philippines 17%, Singapore 17%, Thailand 63%](docs/img/category_coverage.png)
 
-![Category-tag coverage by country](docs/img/category_coverage.png)
+*Figure 1 — Only 12% of Indonesian records carry a category tag, versus 63% in Thailand. How to read this: taller bars mean more completely tagged data, not a bigger market.*
 
-*Figure 1 — Category-tag coverage by country. Bars show the share of records with at least one category tag; higher means more completely tagged, not a bigger market.*
+## What this demonstrates
 
-### Country comparison
+- **Auditing whether data is fit for a decision.** The study measures which fields a decision needs and how often they are populated, instead of assuming a dataset is usable because it is large.
+- **Honest scoping.** It states plainly what the data cannot support — market size, sales, demand, share, availability — rather than implying that coverage equals commercial insight.
+- **Reproducible, tested analysis.** Every headline number is asserted in CI against committed outputs, and every chart is regenerated from those outputs rather than drawn by hand.
+
+*Decisions this supports:* what to use this data for, at what effort, and what to commission first — see the [decision memo](docs/11_decision_memo.md).
+
+## Country comparison
+
+**Why these countries:** Indonesia is the study country; Malaysia (MY), the Philippines (PH), and Singapore (SG) are comparison countries chosen on documented coverage, category availability, source-snapshot alignment, and analytical relevance — not on record count ([business brief](docs/01_business_brief.md), section 1). Thailand (TH) is a high-coverage contrast, not an equivalent market peer.
 
 "Assigned" means a record has at least one substantive reporting-group assignment; groups can overlap. "Share of all records" uses **all country records** as the denominator; tag coverage uses **tagged records** as the denominator.
 
@@ -51,25 +49,25 @@ An evidence-based comparison of product records and data coverage in a pinned Op
 | Thailand (TH) | High-coverage contrast | 11,343 | 7,104 | 62.63% | 4,516 (63.6%) | 673 (9.5%) | 39.81% | 5.93% |
 <!-- AUTO-GENERATED: country-comparison:END -->
 
-**Reading the terms:**
+### Glossary in plain English
 
 | Term | Plain meaning |
 |---|---|
-| Reporting group | One fixed food group used to group category tags for comparison, such as Beverages, Sweet foods & desserts, or Cereals, potatoes & bakery. |
+| Reporting group | One fixed food group used to compare category tags, such as Beverages or Cereals, potatoes & bakery. |
 | Category-tagged / tag coverage | A record has at least one category tag; coverage is the tagged share of a country's records. |
-| Candidate-derived assigned | A record linked to a reporting group by a candidate (automated or manual) mapping. Exploratory—not all of these mappings are reviewed. |
-| Approved-only assigned | A record linked only through mappings with an approved decision. Stricter and narrower than candidate-derived. |
-| Exact-approved brand mapping | Raw brand text matched to a brand whose mapping is marked approved. Much narrower than having brand text. |
+| Candidate-derived assigned | Broad, automated, not-yet-verified: a record linked to a group by an automated or manual candidate mapping. |
+| Approved-only assigned | Narrow, verified: a record linked only through mappings with a reviewed decision. |
+| Exact-approved brand mapping | A brand name matched to a brand whose mapping is reviewed. Much narrower than having brand text. |
 | Share of all records | A count divided by all of a country's records, not only its tagged records. |
-| High-coverage contrast | Thailand is included because its category-tag coverage is far higher (62.6%), to show what well-tagged data looks like. It is not an equivalent market peer. |
+| High-coverage contrast | Thailand is included because its tag coverage is far higher (62.6%), to show what well-tagged data looks like. It is not an equivalent market peer. |
 
-![Candidate-derived and approved-only assignment coverage](docs/img/category_assignment_coverage.png)
+![Grouped bar chart: in Indonesia, candidate-derived assignment covers 71% of tagged records and approved-only covers 10%](docs/img/category_assignment_coverage.png)
 
-*Figure 2 — Candidate-derived vs approved-only assignment coverage among category-tagged records.*
+*Figure 2 — In Indonesia, broad mapping assigns 71% of tagged records while strict mapping assigns 10%. How to read this: the gap between the two bars shows how much the answer depends on which mapping rule you accept.*
 
-![Largest candidate-derived reporting group by country](docs/img/largest_category_group.png)
+![Bar chart of each country's largest reporting group: sweet foods & desserts leads in 3 of 5 countries](docs/img/largest_category_group.png)
 
-*Figure 3 — Largest candidate-derived reporting group per country, as a share of all country records. Labels use the fixed reporting-group framework; groups can overlap, so these shares are not additive.*
+*Figure 3 — Sweet foods & desserts is the largest reporting group in 3 of 5 countries. How to read this: each bar is the biggest single group for that country as a share of all its records; groups can overlap, so bars are not additive.*
 
 ### Field readiness
 
@@ -85,21 +83,13 @@ Percentages are records with a non-empty field or valid value, using the definit
 | Thailand (TH) | 80.4% | 62.6% | 55.6% | 81.2% | 45.6% | 29.9% | 17.2% | 0.4% |
 <!-- AUTO-GENERATED: readiness-scorecard:END -->
 
-![Data-readiness scorecard](docs/img/data_readiness_scorecard.png)
+![Heatmap of field readiness by country; the widest field gap for Indonesia is category tags at 12% versus 63% in Thailand](docs/img/data_readiness_scorecard.png)
 
-*Figure 4 — Field readiness: the share of records with a usable value for each field. Exact-approved brand mapping is far narrower than brand-text presence.*
+*Figure 4 — The widest field gap for Indonesia is category tags: 12% versus 63% in Thailand. How to read this: darker cells mean more records carry a usable value for that field.*
 
-![Brand text versus exact-approved brand mapping](docs/img/brand_mapping_gap.png)
+![Grouped bar chart comparing brand text with exact-approved brand mapping; brand text covers 39% of Indonesian records and exact-approved mapping 0.34%](docs/img/brand_mapping_gap.png)
 
-*Figure 5 — Raw brand text is common while exact-approved brand mapping stays rare. The two are different measures and must not be read as one.*
-
-## Business lens
-
-A thinking framework for reading this study, not a result of it:
-
-1. **Fitness for use:** data is good or bad only relative to a decision: the question is whether the fields that decision needs are populated and reliable.
-2. **Counts are not weights:** the number of registered products is not a sales-weighted distribution; weighting needs sales or demand data this source does not have.
-3. **Selection bias and triangulation:** collaborative data skews toward particular contributors and products, so findings need triangulation against independent sources.
+*Figure 5 — Brand text covers 39% of Indonesian records; exact-approved mapping covers 0.34%. How to read this: the two bars measure different things and must not be read as one.*
 
 ## Fit for purpose
 
@@ -121,7 +111,7 @@ A thinking framework for reading this study, not a result of it:
 
 ## Method quality
 
-The AI-assisted mapping audit is a diagnostic, not human ground truth. The primary sample is 150 Indonesian category-tagged records selected deterministically by MD5 rank; of 130 candidate group pairs, 97 of 130 were judged correct, 16 disagreed, 8 were ambiguous, and 9 had insufficient evidence, with exact group-set agreement of 61/150 (40.7%). A separate eight-record Meat & poultry census is reported descriptively and is not pooled with the primary estimate. A targeted online follow-up covered the 48 cases with incorrect, ambiguous, or insufficient-evidence assessments (45 primary-sample and 3 census): 30 had supporting product evidence and 18 remained partial or unresolved, with 36 records carrying a source URL and 29 an exact product-code match. Because that follow-up is targeted and non-random, these counts are not a sample-wide precision estimate. Full intervals and per-group results are in the [Stage 7 findings](docs/07_stage7_findings_and_recommendations.md).
+The AI-assisted mapping audit is a diagnostic, not human ground truth. On a targeted, non-random sample of 150 Indonesian records, 97 of 130 candidate assignments were judged correct, with exact group-set agreement of 61/150 (40.7%); a separate eight-record Meat & poultry census is reported descriptively. A targeted online follow-up covered the 48 cases that were incorrect, ambiguous, or under-evidenced. Because that follow-up is targeted and non-random, it is not a sample-wide precision estimate. Full intervals and per-group results are in the [findings and recommendations](docs/07_stage7_findings_and_recommendations.md).
 
 ## Scope and limitations
 
@@ -141,8 +131,16 @@ The AI-assisted mapping audit is a diagnostic, not human ground truth. The prima
 ## Reproduce and inspect
 
 - **Just looking?** Every chart and headline number on this page is committed to the repo and can be regenerated and verified without the 8 GB download — see the [quick-look section](docs/09_reproduction.md#quick-look-without-the-8-gb-download).
-- [Repository architecture](docs/00_repository_architecture.md): directory roles, source-of-truth rules, and pipeline ownership.
-- [Reproduction guide](docs/09_reproduction.md): workflow, requirements, definitions, and three example SQL queries; [claim lineage](docs/10_claim_lineage.md): trace from key claims to inputs, transformations, outputs, and checks; [Stage 7 findings](docs/07_stage7_findings_and_recommendations.md): generated results and caveats.
-- [Business brief](docs/01_business_brief.md), [data source and licensing](docs/02_data_source.md), [release metadata](docs/08_github_release_metadata.md), and the prepared [social preview](docs/img/social_preview.png).
+- **Need a one-page brief?** The [client one-pager](docs/12_client_one_pager.md) covers the problem, approach, result, decision implications, and limits on a single page.
+- [Repository architecture](docs/00_repository_architecture.md) maps the directory roles and source-of-truth rules; the [reproduction guide](docs/09_reproduction.md) covers requirements, definitions, and three example SQL queries; [claim lineage](docs/10_claim_lineage.md) traces each claim to its inputs and checks.
+- [Business brief](docs/01_business_brief.md), [data source and licensing](docs/02_data_source.md), [release metadata](docs/08_github_release_metadata.md), and the [findings and recommendations](docs/07_stage7_findings_and_recommendations.md).
 
 Original project code and documentation are MIT-licensed. Open Food Facts data and third-party references have separate terms; see the [source and licensing note](docs/02_data_source.md).
+
+## About the author
+
+[Maulana Kindi](https://www.linkedin.com/in/maulanakinditamami/) is a freelance data analyst and BI consultant. This study is a portfolio piece: it shows how I scope a data question, measure what the data can actually support, and keep every claim reproducible.
+
+Services: data-fitness audits, KPI definition, SQL and DuckDB pipelines, and dashboards.
+
+Contact: [maulanakindi@gmail.com](mailto:maulanakindi@gmail.com) · [LinkedIn](https://www.linkedin.com/in/maulanakinditamami/)

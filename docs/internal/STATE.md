@@ -56,7 +56,7 @@
 | P2-3 | Optional data-free demo script | won't do - covered by the `docs/09` quick look and `support_rerender_generated_sections.py` | — |
 | P2-4 | Protect `main` and document the policy | done (branch protection applied, `CONTRIBUTING.md` updated) | `5cb6a0a` |
 | P2-5 | Assignment-rate two-proportion test (candidate vs approved-only) | won't do - both groups are the same 9,118 records; +7.40 pp, 95% CI 6.78 to 8.02, McNemar exact p = 1.3e-203, so the result is trivial and carries no decision value | — |
-| P2-6 | Decision memo: cost basis and owner wording | done - no currency stated (vendor programmes are quote-only), owners confirmed as roles, approval line clarified | — |
+| P2-6 | Decision memo: cost basis and owner wording | done - no currency stated (vendor programs are quote-only), owners confirmed as roles, approval line clarified | — |
 | P2-7 | Pin liveness and drift check | done - `support_check_pin_liveness.py` plus tests; pin resolved and head 24 days newer on 2026-11-17; network-bound, excluded from CI | — |
 | P2-8 | Decision memo approval | done - approved 2026-11-17 by the repository owner; decisions 1-3 adopted, decision 4 recorded but not scoped | — |
 
@@ -75,7 +75,7 @@
 
 ## Verification notes (P1-1, this session)
 - `scripts/support_generate_visuals.py` now emits five charts: the two existing ones plus `largest_category_group.png` (largest candidate-derived group per country, share of all country rows) and `brand_mapping_gap.png` (raw brand text vs exact-approved mapping). Both read only tracked CSVs already used by the other charts.
-- Palette: countries use an Okabe-Ito subset (`#009E73`, `#56B4E9`, `#E69F00`, `#CC79A7`, `#D55E00`); the two-series charts use `#0072B2` (broad) and `#999999` (strict), deliberately disjoint from the country hues so a colour never means two different things across charts. The low-contrast teal pair (`#0B6E69`/`#72B7B2`) is gone.
+- Palette: countries use an Okabe-Ito subset (`#009E73`, `#56B4E9`, `#E69F00`, `#CC79A7`, `#D55E00`); the two-series charts use `#0072B2` (broad) and `#999999` (strict), deliberately disjoint from the country hues so a color never means two different things across charts. The low-contrast teal pair (`#0B6E69`/`#72B7B2`) is gone.
 - New `tests/test_generated_visuals.py` (5 tests): all five PNGs written, valid PNG signature, >5 KB; palette distinctness regression guard; chart follows the largest-share CSV row (mutation-verified); `KeyError` when `group_source_rows` or the `Brand text` metric is missing.
 - README: figures renumbered 1–5 with captions (150 lines, at the ≤150 limit); `docs/09` now says "five static charts".
 - Images regenerated from tracked CSVs only; no headline number changed; `data_readiness_scorecard.png` byte-identical (no code change in that function).
@@ -100,4 +100,4 @@
 
 ## Resolved questions
 - Release hygiene (push/PR/tag) required an explicit user request; it was performed on 2026-11-17 as PR #1, PR #2, and tag `v1.1`.
-- `docs/audit/` stays tracked. It is the record of how the published v1.1 state was scored and verified, which is what makes the 8.75/10 claim auditable rather than asserted.
+- `docs/internal/` stays tracked. It is the record of how the published v1.1 state was scored and verified, which is what makes the 8.75/10 claim auditable rather than asserted. It is a working note, not reader-facing documentation.

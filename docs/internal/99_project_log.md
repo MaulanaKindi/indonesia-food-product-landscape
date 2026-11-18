@@ -80,9 +80,9 @@ Short records of decisions that affect scope, measurement, or reproducibility.
 
 ## 2026-11-16 - Add accessible charts and publish v1.1
 
-**Decision:** Add a largest-reporting-group chart and a brand-text versus exact-approved-mapping chart, generate all five charts only from tracked CSVs, move the country palette to an Okabe-Ito subset with series colours that are disjoint from country colours, and publish the stabilization and audit work together as v1.1.
+**Decision:** Add a largest-reporting-group chart and a brand-text versus exact-approved-mapping chart, generate all five charts only from tracked CSVs, move the country palette to an Okabe-Ito subset with series colors that are disjoint from country colors, and publish the stabilization and audit work together as v1.1.
 
-**Reason:** The 60-second reader needs two visuals that the text cannot carry as fast: which reporting group dominates recorded rows, and how far brand-text availability sits from exact-approved brand coverage. Sharing hues between the country palette and the two-series charts would make one colour mean two different things, so series colours are deliberately disjoint. Publishing the stabilization branch and the audit branch in one release keeps the README, charts, and CI gates consistent for anyone who reads only the tagged state.
+**Reason:** The 60-second reader needs two visuals that the text cannot carry as fast: which reporting group dominates recorded rows, and how far brand-text availability sits from exact-approved brand coverage. Sharing hues between the country palette and the two-series charts would make one color mean two different things, so series colors are deliberately disjoint. Publishing the stabilization branch and the audit branch in one release keeps the README, charts, and CI gates consistent for anyone who reads only the tagged state.
 
 **Verification:** `pytest` 41 passed; `ruff check` and `ruff format --check` clean; `mypy scripts` clean across 40 files; `sqlfluff` clean; `scripts/support_check_docs_consistency.py` passes; `scripts/18_check_headline_numbers.py` passes 109 assertions; the README is 150 lines, exactly at the presentation limit; `tests/test_generated_visuals.py` covers all five charts, palette distinctness, and the source columns each chart reads.
 
@@ -112,7 +112,7 @@ Short records of decisions that affect scope, measurement, or reproducibility.
 
 ## 2026-11-17 - Close the cost question and cancel the assignment-rate test
 
-**Decision:** State the memo's cost basis explicitly (no currency, because the relevant vendor programmes are quote-only and publish no list price) and confirm that owners are roles; cancel the proposed assignment-rate two-proportion test.
+**Decision:** State the memo's cost basis explicitly (no currency, because the relevant vendor programs are quote-only and publish no list price) and confirm that owners are roles; cancel the proposed assignment-rate two-proportion test.
 
 **Reason:** The two remaining open items were an owner/cost gap and a statistics gap, and neither survives contact with the data. Owners were already roles in the memo table, so nothing needed researching; a currency figure would have to be invented, which is worse than an honest effort band. The assignment-rate comparison puts 788 and 113 on the same 9,118 records, giving +7.40 pp (95% CI 6.78 to 8.02) with a McNemar exact p of 1.3e-203, so it is significant by construction: the two views differ on the same records. A test that cannot fail adds no evidence, so it is recorded as won't do rather than built. Approval of the memo is deliberately left to the end, after the content it approves is settled.
 
@@ -130,7 +130,7 @@ Short records of decisions that affect scope, measurement, or reproducibility.
 
 **Decision:** Approve `docs/11_decision_memo.md` as the repository's standing guidance: decisions 1-3 are adopted, decision 4 is recorded but not scoped. Rename the table column from "Suggested owner" to "Owner" now that the decisions are approved, and relabel decision 4's owner from "Commercial data owner" to "Budget holder (future)".
 
-**Reason:** The memo had been carrying `proposed` while its content was already settled, which made a finished document read as an unfinished one. The repository owner is the only party accountable for these decisions, so recording that approval is accurate rather than ceremonial; the wording says so plainly instead of implying an independent review. Decision 4 named a role this project does not have, so it is labelled as a future budget holder, and it stays unscoped because commissioning sales or panel data needs budget this repository does not control.
+**Reason:** The memo had been carrying `proposed` while its content was already settled, which made a finished document read as an unfinished one. The repository owner is the only party accountable for these decisions, so recording that approval is accurate rather than ceremonial; the wording says so plainly instead of implying an independent review. Decision 4 named a role this project does not have, so it is labeled as a future budget holder, and it stays unscoped because commissioning sales or panel data needs budget this repository does not control.
 
 **Verification:** `docs/11` now states the approval date and approver and no longer asks for approval; the README pointer reads "an owner"; `scripts/support_check_docs_consistency.py` and `scripts/18_check_headline_numbers.py` pass; no figure changed, so `pytest` stays at 56 passed.
 
@@ -138,6 +138,6 @@ Short records of decisions that affect scope, measurement, or reproducibility.
 
 **Decision:** Publish `v1.2` from `main` as a documentation and governance release, covering the work merged after `v1.1`: the decision memo and its approval, the coverage-gap tests, the pinned-snapshot liveness check, and the repository metadata and branch-protection records.
 
-**Reason:** The last tag pointed at `86619d6` while `main` had moved 17 commits ahead, so anyone reading the repository saw material that the published version did not claim. v1.2 makes the tag match what a reader actually sees, without touching data or logic: no headline number, mapping decision, or Stage 5-7 behaviour changes, so the 8.75/10 audit score still describes the release.
+**Reason:** The last tag pointed at `86619d6` while `main` had moved 17 commits ahead, so anyone reading the repository saw material that the published version did not claim. v1.2 makes the tag match what a reader actually sees, without touching data or logic: no headline number, mapping decision, or Stage 5-7 behavior changes, so the 8.75/10 audit score still describes the release.
 
 **Verification:** `pytest` 56 passed; `ruff check` and `ruff format --check` clean; `mypy scripts` clean across 42 files; `sqlfluff` CP01 clean; `scripts/support_check_docs_consistency.py` passes; `scripts/18_check_headline_numbers.py` passes 109 assertions; the release notes and metadata record are in `docs/08_github_release_metadata.md`.
