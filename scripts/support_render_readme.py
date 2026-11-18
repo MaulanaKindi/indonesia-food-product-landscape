@@ -78,7 +78,7 @@ def render_readme(
                 f"{int(audit['candidate_assignment_pairs'])} candidate assignments "
                 "were judged correct on a targeted, non-random sample; this is a "
                 "diagnostic, not human ground truth (details in Method quality and "
-                "the Stage 7 findings)."
+                "the findings and recommendations)."
             ),
         ]
     )
