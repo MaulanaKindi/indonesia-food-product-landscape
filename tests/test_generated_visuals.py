@@ -254,7 +254,10 @@ def test_readiness_title_falls_back_to_the_spread_when_indonesia_leads() -> None
 
     title = visuals.readiness_title(matrix)
 
-    assert title == "Widest spread: Labels, 17% in Thailand versus 29% in Indonesia"
+    assert title == (
+        "The widest spread among the fields shown is Labels: "
+        "17% in Thailand versus 29% in Indonesia"
+    )
 
 
 def test_largest_group_title_counts_countries() -> None:

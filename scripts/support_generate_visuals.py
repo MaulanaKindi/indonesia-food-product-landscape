@@ -85,7 +85,8 @@ def readiness_title(matrix: pd.DataFrame) -> str:
         widest = str(spread.idxmax())
         column = matrix[widest]
         return (
-            f"Widest spread: {widest}, {float(column.min()):.0f}% in "
+            f"The widest spread among the fields shown is {widest}: "
+            f"{float(column.min()):.0f}% in "
             f"{COUNTRY_NAMES[str(column.idxmin())]} versus "
             f"{float(column.max()):.0f}% in {COUNTRY_NAMES[str(column.idxmax())]}"
         )
@@ -93,7 +94,7 @@ def readiness_title(matrix: pd.DataFrame) -> str:
     best_value = gaps[metric][2]
     best_country = gaps[metric][1]
     return (
-        f"Widest gap for Indonesia: {metric}, "
+        f"The widest field gap for Indonesia is {metric}: "
         f"{float(matrix.loc[STUDY_COUNTRY, metric]):.0f}% versus "
         f"{best_value:.0f}% in {COUNTRY_NAMES[best_country]}"
     )

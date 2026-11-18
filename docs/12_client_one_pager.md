@@ -1,6 +1,6 @@
 # Client One-Pager — Indonesia Food Product Landscape
 
-**Prepared by:** [MaulanaKindi] · [maulanakindi@gmail.com] · [https://www.linkedin.com/in/maulanakinditamami/]
+**Prepared by:** [Maulana Kindi](https://www.linkedin.com/in/maulanakinditamami/) · [maulanakindi@gmail.com](mailto:maulanakindi@gmail.com) · [LinkedIn](https://www.linkedin.com/in/maulanakinditamami/)
 
 ## The problem
 

@@ -83,9 +83,9 @@ Percentages are records with a non-empty field or valid value, using the definit
 | Thailand (TH) | 80.4% | 62.6% | 55.6% | 81.2% | 45.6% | 29.9% | 17.2% | 0.4% |
 <!-- AUTO-GENERATED: readiness-scorecard:END -->
 
-![Heatmap of field readiness by country; Indonesia's widest gap is category tags at 12% versus 63% in Thailand](docs/img/data_readiness_scorecard.png)
+![Heatmap of field readiness by country; the widest field gap for Indonesia is category tags at 12% versus 63% in Thailand](docs/img/data_readiness_scorecard.png)
 
-*Figure 4 — The widest gap for Indonesia is category tags: 12% versus 63% in Thailand. How to read this: darker cells mean more records carry a usable value for that field.*
+*Figure 4 — The widest field gap for Indonesia is category tags: 12% versus 63% in Thailand. How to read this: darker cells mean more records carry a usable value for that field.*
 
 ![Grouped bar chart comparing brand text with exact-approved brand mapping; brand text covers 39% of Indonesian records and exact-approved mapping 0.34%](docs/img/brand_mapping_gap.png)
 
@@ -139,8 +139,8 @@ Original project code and documentation are MIT-licensed. Open Food Facts data a
 
 ## About the author
 
-[MaulanaKindi] is a freelance data analyst and BI consultant. This study is a portfolio piece: it shows how I scope a data question, measure what the data can actually support, and keep every claim reproducible.
+[Maulana Kindi](https://www.linkedin.com/in/maulanakinditamami/) is a freelance data analyst and BI consultant. This study is a portfolio piece: it shows how I scope a data question, measure what the data can actually support, and keep every claim reproducible.
 
 Services: data-fitness audits, KPI definition, SQL and DuckDB pipelines, and dashboards.
 
-Contact: [maulanakindi@gmail.com] · [https://www.linkedin.com/in/maulanakinditamami/]
+Contact: [maulanakindi@gmail.com](mailto:maulanakindi@gmail.com) · [LinkedIn](https://www.linkedin.com/in/maulanakinditamami/)
