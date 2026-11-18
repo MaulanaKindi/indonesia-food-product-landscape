@@ -200,3 +200,109 @@ def test_brand_chart_requires_brand_text_metric(tmp_path) -> None:
         assert "Brand text" in str(error)
     else:
         raise AssertionError("expected KeyError when the Brand text metric is absent")
+
+
+def test_category_coverage_title_is_computed_and_flags_a_low_result() -> None:
+    trailing = pd.DataFrame({"category_tags_coverage_pct": {"ID": 12.18, "TH": 62.63}})
+    leading = pd.DataFrame({"category_tags_coverage_pct": {"ID": 62.63, "TH": 12.18}})
+
+    assert visuals.category_coverage_title(trailing).startswith("Only 12%")
+    assert "versus 63% in Thailand" in visuals.category_coverage_title(trailing)
+    assert not visuals.category_coverage_title(leading).startswith("Only")
+
+
+def test_category_coverage_title_follows_the_data(tmp_path) -> None:
+    analysis_dir, _ = write_inputs(tmp_path)
+    scope = pd.read_csv(analysis_dir / "stage6_country_scope.csv")
+    before = visuals.category_coverage_title(scope.set_index("iso_alpha2"))
+    scope.loc[scope["iso_alpha2"].eq("ID"), "category_tags_coverage_pct"] = 90.0
+    after = visuals.category_coverage_title(scope.set_index("iso_alpha2"))
+
+    assert before != after
+    assert "90%" in after
+
+
+def test_assignment_coverage_title_reports_both_views() -> None:
+    coverage = pd.DataFrame(
+        {"candidate_derived": {"ID": 70.9}, "approved_only": {"ID": 10.2}}
+    )
+
+    title = visuals.assignment_coverage_title(coverage)
+
+    assert "71%" in title
+    assert "10%" in title
+
+
+def test_readiness_title_names_the_widest_gap_for_indonesia() -> None:
+    matrix = pd.DataFrame(
+        {
+            "Brand text": {"ID": 38.8, "TH": 80.4},
+            "Category tags": {"ID": 12.18, "TH": 62.63},
+        }
+    )
+
+    title = visuals.readiness_title(matrix)
+
+    assert "Category tags" in title
+    assert "12%" in title
+    assert "63%" in title
+    assert "Thailand" in title
+
+
+def test_readiness_title_falls_back_to_the_spread_when_indonesia_leads() -> None:
+    matrix = pd.DataFrame({"Labels": {"ID": 28.9, "TH": 17.2}})
+
+    title = visuals.readiness_title(matrix)
+
+    assert title == "Widest spread: Labels, 17% in Thailand versus 29% in Indonesia"
+
+
+def test_largest_group_title_counts_countries() -> None:
+    largest = pd.DataFrame(
+        {
+            "reporting_group_label": {
+                "ID": "Beverages",
+                "MY": "Snacks",
+                "TH": "Snacks",
+            },
+            "group_share_of_country_rows_pct": {"ID": 6.0, "MY": 9.0, "TH": 18.0},
+        }
+    )
+
+    assert (
+        visuals.largest_group_title(largest)
+        == "Snacks is the largest reporting group in 2 of 3 countries"
+    )
+
+
+def test_largest_group_title_names_one_country_when_no_group_repeats() -> None:
+    largest = pd.DataFrame(
+        {
+            "reporting_group_label": {
+                "ID": "Beverages",
+                "MY": "Snacks",
+                "TH": "Bakery",
+            },
+            "group_share_of_country_rows_pct": {"ID": 6.0, "MY": 9.0, "TH": 18.0},
+        }
+    )
+
+    title = visuals.largest_group_title(largest)
+
+    assert (
+        title == "Bakery is the largest reporting group in Thailand at 18% of records"
+    )
+
+
+def test_brand_gap_title_keeps_two_decimals_below_one_percent() -> None:
+    matrix = pd.DataFrame(
+        {
+            "Brand text": {"ID": 38.8},
+            "Exact-approved brand mapping": {"ID": 0.34},
+        }
+    )
+
+    title = visuals.brand_gap_title(matrix)
+
+    assert "Brand text covers 39% of Indonesian records" in title
+    assert "exact-approved mapping covers 0.34%" in title
