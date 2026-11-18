@@ -60,6 +60,6 @@ The AI-assisted audit judged 97 of 130 candidate group pairs correct on a fixed 
 
 ## Provenance
 
-Source commit, size, and checksum: [data source and licensing](02_data_source.md). Metric definitions: [reproduction guide](09_reproduction.md). Claim-to-evidence trace: [claim lineage](10_claim_lineage.md). Generated results and caveats: [Stage 7 findings](07_stage7_findings_and_recommendations.md).
+Source commit, size, and checksum: [data source and licensing](02_data_source.md). Metric definitions: [reproduction guide](09_reproduction.md). Claim-to-evidence trace: [claim lineage](10_claim_lineage.md). Generated results and caveats: [findings and recommendations](07_stage7_findings_and_recommendations.md).
 
 **Status.** Adopted 2026-11-17 by the author. Decisions 1–3 are standing guidance for this project. Decision 4 is recorded but not scoped: commissioning sales, panel, or retail-scan data requires a budget holder this project does not have, so it stands as a recommendation to whoever commissions that data rather than as a task for this repository.

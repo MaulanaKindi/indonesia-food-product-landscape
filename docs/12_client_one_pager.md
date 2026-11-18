@@ -22,7 +22,7 @@ A market team wants to describe the Indonesian food market from open product dat
 | Singapore (SG) | 11,986 | 17.3% |
 | Thailand (TH) — high-coverage contrast | 11,343 | 62.6% |
 
-Indonesia sits close to Malaysia, below the Philippines and Singapore, and far below Thailand. A two-proportion test with 95% intervals finds Indonesia statistically indistinguishable from Malaysia (+0.87 pp, 95% CI -0.11 to +1.86) and clearly below the other three, including after a Bonferroni adjustment for four comparisons.
+Indonesia sits close to Malaysia, below the Philippines and Singapore, and far below Thailand. A statistical comparison with 95% confidence intervals finds Indonesia indistinguishable from Malaysia (+0.87 pp, 95% CI -0.11 to +1.86) and clearly below the other three, even after adjusting for running four comparisons at once.
 
 ## Decision implications
 
