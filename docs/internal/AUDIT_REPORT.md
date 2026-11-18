@@ -106,7 +106,7 @@ All headline numbers match tracked outputs — no drift found:
 | D5 | Code & SQL quality | 15% | 8 | 8 | Unchanged in substance; verified clean locally (`mypy` 40 files, `ruff`, `sqlfluff`) |
 | D6 | Validation & testing | 10% | 7 | 9 | 109-assertion guard in CI plus seven renderer tests, mutation-verified |
 | D7 | Communication of results | 10% | 6 | 8.5 | Five charts with captions, Okabe-Ito palette (series separated from country hues), full country names, derived shares, fit-for-purpose |
-| D8 | Repo hygiene | 5% | 9 | 9 | Unchanged; `docs/audit/` still untracked |
+| D8 | Repo hygiene | 5% | 9 | 9 | Unchanged; internal working notes are tracked under `docs/internal/` |
 
 **Weighted overall = 8.75 / 10** (baseline 7.50).
 

@@ -1,21 +1,21 @@
 # Decision Memo — What This Data Supports
 
-**Prepared:** 2026-11-17 · **Approved:** 2026-11-17 by the repository owner · **Scope:** one pinned Open Food Facts snapshot (commit and SHA-256 in [the source record](02_data_source.md))
+**Prepared:** 2026-11-17 · **Adopted:** 2026-11-17 by the author · **Scope:** one pinned Open Food Facts snapshot (commit and SHA-256 in [the source record](02_data_source.md))
 
-This memo turns the study's findings into decisions with evidence, confidence, effort, and an owner. It introduces no new number: every figure below is a tracked value that `scripts/18_check_headline_numbers.py` and `scripts/support_check_docs_consistency.py` assert against the committed CSVs, or is reproducible with the script named beside it.
+This memo turns the study's findings into decisions with evidence, confidence, effort, and a suggested owner role. It introduces no new number: every figure below is a tracked value that `scripts/18_check_headline_numbers.py` and `scripts/support_check_docs_consistency.py` assert against the committed CSVs, or is reproducible with the script named beside it.
 
 ## Decisions
 
-| # | Decision or action | Evidence (tracked) | Confidence | Effort (est.) | Owner | Horizon |
+| # | Decision or action | Evidence (tracked) | Confidence | Effort (est.) | Suggested owner role | Horizon |
 |---|---|---|---|---|---|---|
-| 1 | Use Open Food Facts as a **supplementary** signal for catalogue coverage and field completeness | 12.2% of 9,118 Indonesian records carry a category tag; brand text on 38.8%, numeric nutrition on 31.0% ([field readiness](../README.md#field-readiness)) | High for describing this snapshot; low for generalising to the market | S — reuse committed outputs, no new acquisition | Analytics lead | Now |
+| 1 | Use Open Food Facts as a **supplementary** signal for catalog coverage and field completeness | 12.2% of 9,118 Indonesian records carry a category tag; brand text on 38.8%, numeric nutrition on 31.0% ([field readiness](../README.md#field-readiness)) | High for describing this snapshot; low for generalizing to the market | S — reuse committed outputs, no new acquisition | Analytics lead | Now |
 | 2 | Do **not** use it alone for competitor share, market size, sales, demand, or availability | The source has no sales, revenue, or demand fields and is a collaborative snapshot, not a census ([analysis specification](06_analysis_specification.md)) | High | None — an avoidance, not a task | Analytics lead | Standing |
 | 3 | Treat category assignments as **provisional** | Candidate-derived assignments cover 788/9,118 records (8.64%) against 113 (1.24%) approved-only; 106,211 tags remain taxonomy-unmatched ([data profile](03_data_profile.md)) | Medium-high | M — scheduled human review of category and brand mappings | Data steward | Next planning cycle |
-| 4 | Commission sales, panel, or retail-scan data before any share or demand claim | The gap is structural, not a processing issue; see [what would change these conclusions](#what-would-change-these-conclusions) | High that the gap exists | L — new licence, ingestion, and validation | Budget holder (future) | Next budget cycle |
+| 4 | Commission sales, panel, or retail-scan data before any share or demand claim | The gap is structural, not a processing issue; see [what would change these conclusions](#what-would-change-these-conclusions) | High that the gap exists | L — new license, ingestion, and validation | Budget holder (future) | Next budget cycle |
 
 Effort is a planning estimate, not a commitment: **S** fits the existing backlog, **M** needs scheduled review capacity, **L** needs new procurement or budget.
 
-**Cost basis.** No currency amount appears here, deliberately: the relevant vendor programmes are quote-only and publish no list price, so any figure would be unverifiable rather than informative. The **L** band on decision 4 therefore means procurement effort, not a known spend. Owners are roles rather than individuals, so the table stays valid when people change.
+**Cost basis.** No currency amount appears here, deliberately: the relevant vendor programs are quote-only and publish no list price, so any figure would be unverifiable rather than informative. The **L** band on decision 4 therefore means procurement effort, not a known spend. Owner roles are suggestions for a client team rather than named people, so the table stays valid when the team changes.
 
 ## What each decision can reach
 
@@ -62,4 +62,4 @@ The AI-assisted audit judged 97 of 130 candidate group pairs correct on a fixed 
 
 Source commit, size, and checksum: [data source and licensing](02_data_source.md). Metric definitions: [reproduction guide](09_reproduction.md). Claim-to-evidence trace: [claim lineage](10_claim_lineage.md). Generated results and caveats: [Stage 7 findings](07_stage7_findings_and_recommendations.md).
 
-**Approval record.** Approved 2026-11-17 by the repository owner. Decisions 1–3 are adopted as standing guidance for this repository. Decision 4 is recorded but not scoped: commissioning sales, panel, or retail-scan data requires a budget holder this project does not have, so it stands as a recommendation to whoever commissions that data rather than as a task for this repository.
+**Status.** Adopted 2026-11-17 by the author. Decisions 1–3 are standing guidance for this project. Decision 4 is recorded but not scoped: commissioning sales, panel, or retail-scan data requires a budget holder this project does not have, so it stands as a recommendation to whoever commissions that data rather than as a task for this repository.

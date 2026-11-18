@@ -100,4 +100,4 @@
 
 ## Resolved questions
 - Release hygiene (push/PR/tag) required an explicit user request; it was performed on 2026-11-17 as PR #1, PR #2, and tag `v1.1`.
-- `docs/audit/` stays tracked. It is the record of how the published v1.1 state was scored and verified, which is what makes the 8.75/10 claim auditable rather than asserted.
+- `docs/internal/` stays tracked. It is the record of how the published v1.1 state was scored and verified, which is what makes the 8.75/10 claim auditable rather than asserted. It is a working note, not reader-facing documentation.
